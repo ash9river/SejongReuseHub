@@ -1,10 +1,12 @@
+import { GithubProfile } from 'services/getData';
+
 export const EXAMPLEACTIONTYPE = 'exampleReducer/EXAMPLEACTIONTYPE' as const;
 
-export const exampleActionFunction = (variable: number) => ({
+export const exampleActionFunction = (variable: GithubProfile) => ({
   type: EXAMPLEACTIONTYPE,
   payload: variable,
 });
-export const exampleActionFunctionVersionTwo = (variable: number) => ({
+export const exampleActionFunctionVersionTwo = (variable: GithubProfile) => ({
   type: EXAMPLEACTIONTYPE,
   payload: variable,
 });
@@ -15,7 +17,7 @@ type ExampleAction =
 //  | ReturnType<typeof 액션함수>
 
 type ExampleState = {
-  exampleItems: number[];
+  exampleItems: GithubProfile[];
 };
 
 const initailState: ExampleState = {
@@ -27,11 +29,18 @@ const exampleReducer = (
   action: ExampleAction,
 ) => {
   switch (action.type) {
-    case EXAMPLEACTIONTYPE:
-      return {
-        ...state,
-        exampleItems: [...state.exampleItems, action.payload],
-      };
+    case EXAMPLEACTIONTYPE: {
+      const existIdx = state.exampleItems.findIndex(
+        (item) => item.id === action.payload.id,
+      );
+      if (existIdx === -1) {
+        return {
+          ...state,
+          exampleItems: [...state.exampleItems, action.payload],
+        };
+      }
+      return state;
+    }
     default:
       return state;
   }
