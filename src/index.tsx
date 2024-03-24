@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import MapPage from 'pages/MapPage';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
@@ -10,7 +9,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <MapPage />
+    <App />
   </React.StrictMode>,
 );
 

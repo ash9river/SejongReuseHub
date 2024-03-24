@@ -11,8 +11,8 @@ export default function MapPage() {
     const container = document.getElementById('map');
     const options = {
       center: new kakao.maps.LatLng(
-        location.coordinates?.lat,
-        location.coordinates?.lng,
+        location.coordinates.latitude,
+        location.coordinates.longitude,
       ),
       level: 2,
     };
@@ -20,9 +20,9 @@ export default function MapPage() {
     const map = new kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
   }, [location]); //api 불러오는 시간이 필요함
   return (
-    <section>
+    <div>
       <h1>Map</h1>
       <div id="map" style={{ width: 500, height: 500 }} />
-    </section>
+    </div>
   );
 }

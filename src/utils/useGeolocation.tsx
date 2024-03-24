@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 
 interface locationType {
   loaded: boolean;
-  coordinates?: { lat: number; lng: number };
+  coordinates: { latitude: number; longitude: number };
   error?: { code: number; message: string };
 }
 
-const useGeolocation = () => {
+function useGeolocation() {
   const [location, setLocation] = useState<locationType>({
     loaded: false,
-    coordinates: { lat: 0, lng: 0 },
+    coordinates: { latitude: 0, longitude: 0 },
   });
 
   // 성공에 대한 로직
@@ -19,8 +19,8 @@ const useGeolocation = () => {
     setLocation({
       loaded: true,
       coordinates: {
-        lat: location.coords.latitude,
-        lng: location.coords.longitude,
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
       },
     });
   };
@@ -29,6 +29,10 @@ const useGeolocation = () => {
   const onError = (error: { code: number; message: string }) => {
     setLocation({
       loaded: true,
+      coordinates: {
+        latitude: error.code,
+        longitude: error.code,
+      },
       error,
     });
   };
@@ -47,6 +51,6 @@ const useGeolocation = () => {
   }, []);
 
   return location;
-};
+}
 
 export default useGeolocation;
