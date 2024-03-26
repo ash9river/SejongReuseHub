@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { thunk } from 'redux-thunk';
 import exampleReducer from './exampleReducer';
+import postsItemReducer from './bulletin/postsItemReducer';
 
 const rootReducer = combineReducers({
   // list of Reducers
   exampleReducer,
+  postsItemReducer,
 });
 
 export const store = configureStore({

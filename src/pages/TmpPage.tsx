@@ -1,3 +1,4 @@
+import ThisIsTmp from 'components/ThisIsTmp';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -11,7 +12,8 @@ import {
 import { AppDispatch, RootState } from 'store';
 
 export default function TmpPage() {
-  const userData = useSelector(
+  return <ThisIsTmp />;
+  /*   const userData = useSelector(
     (state: RootState) => state.exampleReducer.exampleItems,
   );
 
@@ -39,5 +41,5 @@ export default function TmpPage() {
           )),
         )}
     </h5>
-  );
+  ); */
 }

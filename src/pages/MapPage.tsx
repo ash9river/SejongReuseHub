@@ -18,7 +18,7 @@ export default function MapPage() {
     };
 
     const map = new kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
-  }, [location]); //api 불러오는 시간이 필요함
+  }, [location]); // api 불러오는 시간이 필요함
   return (
     <div>
       <h1>Map</h1>
