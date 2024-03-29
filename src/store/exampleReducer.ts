@@ -20,12 +20,12 @@ type ExampleState = {
   exampleItems: GithubProfile[];
 };
 
-const initailState: ExampleState = {
+const initialState: ExampleState = {
   exampleItems: [],
 };
 
 const exampleReducer = (
-  state: ExampleState = initailState,
+  state: ExampleState = initialState,
   action: ExampleAction,
 ) => {
   switch (action.type) {

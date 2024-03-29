@@ -2,11 +2,13 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { thunk } from 'redux-thunk';
 import exampleReducer from './exampleReducer';
 import postsItemReducer from './bulletin/postsItemReducer';
+import locationReducer from './map/locationReducer';
 
 const rootReducer = combineReducers({
   // list of Reducers
   exampleReducer,
   postsItemReducer,
+  locationReducer,
 });
 
 export const store = configureStore({

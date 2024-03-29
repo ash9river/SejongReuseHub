@@ -28,6 +28,7 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 0,
     'react/require-default-props': 'warn',
     'default-param-last': 0,
+    'consistent-return': 'warn',
   },
   settings: {
     'import/resolver': {
