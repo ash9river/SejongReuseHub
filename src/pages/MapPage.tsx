@@ -1,9 +1,12 @@
-import MapContainer from 'components/map/MapContainer';
-import { useState, useEffect, useRef } from 'react';
-import getGeolocation from 'utils/getGeolocation';
+import React, { useEffect } from 'react';
 
-const { kakao } = window;
+import KaKaoMap from 'components/map/KaKaoMap';
 
 export default function MapPage() {
-  return <MapContainer />;
+  return (
+    <div>
+      <h1>Map</h1>
+      <KaKaoMap />
+    </div>
+  );
 }
