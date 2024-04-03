@@ -32,15 +32,16 @@ function getGeolocation() {
   const onSuccess = (location: {
     coords: { latitude: number; longitude: number };
   }) => {
+    const item: coordinate = {
+      longitude: location.coords.longitude,
+      latitude: location.coords.latitude,
+    };
+
     dispatch({
       type: SETLOCATION,
-      payload: {
-        longitude,
-        latitude,
-      },
+      payload: item,
     });
   };
-
   // 에러에 대한 로직a
   const onError = (error: { code: number; message: string }) => {
     throw error;

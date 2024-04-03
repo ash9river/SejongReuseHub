@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import getGeolocation from 'utils/getGeolocation';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import Marker from './Marker';
-import markers from './data';
+import Marker, { MarkerProps } from './Marker';
+import markers, { DataMarkerProps } from './data';
 
 const { kakao } = window;
 
@@ -26,15 +26,30 @@ const locations = [
 ];
 
 export default function KaKaoMap() {
-  const location = getGeolocation();
-  const [selectedCategory, setSelectedCategory] = useState('coffee');
+  const { longitude, latitude } = getGeolocation();
+  const FirstMarker: DataMarkerProps[] = markers.filter(
+    (category) => category.name === 'coffee',
+  );
+  const [selectedCategory, setSelectedCategory] =
+    useState<DataMarkerProps[]>(FirstMarker);
+
+  function DeleteMarks(name: string) {
+    // console.log(markers);
+    setSelectedCategory(markers);
+    const newMarkers: DataMarkerProps[] = markers.filter(
+      (category) => category.name === name,
+    );
+
+    // console.log(newMarkers);
+    setSelectedCategory(newMarkers);
+  }
 
   return (
     <div>
       <Map
         center={{
-          lat: location.latitude,
-          lng: location.longitude,
+          lat: latitude,
+          lng: longitude,
         }} // 지도의 중심 좌표
         style={{ width: '100vw', height: '100vh' }} // 지도 크기
         level={3} // 지도 확대 레벨
@@ -50,23 +65,27 @@ export default function KaKaoMap() {
             title={loc.title}
           />
         ))}
-
-        <Marker
-          Positions={markers[`${selectedCategory}Positions`]}
-          Origin={markers[`${selectedCategory}Origin`]}
-        />
+        {selectedCategory.map((mark: DataMarkerProps, index: number) => {
+          return (
+            <Marker
+              key={`${mark.Positions[index].lat},${mark.Positions[index].lng}`}
+              Positions={mark.Positions}
+              Origin={mark.Origin}
+            />
+          );
+        })}
       </Map>
       <div className="category">
         <ul style={{ gap: '10px', display: 'flex', flexDirection: 'row' }}>
-          <button type="button" onClick={() => setSelectedCategory('coffee')}>
+          <button type="button" onClick={() => DeleteMarks('coffee')}>
             커피숍
           </button>
 
-          <button type="button" onClick={() => setSelectedCategory('store')}>
+          <button type="button" onClick={() => DeleteMarks('store')}>
             편의점
           </button>
 
-          <button type="button" onClick={() => setSelectedCategory('carpark')}>
+          <button type="button" onClick={() => DeleteMarks('carpark')}>
             주차장
           </button>
         </ul>
