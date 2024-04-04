@@ -1,5 +1,32 @@
-.map-container {
-  width: 90vw;
+// .map-container {
+//   width: 90vw;
+//   height: 100vh;
+//   margin: auto;
+// }
+.category {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+}
+.mapWrap {
+  position: relative;
+  overflow: hidden;
+  width: 100vw;
   height: 100vh;
-  margin: auto;
+}
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+.category_button {
+  // border-radius: 10px;
+  width: 100px;
+  height: 100px;
+  border: none;
 }

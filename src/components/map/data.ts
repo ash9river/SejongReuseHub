@@ -1,8 +1,9 @@
 import { Position, MarkerProps } from './Marker';
-
+// 인터페이스를 임포트 받아 상속을 통해 확장한 모습이다.
 export interface DataMarkerProps extends MarkerProps {
   name: string;
 }
+// 이름, 위치, origin을 속성으로 가진다.
 const markers: DataMarkerProps[] = [
   {
     name: 'coffee',
