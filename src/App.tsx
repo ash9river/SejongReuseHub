@@ -1,4 +1,6 @@
 import MainLayout from 'layouts/MainLayout';
+import MapLayout from 'layouts/MapLayout';
+import ErrorPage from 'pages/ErrorPage';
 import HomePage from 'pages/HomePage';
 import MapPage from 'pages/MapPage';
 import PostViewPage from 'pages/PostViewPage';
@@ -16,6 +18,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <MainLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -27,7 +30,13 @@ const router = createBrowserRouter([
       },
       {
         path: 'map',
-        element: <MapPage />,
+        element: <MapLayout />,
+        children: [
+          {
+            index: true,
+            element: <MapPage />,
+          },
+        ],
       },
       {
         path: 'tmp',

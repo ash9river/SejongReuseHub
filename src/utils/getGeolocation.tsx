@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SETLOCATION, coordinate } from 'store/map/locationReducer';
+import { SETLOCATION, coordinateType } from 'store/map/locationReducer';
 import { AppDispatch, RootState } from 'store';
 
 type coordinates = {
-  coordinate: coordinate;
+  coordinate: coordinateType;
   latitudeDelata?: number;
   longitudeDelta?: number;
 };
@@ -32,7 +32,7 @@ function getGeolocation() {
   const onSuccess = (location: {
     coords: { latitude: number; longitude: number };
   }) => {
-    const item: coordinate = {
+    const item: coordinateType = {
       longitude: location.coords.longitude,
       latitude: location.coords.latitude,
     };

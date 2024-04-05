@@ -1,6 +1,8 @@
 /* eslint-disable global-require */
 import CustomError from '../configs/CustomError';
 
+import Header from '../components/UI/Header';
+import Footer from '../components/UI/Footer';
 import styles from './ErrorPage.module.scss';
 
 interface ErrorPageProps {
@@ -14,7 +16,7 @@ export default function ErrorPage({ error }: ErrorPageProps) {
 
   return (
     <>
-      <header />
+      <Header />
       <main>
         <div className={styles.wrapper}>
           <div className={styles.tmp}>
@@ -23,7 +25,7 @@ export default function ErrorPage({ error }: ErrorPageProps) {
           </div>
         </div>
       </main>
-      <footer />
+      <Footer />
     </>
   );
 }

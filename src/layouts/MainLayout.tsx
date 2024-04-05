@@ -1,15 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
 function MainLayout() {
-  return (
-    <>
-      <header />
-      <main>
-        <Outlet />
-      </main>
-      <footer />
-    </>
-  );
+  return <Outlet />;
 }
 
 export default MainLayout;
