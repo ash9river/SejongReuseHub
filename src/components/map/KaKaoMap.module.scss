@@ -17,16 +17,21 @@
   width: 100vw;
   height: 100vh;
 }
-html,
-body {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-}
+
 .category_button {
-  // border-radius: 10px;
+  border-radius: 10px;
   width: 100px;
   height: 100px;
   border: none;
+}
+
+.MapStyle {
+  width: 100vw;
+  height: 100vh;
+  position: 'relative';
+  overflow: 'hidden';
+}
+.ImgStyle {
+  width: 100px;
+  height: 100px;
 }
