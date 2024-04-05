@@ -1,7 +1,7 @@
 import './Footer.module.scss';
 
 function Footer() {
-  return <footer>Made by ash9river</footer>;
+  return <footer>this is footer</footer>;
 }
 
 export default Footer;

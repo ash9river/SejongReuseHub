@@ -1,5 +1,6 @@
 import MainLayout from 'layouts/MainLayout';
 import MapLayout from 'layouts/MapLayout';
+import PostLayout from 'layouts/PostLayout';
 import ErrorPage from 'pages/ErrorPage';
 import HomePage from 'pages/HomePage';
 import MapPage from 'pages/MapPage';
@@ -26,7 +27,13 @@ const router = createBrowserRouter([
       },
       {
         path: 'postView',
-        element: <PostViewPage />,
+        element: <PostLayout />,
+        children: [
+          {
+            index: true,
+            element: <PostViewPage />,
+          },
+        ],
       },
       {
         path: 'map',
