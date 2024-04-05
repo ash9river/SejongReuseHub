@@ -3,7 +3,7 @@ import { DataMarkerProps } from './data';
 function DeleteMarks(
   name: string,
   markers: DataMarkerProps[],
-  setSelectedCategory: (markers: DataMarkerProps[]) => void,
+  setSelectedCategory: (T: DataMarkerProps[]) => void,
 ) {
   // 원본 배열 가져옴
   setSelectedCategory(markers);

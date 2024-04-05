@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { coordinate } from 'store/map/locationReducer';
+import { coordinateType } from 'store/map/locationReducer';
 
 const { kakao } = window;
 
-const useFetchMap = (coordinate: coordinate) => {
+const useFetchMap = (coordinate: coordinateType) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { longitude, latitude } = coordinate;
 

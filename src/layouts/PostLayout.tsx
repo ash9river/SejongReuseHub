@@ -1,16 +1,17 @@
 import Footer from 'components/UI/Footer';
 import Header from 'components/UI/Header';
+import { Outlet } from 'react-router-dom';
 
-function HomePage() {
+function PostLayout() {
   return (
     <>
       <Header />
       <main>
-        <h1 style={{ margin: '0' }}>this is home</h1>;
+        <Outlet />
       </main>
       <Footer />
     </>
   );
 }
 
-export default HomePage;
+export default PostLayout;

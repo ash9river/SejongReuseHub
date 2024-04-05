@@ -1,11 +1,11 @@
 export const SETLOCATION = 'map/locationReducer/SETLOCATION' as const;
 
-export const setLocation = (payload: coordinate) => ({
+export const setLocation = (payload: coordinateType) => ({
   type: SETLOCATION,
   payload,
 });
 
-export type coordinate = {
+export type coordinateType = {
   longitude: number;
   latitude: number;
 };
@@ -13,7 +13,7 @@ export type coordinate = {
 type LocationActuon = ReturnType<typeof setLocation>;
 
 type CurrentLocationState = {
-  coordinate: coordinate;
+  coordinate: coordinateType;
 };
 
 const initialState: CurrentLocationState = {
@@ -30,7 +30,7 @@ const locationReducer = (
   const { type, payload } = action;
   switch (type) {
     case SETLOCATION: {
-      const newLocation: coordinate = {
+      const newLocation: coordinateType = {
         latitude: payload.latitude,
         longitude: payload.longitude,
       };
