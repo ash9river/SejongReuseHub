@@ -1,14 +1,14 @@
 import Footer from 'components/UI/Footer';
 import Header from 'components/UI/Header';
+import HomeContainer from 'components/home/HomeContainer';
 
 function HomePage() {
   return (
     <>
       <Header />
       <main>
-        <h1 style={{ margin: '0' }}>this is home</h1>;
+        <HomeContainer />
       </main>
-      <Footer />
     </>
   );
 }

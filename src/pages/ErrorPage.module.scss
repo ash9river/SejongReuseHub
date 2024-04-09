@@ -1,12 +1,14 @@
 @import '../styles/mixin';
 
 .wrapper {
-  height: calc(100vh - 120px);
+  height: calc(100vh - 121px);
   width: 100%;
   .tmp {
-    width: calc(100% - 1rem);
-    height: auto;
+    height: calc(100% - 1rem);
     padding: 1rem;
     text-align: center;
+    h1 {
+      margin-top: 0;
+    }
   }
 }

@@ -10,7 +10,7 @@ interface ErrorPageProps {
 }
 
 export default function ErrorPage({ error }: ErrorPageProps) {
-  const message = error?.message || '404 Not Fount';
+  const message = error?.message || '404 Not Found';
   const info =
     error?.response?.info || "The site you' looking for is not here.";
 

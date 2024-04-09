@@ -1,0 +1,32 @@
+.scroll-container {
+  overflow: auto;
+  scroll-snap-type: y mandatory; /* y 축 방향으로만 scroll snap 적용 */
+  height: calc(100vh - 60px);
+  .scroll-area {
+    height: 100%;
+    scroll-snap-align: start;
+    // background-size: cover;
+    // background-repeat: no-repeat;
+    // background-position: center;
+    display: grid;
+    background: #000;
+  }
+  .scroll-area:nth-of-type(1) {
+    grid-template: 10% 20% 20% 20% 20% 10%/10% 1fr 10%;
+    background: #c94e4b;
+    color: white;
+  }
+
+  .scroll-area:nth-of-type(2) {
+    background: #66c969;
+  }
+
+  /*   .scroll-area:last-child {
+    background: #4cc1be;
+  } */
+}
+
+.rest-area {
+  height: calc(100vh - 60px);
+  background: #4cc1be;
+}
