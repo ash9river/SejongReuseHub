@@ -1,9 +1,10 @@
+import { Dispatch } from 'react';
 import { DataMarkerProps } from './data';
 
 function DeleteMarks(
   name: string,
   markers: DataMarkerProps[],
-  setSelectedCategory: (T: DataMarkerProps[]) => void,
+  setSelectedCategory: Dispatch<DataMarkerProps[]>,
 ) {
   // 원본 배열 가져옴
   setSelectedCategory(markers);
