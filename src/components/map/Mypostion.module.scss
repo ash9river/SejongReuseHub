@@ -1,0 +1,16 @@
+.Myposition {
+  z-index: 1;
+  position: absolute;
+  top: 14rem;
+  right: 3px;
+  width: 32px;
+  height: 32px;
+  background-color: #ffffff;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+}
+
+.imgStyle {
+  width: 10px;
+  height: 10px;
+}

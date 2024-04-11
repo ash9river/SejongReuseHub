@@ -8,20 +8,22 @@ import {
 } from 'react-kakao-maps-sdk';
 import KaKaoMapControl from './KaKaoMapControl';
 
-import Marker, { MarkerProps } from './Marker';
+import Marker, { MarkerProps, Position } from './Marker';
 import markers, { DataMarkerProps } from './data';
 import styles from './KaKaoMap.module.scss';
 import UseKakaoLoader from './UseKakoaLoader';
 import DeleteMarks from './DeleteMarks';
 import KaKaoHeader from './KaKaoHeader';
+import Myposition from './Myposition';
 
 const { kakao } = window;
 
-export default function KaKaoMap() {
+function KaKaoMap() {
   UseKakaoLoader();
   const { longitude, latitude } = getGeolocation();
+
   const mapRef = useRef<kakao.maps.Map>(null);
-  const [mapType, setMapType] = useState<'roadmap' | 'skyview'>('roadmap');
+  // const [mapType, setMapType] = useState<'roadmap' | 'skyview'>('roadmap');
 
   // 초기 배열 기본값
   const FirstMarker: DataMarkerProps[] = markers.filter(
@@ -39,7 +41,7 @@ export default function KaKaoMap() {
         }} // 지도의 중심 좌표
         className={styles.MapStyle} // 지도 크기
         level={3} // 지도 확대 레벨
-        mapTypeId={mapType === 'roadmap' ? 'ROADMAP' : 'HYBRID'}
+        // mapTypeId={mapType === 'roadmap' ? 'ROADMAP' : 'HYBRID'}
         ref={mapRef}
       >
         <MapTypeControl position="TOPLEFT" />
@@ -56,9 +58,12 @@ export default function KaKaoMap() {
             />
           );
         })}
+        {/* 내 위치가는 버튼 */}
+        <Myposition lat={latitude} lng={longitude} />
       </Map>
 
       <KaKaoHeader setCategory={setSelectedCategory} />
     </div>
   );
 }
+export default KaKaoMap;
