@@ -1,46 +1,54 @@
 import { http, HttpResponse } from 'msw';
 
+const posts = ['게시글1', '게시글2', '게시글3'];
+
+export interface postItemType {
+  postId: number;
+  postTitle: string;
+  postContent: string;
+}
+
+const postArray: postItemType[] = [
+  {
+    postId: 1,
+    postTitle: '가나다라마바사',
+    postContent: '아자차카타파하',
+  },
+  {
+    postId: 2,
+    postTitle: '가나다라마바사',
+    postContent: '아자차카타파하',
+  },
+  {
+    postId: 3,
+    postTitle: '가나다라마바사',
+    postContent: '아자차카타파하',
+  },
+];
+
 export const handlers = [
-  /*   http.get('/tmpmarkers', async ({ request }) => {
-    const url = new URL(request.url || '');
+  http.get('/hello', () => {
+    console.log('msw:get :: /hello');
+    return HttpResponse.json({
+      data: 'Captured a "GET /hello" request',
+    });
+  }),
 
-    const latitude = url.searchParams.get('latitude');
-    const longitude = url.searchParams.get('longitude');
+  http.get('/post', async () => {
+    const retItem = postArray;
+    console.log(retItem);
 
-    const latitudeDelta = url.searchParams.get('latitudeDelta');
-    const longitudeDelta = url.searchParams.get('longitudeDelta');
+    return HttpResponse.json(retItem);
+  }),
 
-    const northEastBoundary = {
-      latitude: Number(latitude) + Number(latitudeDelta),
-      longitude: Number(longitude) + Number(longitudeDelta),
-    };
-
-    const southWestBoundary = {
-      latitude: Number(latitude) - Number(longitudeDelta),
-      longitude: Number(longitude) - Number(longitudeDelta),
-    };
-    console.log(
-      latitude,
-      longitude,
-      latitudeDelta,
-      longitudeDelta,
-      northEastBoundary,
-      southWestBoundary,
+  http.get('/post/:id', async ({ params }) => {
+    const { id } = params;
+    const retItem: postItemType | undefined = postArray.find(
+      (postItem) => postItem.postId === +id,
     );
 
-    return HttpResponse.json([
-      {
-        markerId: 'test_marker0',
-        markerName: 'test_marker0',
-        latitude: 0,
-        longitude: 0,
-      },
-      {
-        markerId: 'test_marker1',
-        markerName: 'test_marker1',
-        latitude: 1,
-        longitude: 1,
-      },
-    ]);
-  }), */
+    console.log(retItem);
+
+    return HttpResponse.json(retItem);
+  }),
 ];
