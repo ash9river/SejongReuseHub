@@ -9,7 +9,7 @@ function KaKaoMapOpenSide() {
   }, [isOpen]);
 
   return (
-    <div className="header-button">
+    <div className={styles['header-button']}>
       <button type="button" className={styles.button} onClick={toggleMenu}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +20,7 @@ function KaKaoMapOpenSide() {
         </svg>
       </button>
 
-      <ul className={isOpen ? 'show-menu' : 'hide-menu'}>
+      <ul className={isOpen ? styles['show-menu'] : styles['hide-menu']}>
         <li>1</li>
         <li>2</li>
         <li>3</li>

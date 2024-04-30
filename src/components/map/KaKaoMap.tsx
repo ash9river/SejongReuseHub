@@ -33,20 +33,20 @@ function KaKaoMap() {
     useState<DataMarkerProps[]>(FirstMarker);
 
   return (
-    <div className={styles.mapWrap}>
+    <div className={styles['map-wrap']}>
       <Map
         center={{
           lat: latitude,
           lng: longitude,
         }} // 지도의 중심 좌표
-        className={styles.MapStyle} // 지도 크기
+        className={styles['map-container']} // 지도 크기
         level={3} // 지도 확대 레벨
         // mapTypeId={mapType === 'roadmap' ? 'ROADMAP' : 'HYBRID'}
         ref={mapRef}
       >
-        <MapTypeControl position="TOPLEFT" />
+        <MapTypeControl position="RIGHT" />
         {/* <KaKaoMapControl maptype={mapType} setMapType={setMapType} /> */}
-        <ZoomControl position="RIGHT" />
+        <ZoomControl position="BOTTOMRIGHT" />
         <MapMarker position={{ lat: latitude, lng: longitude }} />
         {/* 맵 중첩이가능함 */}
         {selectedCategory.map((mark: DataMarkerProps, index: number) => {
@@ -61,7 +61,7 @@ function KaKaoMap() {
         {/* 내 위치가는 버튼 */}
         <Myposition lat={latitude} lng={longitude} />
       </Map>
-      <div className={styles.MapSide}>
+      <div className={styles['map-side']}>
         <KaKaoHeader setCategory={setSelectedCategory} />
         <KaKaoMapOpenSide />
       </div>

@@ -1,9 +1,9 @@
-.mapWrap {
+.map-wrap {
   width: 100vw;
   height: 100vh;
 }
 
-.MapStyle {
+.map-container {
   width: calc(100vw - 4rem);
   height: 100vh;
   float: right;
@@ -11,7 +11,7 @@
   z-index: 0;
 }
 
-// .MapSide {
+// .map-side{
 //   z-index: 1;
 //   display: flex;
 //   float: left;
