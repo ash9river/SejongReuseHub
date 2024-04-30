@@ -1,20 +1,40 @@
-.buttonStyle {
+.img-container {
   height: 1rem;
   width: 1rem;
 }
 
-.button {
+.show-button {
+  border: none;
   position: absolute;
   top: 50%;
   left: 4rem;
+  height: 3rem;
   transform: translateY(-50%);
   z-index: 10;
   overflow: hidden;
   display: inline-block;
   font-size: 1px;
   line-height: 1px;
-  color: transparent;
+  background-color: #ffffff;
   vertical-align: top;
+  transition: left 0.5s ease; /* 변화를 부드럽게 만듭니다. */
+}
+
+.hide-button {
+  border: none;
+  position: absolute;
+  top: 50%;
+  left: 34rem;
+  height: 3rem;
+  transform: translateY(-50%);
+  z-index: 10;
+  overflow: hidden;
+  display: inline-block;
+  font-size: 1px;
+  line-height: 1px;
+  background-color: #ffffff;
+  vertical-align: top;
+  transition: all 0.3s ease-in; /* 변화를 부드럽게 만듭니다. */
 }
 
 // .header-button {
@@ -26,16 +46,25 @@
 // }
 
 .hide-menu {
-  display: none;
-  position: absolute;
+  //display: none;
+  position: absolute; 
+  transition: all 0.3s ease-in;
+  z-index: 5;
+
 }
 
 .show-menu {
   position: absolute;
-  z-index: 1;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   height: 100vh;
-  width: 4rem;
-  float: left;
+  top: 50%;
+  width: 30rem;
+  background-color: white;
+  transform: translateY(-50%);
+  left: 4rem;
+  z-index: 5;
+  transition: all 0.3s ease-in;
 }
+
