@@ -7,7 +7,7 @@ import {
   ZoomControl,
 } from 'react-kakao-maps-sdk';
 import KaKaoMapControl from './KaKaoMapControl';
-
+import KaKaoMapOpenSide from './KaKaoMapOpenSide';
 import Marker, { MarkerProps, Position } from './Marker';
 import markers, { DataMarkerProps } from './data';
 import styles from './KaKaoMap.module.scss';
@@ -61,8 +61,10 @@ function KaKaoMap() {
         {/* 내 위치가는 버튼 */}
         <Myposition lat={latitude} lng={longitude} />
       </Map>
-
-      <KaKaoHeader setCategory={setSelectedCategory} />
+      <div className={styles.MapSide}>
+        <KaKaoHeader setCategory={setSelectedCategory} />
+        <KaKaoMapOpenSide />
+      </div>
     </div>
   );
 }

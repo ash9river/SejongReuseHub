@@ -7,5 +7,12 @@
   width: calc(100vw - 4rem);
   height: 100vh;
   float: right;
-  //overflow: 'hidden';
+  overflow: 'hidden';
+  z-index: 0;
 }
+
+// .MapSide {
+//   z-index: 1;
+//   display: flex;
+//   float: left;
+// }
