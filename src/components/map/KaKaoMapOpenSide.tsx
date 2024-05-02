@@ -10,22 +10,27 @@ function KaKaoMapOpenSide() {
 
   return (
     <div className={styles['header-button']}>
-      <button type="button" className={styles.button} onClick={toggleMenu}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 320 512"
-          className={styles.buttonStyle}
-        >
-          <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
-        </svg>
+      <button
+        type="button"
+        className={isOpen ? styles['hide-button'] : styles['show-button']}
+        onClick={toggleMenu}
+      >
+        {isOpen ? (
+          <img
+            className={styles['img-container']}
+            src="/img/right.png"
+            alt="hide-button"
+          />
+        ) : (
+          <img
+            className={styles['img-container']}
+            src="/img/left.png"
+            alt="show-button"
+          />
+        )}
       </button>
 
-      <ul className={isOpen ? styles['show-menu'] : styles['hide-menu']}>
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-      </ul>
+      <div className={isOpen ? styles['show-menu'] : styles['hide-menu']} />
     </div>
   );
 }
