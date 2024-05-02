@@ -30,12 +30,7 @@ function KaKaoMapOpenSide() {
         )}
       </button>
 
-      <ul className={isOpen ? styles['show-menu'] : styles['hide-menu']}>
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-      </ul>
+      <div className={isOpen ? styles['show-menu'] : styles['hide-menu']} />
     </div>
   );
 }
