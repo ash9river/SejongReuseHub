@@ -15,19 +15,11 @@ function KaKaoMapOpenSide() {
         className={isOpen ? styles['hide-button'] : styles['show-button']}
         onClick={toggleMenu}
       >
-        {isOpen ? (
-          <img
-            className={styles['img-container']}
-            src="/img/right.png"
-            alt="hide-button"
-          />
-        ) : (
-          <img
-            className={styles['img-container']}
-            src="/img/left.png"
-            alt="show-button"
-          />
-        )}
+        <img
+          className={styles['img-container']}
+          src="/img/left.png"
+          alt="show-button"
+        />
       </button>
 
       <div className={isOpen ? styles['show-menu'] : styles['hide-menu']} />

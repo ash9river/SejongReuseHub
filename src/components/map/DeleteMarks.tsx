@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { DataMarkerProps } from './data';
+import { DataMarkerProps } from '../../configs/interface/KakaoMapInterface';
 
 function DeleteMarks(
   name: string,

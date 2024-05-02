@@ -1,4 +1,4 @@
-.Myposition {
+.my-position-container {
   z-index: 1;
   position: absolute;
   bottom: 14rem;
@@ -10,7 +10,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
 }
 
-.imgStyle {
+.my-position-content {
   width: 10px;
   height: 10px;
 }
