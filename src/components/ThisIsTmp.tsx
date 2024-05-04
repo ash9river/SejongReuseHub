@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getData } from 'services/api-requester';
-import { postItemType } from 'services/mocks/handlers';
+import { getData } from 'services/getData';
+import { postItemType } from 'services/mocks/postItem';
 
 import { AppDispatch, RootState } from 'store';
 import { getPostItemWithThunk } from 'store/bulletin/postsItemReducer';

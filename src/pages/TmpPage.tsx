@@ -2,7 +2,6 @@ import ThisIsTmp from 'components/ThisIsTmp';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getData } from 'services/api-requester';
 import {
   GithubProfile,
   UserProps,
