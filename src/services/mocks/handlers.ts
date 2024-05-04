@@ -28,6 +28,19 @@ export const handlers = [
     return HttpResponse.json(retItem);
   }),
 
+  http.post('/post', async ({ request }) => {
+    const data = await request.formData();
+    console.log(data);
+    const len = postArray.length;
+    const newPost = {
+      postId: len + 1,
+      postTitle: data.get('title') || '',
+      postContnet: data.get('content') || '',
+    };
+    const tmpArray = [...postArray, newPost];
+    console.log(tmpArray);
+  }),
+
   http.get('/markers', async () => {
     return HttpResponse.json(markers);
   }),
