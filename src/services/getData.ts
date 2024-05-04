@@ -1,6 +1,23 @@
+import { AxiosRequestConfig, isAxiosError } from 'axios';
 import { Dispatch } from 'redux';
-import { getData } from './api-requester';
 import { exampleActionFunction } from '../store/exampleReducer';
+import { apiRequester, setRequestDefaultHeader } from './api-requester';
+
+const bracket = {};
+
+export const getData = async <T>(
+  url: string,
+  config?: AxiosRequestConfig,
+): Promise<T> => {
+  try {
+    const modifiedConfig = setRequestDefaultHeader(config || bracket);
+    const response = await apiRequester.get<T>(url, modifiedConfig);
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) throw new Error(error.message);
+    else throw error;
+  }
+};
 
 export async function getUserData(username: string) {
   const response = await getData<GithubProfile>(

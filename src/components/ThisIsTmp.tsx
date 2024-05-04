@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getData } from 'services/api-requester';
+import { getData } from 'services/getData';
 import { postItemType } from 'services/mocks/postItem';
 
 import { AppDispatch, RootState } from 'store';

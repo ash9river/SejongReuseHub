@@ -6,7 +6,6 @@ import {
   MapTypeControl,
   ZoomControl,
 } from 'react-kakao-maps-sdk';
-import { getData } from 'services/api-requester';
 import { DataMarkerProps } from 'configs/interface/KakaoMapInterface';
 import { markers } from 'services/mocks/marker';
 import KaKaoMapOpenSide from './KaKaoMapOpenSide';
