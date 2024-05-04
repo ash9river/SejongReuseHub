@@ -1,13 +1,15 @@
 import React, { useState, useRef, useCallback } from 'react';
 import styles from './KaKaoMapOpenSide.module.scss';
 
-function KaKaoMapOpenSide() {
-  const [isOpen, setMenu] = useState<boolean>(false); // 메뉴의 초기값을 false로 설정
+interface KaKaoMapOpenSideProps {
+  isOpen: boolean;
+  toggleMenu: () => void;
+}
 
-  const toggleMenu = useCallback(() => {
-    setMenu(!isOpen); // on,off 개념 boolean
-  }, [isOpen]);
+// 함수형 컴포넌트의 프로퍼티를 받을 때 객체 형태로 받는 것은 React의 동작 방식과 관련이 있습니다.
+// React에서는 함수형 컴포넌트의 프로퍼티들이 단일 객체로 전달되기 때문에, 이를 명확하게 타입으로 지정하기 위해서는 객체 형태로 받아와야 합니다.
 
+function KaKaoMapOpenSide({ isOpen, toggleMenu }: KaKaoMapOpenSideProps) {
   return (
     <div className={styles['header-button']}>
       <button

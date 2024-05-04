@@ -1,6 +1,7 @@
 import { Dispatch, ReactElement, useCallback } from 'react';
 import { markers } from 'services/mocks/marker';
-import styles from './KaKaoHeader.module.scss';
+import styles from './KakaoHeader.module.scss';
+import SideBar from './sidebar/SideBar';
 // 카테고리 헤더
 
 function KaKaoHeader(): ReactElement {
@@ -19,6 +20,7 @@ function KaKaoHeader(): ReactElement {
           />
         );
       })}
+      <SideBar />
     </div>
   );
 }
