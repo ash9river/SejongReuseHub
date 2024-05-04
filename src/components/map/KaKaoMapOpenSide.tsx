@@ -18,13 +18,13 @@ function KaKaoMapOpenSide() {
         {isOpen ? (
           <img
             className={styles['img-container']}
-            src="/img/right.png"
+            src="/img/left.png"
             alt="hide-button"
           />
         ) : (
           <img
             className={styles['img-container']}
-            src="/img/left.png"
+            src="/img/right.png"
             alt="show-button"
           />
         )}
