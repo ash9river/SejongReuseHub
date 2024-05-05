@@ -8,12 +8,9 @@ import {
 } from 'react-kakao-maps-sdk';
 import { DataMarkerProps } from 'configs/interface/KakaoMapInterface';
 import { markers } from 'services/mocks/marker';
-import KakaoMapOpenSide from './sidebar/KakaoMapOpenSide';
 import Marker, { MarkerProps, Position } from './Marker';
 import useKakaoLoader from '../../hooks/useKakoaLoader';
-import KakaoHeader from './KakaoHeader';
 import Myposition from './Myposition';
-import MapTopMenuContainer from './sidebar/MapTopMenuContainer';
 import styles from './KakaoMap.module.scss';
 
 const { kakao } = window;
