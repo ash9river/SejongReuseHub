@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback } from 'react';
-import styles from './KaKaoMapOpenSide.module.scss';
+import styles from './KakaoMapOpenSide.module.scss';
 
 interface KaKaoMapOpenSideProps {
   isOpen: boolean;

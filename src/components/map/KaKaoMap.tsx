@@ -8,7 +8,7 @@ import {
 } from 'react-kakao-maps-sdk';
 import { DataMarkerProps } from 'configs/interface/KakaoMapInterface';
 import { markers } from 'services/mocks/marker';
-import KaKaoMapOpenSide from './sidebar/KaKaoMapOpenSide';
+import KaKaoMapOpenSide from './sidebar/KakaoMapOpenSide';
 import Marker, { MarkerProps, Position } from './Marker';
 import UseKakaoLoader from '../../hooks/useKakoaLoader';
 import KaKaoHeader from './KakaoHeader';
