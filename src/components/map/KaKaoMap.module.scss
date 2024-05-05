@@ -1,18 +1,8 @@
-.map-wrap {
-  width: 100vw;
-  height: 100vh;
-}
-
 .map-container {
-  width: calc(100vw - 4rem);
-  height: 100vh;
-  float: right;
-  overflow: 'hidden';
-  z-index: 0;
-}
-
-// .map-side{
-//   z-index: 1;
-//   display: flex;
-//   float: left;
-// }
+    width: calc(100vw - 4rem);
+    height: 100vh;
+    float: right;
+    overflow: 'hidden';
+    z-index: 0;
+  }
+  

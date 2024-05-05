@@ -1,5 +1,5 @@
-import KaKaoMap from 'components/map/KaKaoMap';
+import KakaMapContainer from 'components/map/KakaoMapContainer';
 
 export default function MapPage() {
-  return <KaKaoMap />;
+  return <KakaMapContainer />;
 }
