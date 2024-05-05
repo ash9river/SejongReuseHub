@@ -4,7 +4,7 @@ import styles from './KakaoHeader.module.scss';
 import SideBar from './sidebar/SideBar';
 // 카테고리 헤더
 
-function KaKaoHeader(): ReactElement {
+function KakaoHeader(): ReactElement {
   // type에 any를 써준 모습.. 리덕스로 수정예정
 
   return (
@@ -25,4 +25,4 @@ function KaKaoHeader(): ReactElement {
   );
 }
 
-export default KaKaoHeader;
+export default KakaoHeader;
