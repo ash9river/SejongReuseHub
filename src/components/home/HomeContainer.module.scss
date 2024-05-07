@@ -8,12 +8,13 @@
     // background-size: cover;
     // background-repeat: no-repeat;
     // background-position: center;
+    overflow: hidden;
     display: grid;
     background: #000;
   }
   .scroll-area:nth-of-type(1) {
     grid-template: 10% 20% 20% 20% 20% 10%/10% 1fr 10%;
-    background: #c94e4b;
+    background: black;
     color: white;
   }
 
@@ -29,4 +30,12 @@
 .rest-area {
   height: calc(100vh - 60px);
   background: #4cc1be;
+}
+.content-wrap {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 20rem;
+  right: 45rem;
+  gap: 2rem;
 }
