@@ -6,6 +6,7 @@ import {
   MapTypeControl,
   ZoomControl,
 } from 'react-kakao-maps-sdk';
+import { motion } from 'framer-motion';
 import UseKakaoLoader from '../../hooks/useKakoaLoader';
 import styles from './MainMapBack.module.scss';
 
@@ -14,16 +15,27 @@ function MainMapBack() {
   const { longitude, latitude } = getGeolocation();
   const mapRef = useRef<kakao.maps.Map>(null);
   return (
-    <Map
-      center={{
-        lat: latitude,
-        lng: longitude,
-      }} // 지도의 중심 좌표
-      className={styles['map-background']} // 지도 크기
-      level={4} // 지도 확대 레벨
-      // mapTypeId={mapType === 'roadmap' ? 'ROADMAP' : 'HYBRID'}
-      ref={mapRef}
-    />
+    <motion.div whileHover={{ scale: 1.1 }}>
+      <Map
+        center={{
+          lat: latitude,
+          lng: longitude,
+        }} // 지도의 중심 좌표
+        className={styles['map-background']} // 지도 크기
+        level={1} // 지도 확대 레벨
+        ref={mapRef}
+      >
+        <MapMarker // 인포윈도우를 생성하고 지도에 표시합니다
+          position={{
+            // 인포윈도우가 표시될 위치입니다
+            lat: latitude,
+            lng: longitude,
+          }}
+        >
+          <div style={{ padding: '5px', color: '#000' }}>교환해요</div>
+        </MapMarker>
+      </Map>
+    </motion.div>
   );
 }
 

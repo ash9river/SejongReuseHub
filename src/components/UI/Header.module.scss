@@ -3,7 +3,7 @@
 .navbar {
   width: 100%;
   height: 60px;
-  background-color: #fef7e5;
+  background-color: #4b5965;
   position: relative;
 }
 
@@ -75,11 +75,11 @@
   ul li a {
     font-size: 16px;
     font-weight: 400;
-    color: #2f234f;
+    color: white;
     text-decoration: none;
 
     &.active {
-      color: #574c4c;
+      color: black;
       font-weight: 500;
       position: relative;
 
@@ -90,7 +90,7 @@
         left: 0;
         width: 100%;
         height: 2px;
-        background-color: #574c4c;
+        background-color: black;
       }
     }
   }

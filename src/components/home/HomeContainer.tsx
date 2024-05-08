@@ -14,6 +14,11 @@ function HomeContainer() {
         <div className={styles['content-wrap']}>
           <Content />
           <DetailMore />
+          <img
+            className={styles['background-logo']}
+            src="/img/sejonglogo.png"
+            alt="logo"
+          />
         </div>
       </div>
       <Footer />

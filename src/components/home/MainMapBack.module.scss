@@ -2,7 +2,13 @@
     width: 30vw;
     height: 80vh;
     position: relative;
-    left: 3rem;
-    top: 2rem;
+    left: 30%;
+    top: 40%;
     z-index: 0;
+    border-radius: 10px;
+}
+
+.chat-style{
+    padding: '5px';
+    color: '#000';
 }
