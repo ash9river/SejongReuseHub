@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 // 커스텀 컨트롤러 만들다가 말음
 type MapType = 'roadmap' | 'skyview';
-function KaKaoMapControl(mapType: MapType, setMapType: Dispatch<MapType>) {
+function KakaoMapControl(mapType: MapType, setMapType: Dispatch<MapType>) {
   return (
     <div className="custom_typecontrol">
       <button
@@ -24,4 +24,4 @@ function KaKaoMapControl(mapType: MapType, setMapType: Dispatch<MapType>) {
   );
 }
 
-export default KaKaoMapControl;
+export default KakaoMapControl;

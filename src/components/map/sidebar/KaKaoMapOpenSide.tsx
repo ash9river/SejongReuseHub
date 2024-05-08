@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import styles from './KakaoMapOpenSide.module.scss';
 
-interface KaKaoMapOpenSideProps {
+interface KakaoMapOpenSideProps {
   isOpen: boolean;
   toggleMenu: () => void;
 }
@@ -9,7 +9,7 @@ interface KaKaoMapOpenSideProps {
 // 함수형 컴포넌트의 프로퍼티를 받을 때 객체 형태로 받는 것은 React의 동작 방식과 관련이 있습니다.
 // React에서는 함수형 컴포넌트의 프로퍼티들이 단일 객체로 전달되기 때문에, 이를 명확하게 타입으로 지정하기 위해서는 객체 형태로 받아와야 합니다.
 
-function KaKaoMapOpenSide({ isOpen, toggleMenu }: KaKaoMapOpenSideProps) {
+function KakaoMapOpenSide({ isOpen, toggleMenu }: KakaoMapOpenSideProps) {
   return (
     <div className={styles['header-button']}>
       <button
@@ -29,4 +29,4 @@ function KaKaoMapOpenSide({ isOpen, toggleMenu }: KaKaoMapOpenSideProps) {
   );
 }
 
-export default KaKaoMapOpenSide;
+export default KakaoMapOpenSide;

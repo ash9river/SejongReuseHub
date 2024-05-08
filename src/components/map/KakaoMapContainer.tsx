@@ -1,14 +1,14 @@
 import MapTopMenuContainer from './sidebar/MapTopMenuContainer';
-import KaKaoHeader from './KakaoHeader';
-import KaKaoMap from './KakaoMap';
+import KakaoMap from './KakaoMap';
+import KakaoHeader from './KakaoHeader';
 import styles from './KakaoMapContainer.module.scss';
 
 function KakaMapContainer() {
   return (
     <div className={styles['map-wrap']}>
-      <KaKaoMap />
+      <KakaoMap />
       <div className={styles['map-side']}>
-        <KaKaoHeader />
+        <KakaoHeader />
         <MapTopMenuContainer />
       </div>
     </div>

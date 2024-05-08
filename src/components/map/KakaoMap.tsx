@@ -8,18 +8,15 @@ import {
 } from 'react-kakao-maps-sdk';
 import { DataMarkerProps } from 'configs/interface/KakaoMapInterface';
 import { markers } from 'services/mocks/marker';
-import KaKaoMapOpenSide from './sidebar/KakaoMapOpenSide';
 import Marker, { MarkerProps, Position } from './Marker';
-import UseKakaoLoader from '../../hooks/useKakoaLoader';
-import KaKaoHeader from './KakaoHeader';
+import useKakaoLoader from '../../hooks/useKakoaLoader';
 import Myposition from './Myposition';
-import MapTopMenuContainer from './sidebar/MapTopMenuContainer';
 import styles from './KakaoMap.module.scss';
 
 const { kakao } = window;
 
-function KaKaoMap() {
-  UseKakaoLoader();
+function KakaoMap() {
+  useKakaoLoader();
   const { longitude, latitude } = getGeolocation();
   const mapRef = useRef<kakao.maps.Map>(null);
   // const [mapType, setMapType] = useState<'roadmap' | 'skyview'>('roadmap');
@@ -58,4 +55,4 @@ function KaKaoMap() {
     </Map>
   );
 }
-export default KaKaoMap;
+export default KakaoMap;
