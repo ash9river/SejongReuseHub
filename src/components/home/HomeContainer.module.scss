@@ -1,6 +1,4 @@
 .scroll-container {
-  overflow: auto;
-  scroll-snap-type: y mandatory; /* y 축 방향으로만 scroll snap 적용 */
   height: calc(100vh - 60px);
   .scroll-area {
     height: 100%;
@@ -44,9 +42,9 @@
   padding: 10px;
   border-radius: 10px;
 }
-.background-logo{
+.background-logo {
   position: absolute;
-  top:-5%;
+  top: -5%;
   left: 5%;
   width: 30rem;
   height: 30rem;
