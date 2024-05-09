@@ -1,5 +1,5 @@
 import getGeolocation from 'utils/getGeolocation';
-import { useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import {
   Map,
   MapMarker,
@@ -13,7 +13,15 @@ import styles from './MainMapBack.module.scss';
 function MainMapBack() {
   useKakaoLoader();
   const { longitude, latitude } = getGeolocation();
-  const mapRef = useRef<kakao.maps.Map>(null);
+  const mapRef = useCallback<React.RefCallback<kakao.maps.Map>>(
+    (node: kakao.maps.Map) => {
+      if (node) {
+        node.setCenter(new kakao.maps.LatLng(longitude, latitude));
+      }
+    },
+    [longitude, latitude],
+  );
+
   return (
     <motion.div whileHover={{ scale: 1.1 }}>
       <Map
