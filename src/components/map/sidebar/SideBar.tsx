@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import KaKaoMapOpenSide from './KakaoMapOpenSide';
+import KakaoMapOpenSide from './KakaoMapOpenSide';
 
 function SideBar() {
   const [isOpen, setMenu] = useState<boolean>(false); // 메뉴의 초기값을 false로 설정
@@ -7,7 +7,7 @@ function SideBar() {
   const toggleMenu = useCallback(() => {
     setMenu(!isOpen); // on,off 개념 boolean
   }, [isOpen]);
-  return <KaKaoMapOpenSide isOpen={isOpen} toggleMenu={toggleMenu} />;
+  return <KakaoMapOpenSide isOpen={isOpen} toggleMenu={toggleMenu} />;
 }
 
 export default SideBar;
