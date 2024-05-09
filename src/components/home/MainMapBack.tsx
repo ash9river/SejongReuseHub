@@ -7,11 +7,11 @@ import {
   ZoomControl,
 } from 'react-kakao-maps-sdk';
 import { motion } from 'framer-motion';
-import UseKakaoLoader from '../../hooks/useKakoaLoader';
+import useKakaoLoader from '../../hooks/useKakoaLoader';
 import styles from './MainMapBack.module.scss';
 
 function MainMapBack() {
-  UseKakaoLoader();
+  useKakaoLoader();
   const { longitude, latitude } = getGeolocation();
   const mapRef = useRef<kakao.maps.Map>(null);
   return (
