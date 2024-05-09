@@ -19,7 +19,7 @@ function Header() {
     <nav className={styles.navbar}>
       <div className={styles.container}>
         <div className={styles.logo}>
-          <img src="/logo512.png" alt="logo" />
+          <img src="/img/sejonglogo.png" alt="logo" />
         </div>
         <div
           className={styles.menuIcon}
