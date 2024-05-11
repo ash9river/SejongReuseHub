@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { SETLOCATION, coordinateType } from 'store/map/locationReducer';
-import { AppDispatch, RootState } from 'store';
 
 type coordinates = {
   coordinate: coordinateType;
   latitudeDelata?: number;
   longitudeDelta?: number;
+};
+type coordinateType = {
+  longitude: number;
+  latitude: number;
 };
 
 type locationError = {
@@ -22,12 +23,10 @@ type locationType = {
 };
 
 function getGeolocation() {
-  const { longitude, latitude } = useSelector(
-    (state: RootState) => state.locationReducer.coordinate,
-  );
-
-  const dispatch: AppDispatch = useDispatch();
-
+  const [position, setPosition] = useState<coordinateType>({
+    latitude: 0,
+    longitude: 0,
+  });
   // 성공에 대한 로직
   const onSuccess = (location: {
     coords: { latitude: number; longitude: number };
@@ -36,11 +35,7 @@ function getGeolocation() {
       longitude: location.coords.longitude,
       latitude: location.coords.latitude,
     };
-
-    dispatch({
-      type: SETLOCATION,
-      payload: item,
-    });
+    setPosition(item);
   };
   // 에러에 대한 로직a
   const onError = (error: { code: number; message: string }) => {
@@ -60,8 +55,8 @@ function getGeolocation() {
   }, []);
 
   return {
-    longitude,
-    latitude,
+    longitude: position.longitude,
+    latitude: position.latitude,
   };
 }
 
