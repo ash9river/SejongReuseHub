@@ -1,6 +1,6 @@
-.scroll-container {
+.home-container {
   height: calc(100vh - 60px);
-  .scroll-area {
+  .main-area {
     height: 100%;
     scroll-snap-align: start;
     // background-size: cover;
@@ -10,19 +10,12 @@
     display: grid;
     background: #000;
   }
-  .scroll-area:nth-of-type(1) {
+  .main-area:nth-of-type(1) {
     grid-template: 10% 20% 20% 20% 20% 10%/10% 1fr 10%;
     background: white;
     color: white;
   }
 
-  .scroll-area:nth-of-type(2) {
-    background: #66c969;
-  }
-
-  /*   .scroll-area:last-child {
-    background: #4cc1be;
-  } */
 }
 
 .rest-area {
@@ -46,7 +39,7 @@
   position: absolute;
   top: -5%;
   left: 5%;
-  width: 30rem;
-  height: 30rem;
+  width: 50%;
+  height: 80%;
   z-index: 0;
 }
