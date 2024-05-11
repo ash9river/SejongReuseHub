@@ -6,9 +6,7 @@ import HomePage from 'pages/HomePage';
 import MapPage from 'pages/MapPage';
 import PostViewPage from 'pages/PostViewPage';
 import TmpPage from 'pages/TmpPage';
-import { Provider } from 'react-redux';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { store } from 'store';
 
 declare global {
   interface Window {
@@ -54,11 +52,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return (
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
