@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import getGeolocation from 'utils/getGeolocation';
 import {
   Map,
@@ -8,11 +8,13 @@ import {
 } from 'react-kakao-maps-sdk';
 import { DataMarkerProps } from 'configs/interface/KakaoMapInterface';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { markers } from 'services/mocks/marker';
 import Marker, { MarkerProps, Position } from './header/Marker';
 import useKakaoLoader from '../../hooks/useKakoaLoader';
 import Myposition from './Myposition';
 import styles from './KakaoMap.module.scss';
 import { markerState } from './recoil/MakerAtom';
+import DeleteMarks from './header/DeleteMarks';
 
 const { kakao } = window;
 
@@ -23,7 +25,12 @@ function KakaoMap() {
   // const [mapType, setMapType] = useState<'roadmap' | 'skyview'>('roadmap');
 
   // 초기 배열 기본값
-  const MarkerState = useRecoilValue<DataMarkerProps[]>(markerState);
+  const [MarkerState, setMarkerState] =
+    useRecoilState<DataMarkerProps[]>(markerState);
+
+  useEffect(() => {
+    DeleteMarks('페트병', setMarkerState); // 처음 배열값으로 설정
+  }, []);
 
   return (
     <Map

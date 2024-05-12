@@ -1,4 +1,4 @@
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { MapMarker } from 'react-kakao-maps-sdk';
 
 // postion 타입 지정
 export interface Position {
@@ -13,7 +13,6 @@ export interface MarkerProps {
   Origin: { x: number; y: number };
 }
 
-const markerImageSrc = './img/아름다운가게.png';
 const imageSize = { width: 22, height: 30 };
 
 // 컴포넌트를 담은 함수
