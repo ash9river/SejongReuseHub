@@ -1,6 +1,6 @@
 import { useMap } from 'react-kakao-maps-sdk';
 import { useMemo } from 'react';
-import { Position } from './Marker';
+import { Position } from './header/Marker';
 import styles from './Mypostion.module.scss';
 // 내 위치로 가는 함수
 function Myposition({ lat, lng }: Position) {

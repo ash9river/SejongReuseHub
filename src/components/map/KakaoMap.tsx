@@ -7,11 +7,12 @@ import {
   ZoomControl,
 } from 'react-kakao-maps-sdk';
 import { DataMarkerProps } from 'configs/interface/KakaoMapInterface';
-import { markers } from 'services/mocks/marker';
-import Marker, { MarkerProps, Position } from './Marker';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import Marker, { MarkerProps, Position } from './header/Marker';
 import useKakaoLoader from '../../hooks/useKakoaLoader';
 import Myposition from './Myposition';
 import styles from './KakaoMap.module.scss';
+import { markerState } from './recoil/MakerAtom';
 
 const { kakao } = window;
 
@@ -22,7 +23,7 @@ function KakaoMap() {
   // const [mapType, setMapType] = useState<'roadmap' | 'skyview'>('roadmap');
 
   // 초기 배열 기본값
-  const FirstMarker = markers?.filter((category) => category.name === 'coffee');
+  const MarkerState = useRecoilValue<DataMarkerProps[]>(markerState);
 
   return (
     <Map
@@ -40,16 +41,16 @@ function KakaoMap() {
       <ZoomControl position="BOTTOMRIGHT" />
       <MapMarker position={{ lat: latitude, lng: longitude }} />
       {/* 맵 중첩이가능함 */}
-      {markers &&
-        markers.map((mark: DataMarkerProps, index: number) => {
-          return (
-            <Marker
-              key={`${mark.Positions[index].lat},${mark.Positions[index].lng}`}
-              Positions={mark.Positions}
-              Origin={mark.Origin}
-            />
-          );
-        })}
+      {MarkerState.map((mark: DataMarkerProps, index: number) => {
+        return (
+          <Marker
+            key={`${mark.Positions[index].lat},${mark.Positions[index].lng}`}
+            Positions={mark.Positions}
+            Origin={mark.Origin}
+            name={mark.name}
+          />
+        );
+      })}
       {/* 내 위치가는 버튼 */}
       <Myposition lat={latitude} lng={longitude} />
     </Map>

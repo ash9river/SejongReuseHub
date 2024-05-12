@@ -1,6 +1,5 @@
-import MapTopMenuContainer from './sidebar/MapTopMenuContainer';
 import KakaoMap from './KakaoMap';
-import KakaoHeader from './KakaoHeader';
+import KakaoHeader from './header/KakaoHeader';
 import styles from './KakaoMapContainer.module.scss';
 
 function KakaMapContainer() {
@@ -9,7 +8,6 @@ function KakaMapContainer() {
       <KakaoMap />
       <div className={styles['map-side']}>
         <KakaoHeader />
-        <MapTopMenuContainer />
       </div>
     </div>
   );
