@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import getGeolocation from 'utils/getGeolocation';
 import {
   Map,
@@ -7,9 +7,8 @@ import {
   ZoomControl,
 } from 'react-kakao-maps-sdk';
 import { DataMarkerProps } from 'configs/interface/KakaoMapInterface';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { markers } from 'services/mocks/marker';
-import Marker, { MarkerProps, Position } from './header/Marker';
+import { useRecoilState } from 'recoil';
+import Marker from './header/Marker';
 import useKakaoLoader from '../../hooks/useKakoaLoader';
 import Myposition from './Myposition';
 import styles from './KakaoMap.module.scss';

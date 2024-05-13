@@ -1,9 +1,6 @@
-import { Dispatch, ReactElement, useCallback } from 'react';
-import { useRecoilState } from 'recoil';
-import { DataMarkerProps } from 'configs/interface/KakaoMapInterface';
+import { ReactElement } from 'react';
 import styles from './KakaoHeader.module.scss';
 import SideBar from '../sidebar/SideBar';
-import { markerState } from '../recoil/MakerAtom';
 import HeaderMenu from './HeaderMenu';
 import HeaderProfile from './HeaderProfile';
 import HeaderCategory from './HeaderCategory';
