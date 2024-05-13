@@ -1,12 +1,12 @@
 import { markers } from 'services/mocks/marker';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { DataMarkerProps } from 'configs/interface/KakaoMapInterface';
 import DeleteMarks from './DeleteMarks';
 import styles from './HeaderCategory.module.scss';
 import { markerState } from '../recoil/MakerAtom';
 
 function HeaderCategory() {
-  const [_, setMarkerState] = useRecoilState<DataMarkerProps[]>(markerState);
+  const setMarkerState = useSetRecoilState<DataMarkerProps[]>(markerState);
 
   return (
     <div>
