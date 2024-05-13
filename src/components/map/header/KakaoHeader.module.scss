@@ -1,0 +1,45 @@
+.category {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 4rem;
+  float: left;
+  z-index: 10;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+.category-button {
+  width: 4rem;
+  height: 4rem;
+  border: none;
+  background-color: #ffffff;
+}
+
+.img-container {
+  width: 3rem;
+  height: 3rem;
+}
+.category-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  font-size: 0.5rem;
+}
+
+.category-container:hover {
+  color: rgb(4, 117, 244);
+}
+
+.profile-menu {
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  align-items: center;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  bottom: 0%;
+  width: 4rem;
+  height: 4rem;
+}

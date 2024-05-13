@@ -8,9 +8,9 @@ import {
 } from 'react-kakao-maps-sdk';
 import { motion } from 'framer-motion';
 import useKakaoLoader from '../../hooks/useKakoaLoader';
-import styles from './MainMapBack.module.scss';
+import styles from './MainMapBackGround.module.scss';
 
-function MainMapBack() {
+function MainMapBackGround() {
   useKakaoLoader();
   const { longitude, latitude } = getGeolocation();
   const mapRef = useCallback<React.RefCallback<kakao.maps.Map>>(
@@ -47,4 +47,4 @@ function MainMapBack() {
   );
 }
 
-export default MainMapBack;
+export default MainMapBackGround;
