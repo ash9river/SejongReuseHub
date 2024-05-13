@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import styles from './PostPage.module.scss'; // PostPage.module.scss 파일을 import
+import styles from './PostPage.module.scss';
 
 interface FormData {
   title: string;
@@ -10,24 +10,14 @@ interface FormData {
 }
 
 export default function PostPage() {
-  const [formData, setFormData] = useState<FormData>({
-    title: '',
-    content: '',
-    author: '',
-    password: '',
-    category: 'general',
-  });
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
-  ) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+
+    const fd = new FormData(e.target as HTMLFormElement);
+    const categoryData = fd.get('category') ?? '';
+    const data = Object.fromEntries(fd.entries());
+    data.category = categoryData;
+    console.log(data);
   };
 
   return (
@@ -44,8 +34,6 @@ export default function PostPage() {
                 type="text"
                 id="author"
                 name="author"
-                value={formData.author}
-                onChange={handleChange}
                 className={styles.formWriter}
               />
             </div>
@@ -59,8 +47,6 @@ export default function PostPage() {
               <select
                 id="category"
                 name="category"
-                value={formData.category}
-                onChange={handleChange} // handleChange 함수로 변경된 부분
                 className={styles.formCategory}
               >
                 <option value="share">나눔</option>
@@ -76,8 +62,6 @@ export default function PostPage() {
                 type="text"
                 id="title"
                 name="title"
-                value={formData.title}
-                onChange={handleChange}
                 className={styles.formTitle}
               />
             </div>
@@ -91,8 +75,6 @@ export default function PostPage() {
               <textarea
                 id="content"
                 name="content"
-                value={formData.content}
-                onChange={handleChange}
                 className={styles.formContent}
               />
             </div>
@@ -104,8 +86,6 @@ export default function PostPage() {
                 type="password"
                 id="password"
                 name="password"
-                value={formData.password}
-                onChange={handleChange}
                 className={styles.formPWD}
               />
             </div>

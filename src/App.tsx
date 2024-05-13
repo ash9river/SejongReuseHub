@@ -25,10 +25,6 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: 'post',
-        element: <PostPage />,
-      },
-      {
         path: 'postView',
         element: <PostLayout />,
         children: [
