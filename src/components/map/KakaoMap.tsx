@@ -6,14 +6,19 @@ import {
   MapTypeControl,
   ZoomControl,
 } from 'react-kakao-maps-sdk';
-import { DataMarkerProps } from 'configs/interface/KakaoMapInterface';
+import {
+  DataMarkerProps,
+  MarkerProps,
+} from 'configs/interface/KakaoMapInterface';
 import { useRecoilState } from 'recoil';
+import { useQuery } from '@tanstack/react-query';
+import { categoryState } from 'store/atom/CategoryAtom';
+import { getData } from 'services/getData';
+import { AxiosError } from 'axios';
 import Marker from './header/Marker';
 import useKakaoLoader from '../../hooks/useKakoaLoader';
 import Myposition from './Myposition';
 import styles from './KakaoMap.module.scss';
-import { markerState } from './recoil/MakerAtom';
-import DeleteMarks from './header/DeleteMarks';
 
 const { kakao } = window;
 
@@ -22,14 +27,17 @@ function KakaoMap() {
   const { longitude, latitude } = getGeolocation();
   const mapRef = useRef<kakao.maps.Map>(null);
   // const [mapType, setMapType] = useState<'roadmap' | 'skyview'>('roadmap');
+  const [category, setCategory] = useRecoilState(categoryState);
 
-  // 초기 배열 기본값
-  const [MarkerState, setMarkerState] =
-    useRecoilState<DataMarkerProps[]>(markerState);
+  const { data, isLoading, isError } = useQuery<DataMarkerProps[], AxiosError>({
+    queryKey: ['marker'],
+    queryFn: ({ signal }) => getData(`/markers?category=${category}`, signal),
+    staleTime: 5000,
+  });
 
   useEffect(() => {
-    DeleteMarks('페트병', setMarkerState); // 처음 배열값으로 설정
-  }, []);
+    console.log(data);
+  }, [data]);
 
   return (
     <Map
@@ -47,16 +55,20 @@ function KakaoMap() {
       <ZoomControl position="BOTTOMRIGHT" />
       <MapMarker position={{ lat: latitude, lng: longitude }} />
       {/* 맵 중첩이가능함 */}
-      {MarkerState.map((mark: DataMarkerProps, index: number) => {
-        return (
-          <Marker
-            key={`${mark.Positions[index].lat},${mark.Positions[index].lng}`}
-            Positions={mark.Positions}
-            Origin={mark.Origin}
-            name={mark.name}
-          />
-        );
-      })}
+      {data !== undefined
+        ? data
+            .filter((mark: DataMarkerProps) => mark.name === category)
+            .map((mark: DataMarkerProps, index: number) => {
+              return (
+                <Marker
+                  key={`${mark.Positions[index].lat},${mark.Positions[index].lng}`}
+                  Positions={mark.Positions}
+                  Origin={mark.Origin}
+                  name={mark.name}
+                />
+              );
+            })
+        : null}
       {/* 내 위치가는 버튼 */}
       <Myposition lat={latitude} lng={longitude} />
     </Map>

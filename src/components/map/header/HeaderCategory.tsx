@@ -1,12 +1,13 @@
 import { markers } from 'services/mocks/marker';
 import { useSetRecoilState } from 'recoil';
-import { DataMarkerProps } from 'configs/interface/KakaoMapInterface';
-import DeleteMarks from './DeleteMarks';
+import { categoryState } from 'store/atom/CategoryAtom';
 import styles from './HeaderCategory.module.scss';
-import { markerState } from '../recoil/MakerAtom';
 
 function HeaderCategory() {
-  const setMarkerState = useSetRecoilState<DataMarkerProps[]>(markerState);
+  const setCategory = useSetRecoilState(categoryState);
+  function handleClick(name: string) {
+    setCategory(name);
+  }
 
   return (
     <div>
@@ -19,7 +20,7 @@ function HeaderCategory() {
             <button
               className={styles['category-button']}
               type="button"
-              onClick={() => DeleteMarks(mark.name, setMarkerState)}
+              onClick={() => handleClick(mark.name)}
             >
               <img
                 src={`/img/${mark.name}.png`}

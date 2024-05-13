@@ -13,11 +13,17 @@ export const apiRequester: AxiosInstance = axios.create({
   timeout: 5000,
 });
 
-export const setRequestDefaultHeader = (requestConfig: AxiosRequestConfig) => {
+export const setRequestDefaultHeader = (
+  requestConfig: AxiosRequestConfig,
+  signal?: AbortSignal,
+) => {
   const config = requestConfig;
   config.headers = {
     ...config.headers,
     'Content-Type': 'application/json;charset=utf-8',
   };
+  if (signal) {
+    config.signal = signal;
+  }
   return config;
 };
