@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 import styles from './KakaoHeader.module.scss';
 import SideBar from '../sidebar/SideBar';
-import HeaderMenu from './HeaderMenu';
-import HeaderProfile from './HeaderProfile';
 import HeaderCategory from './HeaderCategory';
+import HeaderProfileMenu from './HeaderProfileMenu';
+
 // 카테고리 헤더
 
 function KakaoHeader(): ReactElement {
@@ -18,8 +18,8 @@ function KakaoHeader(): ReactElement {
       <HeaderCategory />
       <SideBar />
       <div className={styles['profile-menu']}>
-        <HeaderProfile />
-        <HeaderMenu />
+        <HeaderProfileMenu isButton="div" name="profile" />
+        <HeaderProfileMenu isButton="button" name="menu" />
       </div>
     </div>
   );
