@@ -1,7 +1,7 @@
 import styles from './HeaderProfileMenu.module.scss';
 
 export interface style_menu {
-  isButton: string;
+  isButton: boolean;
   name: string;
 }
 

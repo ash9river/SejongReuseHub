@@ -18,8 +18,8 @@ function KakaoHeader(): ReactElement {
       <HeaderCategory />
       <SideBar />
       <div className={styles['profile-menu']}>
-        <HeaderProfileMenu isButton="div" name="profile" />
-        <HeaderProfileMenu isButton="button" name="menu" />
+        <HeaderProfileMenu isButton={false} name="profile" />
+        <HeaderProfileMenu isButton name="menu" />
       </div>
     </div>
   );
