@@ -7,10 +7,11 @@ const bracket = {};
 
 export const getData = async <T>(
   url: string,
+  signal?: AbortSignal,
   config?: AxiosRequestConfig,
 ): Promise<T> => {
   try {
-    const modifiedConfig = setRequestDefaultHeader(config || bracket);
+    const modifiedConfig = setRequestDefaultHeader(config || bracket, signal);
     const response = await apiRequester.get<T>(url, modifiedConfig);
     return response.data;
   } catch (error) {
