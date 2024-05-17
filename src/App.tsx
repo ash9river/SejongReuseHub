@@ -5,7 +5,6 @@ import ErrorPage from 'pages/ErrorPage';
 import HomePage from 'pages/HomePage';
 import MapPage from 'pages/MapPage';
 import PostViewPage from 'pages/PostViewPage';
-import PostPage from 'pages/PostPage';
 import TmpPage from 'pages/TmpPage';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
@@ -34,6 +33,7 @@ const router = createBrowserRouter([
           },
         ],
       },
+
       {
         path: 'map',
         element: <MapLayout />,
