@@ -20,7 +20,6 @@ function HomeContainer() {
           <Content />
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
