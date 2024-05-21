@@ -1,23 +1,23 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
+// import { FormData } from 'configs/interface/FormInterface';
+import { useRecoilState } from 'recoil';
+import { formState } from 'store/atom/FormAtom';
+import PostData from 'utils/PostData';
 import styles from './PostPage.module.scss';
 
-interface FormData {
-  title: string;
-  content: string;
-  author: string;
-  password: string;
-  category: string;
-}
+function PostPage() {
+  const [form, SetForm] = useRecoilState(formState);
 
-export default function PostPage() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const fd = new FormData(e.target as HTMLFormElement);
-    const categoryData = fd.get('category') ?? '';
-    const data = Object.fromEntries(fd.entries());
+    const formdata = new FormData(e.target as HTMLFormElement);
+    const categoryData = formdata.get('category') ?? '';
+    const data: any = Object.fromEntries(formdata.entries());
     data.category = categoryData;
-    console.log(data);
+    SetForm(data);
+    PostData();
+    console.log(form);
   };
 
   return (
@@ -96,3 +96,5 @@ export default function PostPage() {
     </div>
   );
 }
+
+export default PostPage;

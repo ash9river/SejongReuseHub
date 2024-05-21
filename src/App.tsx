@@ -48,6 +48,10 @@ const router = createBrowserRouter([
         path: 'tmp',
         element: <TmpPage />,
       },
+      {
+        path: 'post',
+        element: <PostPage />,
+      },
     ],
   },
 ]);
