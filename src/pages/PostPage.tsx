@@ -1,23 +1,28 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-// import { FormData } from 'configs/interface/FormInterface';
-import { useRecoilState } from 'recoil';
+import React, { FormEvent } from 'react';
+import { FormType } from 'configs/interface/FormInterface';
+import { useRecoilValue } from 'recoil';
 import { formState } from 'store/atom/FormAtom';
-import PostData from 'utils/PostData';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 import styles from './PostPage.module.scss';
 
 function PostPage() {
-  const [form, SetForm] = useRecoilState(formState);
+  const formData: FormType = useRecoilValue(formState); // Recoil 상태 읽기
+
+  const mutation = useMutation({
+    mutationFn: (formdata: FormType) => {
+      return axios.post('/postTest', formdata);
+    },
+  });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const formdata = new FormData(e.target as HTMLFormElement);
     const categoryData = formdata.get('category') ?? '';
     const data: any = Object.fromEntries(formdata.entries());
     data.category = categoryData;
-    SetForm(data);
-    PostData();
-    console.log(form);
+
+    mutation.mutate(data as FormType);
   };
 
   return (
@@ -90,8 +95,20 @@ function PostPage() {
               />
             </div>
           </label>
-          <input type="submit" value="제출" className={styles.form__submit} />{' '}
+          <input type="submit" value="제출" className={styles.form__submit} />
         </form>
+
+        {mutation.isPending ? (
+          'Adding post...'
+        ) : (
+          <>
+            {mutation.isError ? (
+              <div>An error occurred: {mutation.error?.message}</div>
+            ) : null}
+
+            {mutation.isSuccess ? <div>Form added!</div> : null}
+          </>
+        )}
       </div>
     </div>
   );

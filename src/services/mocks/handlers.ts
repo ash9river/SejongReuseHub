@@ -1,4 +1,5 @@
 import { http, HttpResponse } from 'msw';
+import { FormType } from 'configs/interface/FormInterface';
 import { postItemType, postArray } from './postItem';
 import { markers } from './marker';
 
@@ -43,5 +44,18 @@ export const handlers = [
 
   http.get('/markers', async () => {
     return HttpResponse.json(markers);
+  }),
+
+  http.post('/postTest', async ({ request }) => {
+    const data = await request.formData();
+    console.log(data);
+    const len = postArray.length;
+    const newPost = {
+      postId: len + 1,
+      postTitle: data.get('title') || '',
+      postContnet: data.get('content') || '',
+    };
+    const tmpArray = [...postArray, newPost];
+    console.log(tmpArray);
   }),
 ];
