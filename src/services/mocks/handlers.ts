@@ -48,14 +48,20 @@ export const handlers = [
 
   http.post('/postTest', async ({ request }) => {
     const data = await request.formData();
+    const formArray: FormType[] = [];
+    console.log(1111);
     console.log(data);
-    const len = postArray.length;
+    const len = formArray.length;
     const newPost = {
       postId: len + 1,
       postTitle: data.get('title') || '',
       postContnet: data.get('content') || '',
     };
-    const tmpArray = [...postArray, newPost];
+    const tmpArray = [...formArray, newPost];
     console.log(tmpArray);
+
+    return HttpResponse.json(null, {
+      status: 302,
+    });
   }),
 ];
