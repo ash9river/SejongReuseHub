@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw';
-import { FormType } from 'configs/interface/FormInterface';
+import { dummyData } from 'services/boardData';
+import { commentList } from 'services/commentData';
 import { postItemType, postArray } from './postItem';
 import { markers } from './marker';
 
@@ -9,6 +10,21 @@ export const handlers = [
     return HttpResponse.json({
       data: 'Captured a "GET /hello" request',
     });
+  }),
+
+  http.get('/board', () => {
+    // 임시로 추가한 데이터 전달
+    console.log(dummyData);
+    return HttpResponse.json(dummyData);
+  }),
+  // http.get('/board/count', () => {
+  //   console.log(1);
+  //   return HttpResponse.json(1);
+  // }),
+  http.get('/comment', () => {
+    // 임시로 추가한 데이터 전달
+    console.log(commentList);
+    return HttpResponse.json(commentList);
   }),
 
   http.get('/post', async () => {
@@ -46,22 +62,22 @@ export const handlers = [
     return HttpResponse.json(markers);
   }),
 
-  http.post('/postTest', async ({ request }) => {
-    const data = await request.formData();
-    const formArray: FormType[] = [];
-    console.log(1111);
-    console.log(data);
-    const len = formArray.length;
-    const newPost = {
-      postId: len + 1,
-      postTitle: data.get('title') || '',
-      postContnet: data.get('content') || '',
-    };
-    const tmpArray = [...formArray, newPost];
-    console.log(tmpArray);
+  // http.post('/postTest', async ({ request }) => {
+  //   const data = await request.formData();
+  //   const formArray: FormType[] = [];
+  //   console.log(1111);
+  //   console.log(data);
+  //   const len = formArray.length;
+  //   const newPost = {
+  //     postId: len + 1,
+  //     postTitle: data.get('title') || '',
+  //     postContnet: data.get('content') || '',
+  //   };
+  //   const tmpArray = [...formArray, newPost];
+  //   console.log(tmpArray);
 
-    return HttpResponse.json(null, {
-      status: 302,
-    });
-  }),
+  //   return HttpResponse.json(null, {
+  //     status: 302,
+  //   });
+  // }),
 ];

@@ -9,7 +9,6 @@ function PostLayout() {
       <main>
         <Outlet />
       </main>
-      <Footer />
     </>
   );
 }
