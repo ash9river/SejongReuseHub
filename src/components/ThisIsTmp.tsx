@@ -28,12 +28,20 @@ import { getPostItemWithThunk } from 'store/bulletin/postsItemReducer';
 }
  */
 
+type tmpType = {
+  boardId: number;
+  title: string;
+  createdAt: string;
+  nickname: string;
+  boardType: string;
+};
+
 export default function ThisIsTmp() {
-  const [data, setData] = useState<postItemType[]>();
+  const [data, setData] = useState<tmpType[]>();
 
   useEffect(() => {
     async function fetchData() {
-      const tmp = await getData<postItemType[]>('/post');
+      const tmp = await getData<tmpType[]>('/api/maps');
       setData(tmp);
     }
 
@@ -50,10 +58,10 @@ export default function ThisIsTmp() {
       {data !== undefined ? (
         <ul>
           {data.map((item) => (
-            <li key={item.postId}>
-              <p>id : {item.postId}</p>
-              <p>title : {item.postTitle} </p>
-              <p>content : {item.postContent}</p>
+            <li key={item.boardId}>
+              <p>id : {item.boardId}</p>
+              <p>title : {item.title} </p>
+              <p>content : {item.nickname}</p>
             </li>
           ))}
         </ul>

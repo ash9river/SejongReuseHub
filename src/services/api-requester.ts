@@ -9,7 +9,7 @@ interface Response<T> {
 }
 
 export const apiRequester: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: process.env.REACT_APP_URL as string,
   timeout: 5000,
 });
 

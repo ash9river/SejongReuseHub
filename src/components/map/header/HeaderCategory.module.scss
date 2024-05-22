@@ -1,9 +1,16 @@
+.header-category-all {
+  position: relative;
+  z-index: 200;
+}
+.header-category-all > * {
+  z-index: auto;
+}
+
 .category-button {
   width: 100%;
   height: 100%;
   border: none;
   background-color: #ffffff;
-
 }
 
 .img-container {
@@ -15,7 +22,6 @@
   text-align: center;
   justify-content: center;
   font-size: 0.9rem;
-  
 }
 
 .category-container:hover {

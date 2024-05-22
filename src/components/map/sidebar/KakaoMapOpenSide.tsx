@@ -1,31 +1,36 @@
-import React, { useState, useRef, useCallback } from 'react';
+import { useRecoilState } from 'recoil';
+import { isSideBarOpenState } from 'store/atom/SideBarAtom';
+import { useEffect } from 'react';
 import styles from './KakaoMapOpenSide.module.scss';
+import SidePanel from './SidePanel';
 
-interface KakaoMapOpenSideProps {
-  isOpen: boolean;
-  toggleMenu: () => void;
-}
+function KakaoMapOpenSide() {
+  const [isSideBarOpen, setIsSideBarOpen] = useRecoilState(isSideBarOpenState);
 
-// 함수형 컴포넌트의 프로퍼티를 받을 때 객체 형태로 받는 것은 React의 동작 방식과 관련이 있습니다.
-// React에서는 함수형 컴포넌트의 프로퍼티들이 단일 객체로 전달되기 때문에, 이를 명확하게 타입으로 지정하기 위해서는 객체 형태로 받아와야 합니다.
+  function toggleMenu() {
+    if (isSideBarOpen % 2 === 0) {
+      setIsSideBarOpen((prevState) => prevState + 1);
+    } else {
+      setIsSideBarOpen((prevState) => prevState - 1);
+    }
+  }
+  useEffect(() => {
+    console.log(isSideBarOpen);
+  }, [isSideBarOpen]);
 
-function KakaoMapOpenSide({ isOpen, toggleMenu }: KakaoMapOpenSideProps) {
   return (
-    <div className={styles['header-button']}>
+    <>
       <button
         type="button"
-        className={isOpen ? styles['hide-button'] : styles['show-button']}
+        className={styles[`sidebar-open-${isSideBarOpen}`]}
         onClick={toggleMenu}
       >
-        <img
-          className={styles['img-container']}
-          src="/img/left.png"
-          alt="show-button"
-        />
+        <p className={styles['inner-text']}>&#8227;</p>
       </button>
-
-      <div className={isOpen ? styles['show-menu'] : styles['hide-menu']} />
-    </div>
+      <div className={styles[`sidebar-panel-${isSideBarOpen}`]}>
+        <SidePanel />
+      </div>
+    </>
   );
 }
 
