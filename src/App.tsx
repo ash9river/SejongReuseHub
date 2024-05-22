@@ -7,7 +7,7 @@ import MapPage from 'pages/MapPage';
 import PostViewPage from 'pages/PostViewPage';
 import PostPage from 'pages/PostPage';
 import TmpPage from 'pages/TmpPage';
-import ImageUploader from 'components/post/ImageUploader';
+
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import PostAddPage from 'pages/PostAddPage';
 

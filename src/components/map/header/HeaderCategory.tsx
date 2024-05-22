@@ -1,7 +1,29 @@
-import { markers } from 'services/mocks/marker';
 import { useSetRecoilState } from 'recoil';
 import { categoryState } from 'store/atom/CategoryAtom';
 import styles from './HeaderCategory.module.scss';
+
+const markerCategory = [
+  {
+    key: 1,
+    name: '폐건전지,폐형광등',
+  },
+  {
+    key: 2,
+    name: '재활용쓰레기',
+  },
+  {
+    key: 3,
+    name: '의류수거함',
+  },
+  {
+    key: 4,
+    name: '페트병',
+  },
+  {
+    key: 5,
+    name: '아름다운가게',
+  },
+];
 
 function HeaderCategory() {
   const setCategory = useSetRecoilState(categoryState);
@@ -10,11 +32,11 @@ function HeaderCategory() {
   }
 
   return (
-    <div>
-      {markers.map((mark, index: number) => {
+    <div className={styles['header-category-all']}>
+      {markerCategory.map((mark) => {
         return (
           <div
-            key={`${mark.Positions[index].lat},${mark.Positions[index].lng}`}
+            key={`categoryKey${mark.key}`}
             className={styles['category-container']}
           >
             <button
