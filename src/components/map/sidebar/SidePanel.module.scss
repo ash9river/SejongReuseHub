@@ -1,0 +1,10 @@
+.panel-container {
+  position: relative;
+  background-color: white;
+  top: 0;
+  left: calc(5rem + 1px);
+  width: 100%;
+  height: 100vh;
+  border-left: 1px solid #dbdbdb;
+  z-index: 2;
+}

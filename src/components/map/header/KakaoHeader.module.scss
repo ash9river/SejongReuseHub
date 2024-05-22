@@ -1,12 +1,18 @@
 .category {
   display: flex;
+  position: absolute;
   flex-direction: column;
   height: 100vh;
   width: 5rem;
   float: left;
-  z-index: 10;
+  z-index: 300;
+  background-color: white;
   justify-content: flex-start;
+  border-right: 1px solid #dbdbdb;
   gap: 2%;
+}
+.category > * {
+  z-index: auto;
 }
 
 .category-container:hover {
@@ -18,6 +24,8 @@
   border-top: 1px solid rgba(0, 0, 0, 0.15);
   align-items: center;
   position: absolute;
+  background-color: white;
+  z-index: 200;
   display: flex;
   flex-direction: column;
   gap: 12%;
@@ -28,4 +36,6 @@
 
 .ImgStyle {
   cursor: pointer;
+  position: relative;
+  z-index: 200;
 }

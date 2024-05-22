@@ -12,3 +12,13 @@ export interface MarkerProps {
 export interface DataMarkerProps extends MarkerProps {
   name: string;
 }
+
+export interface MarkerInterface {
+  mapId: number;
+  address: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+  categoryId: number;
+  categoryName: string;
+}

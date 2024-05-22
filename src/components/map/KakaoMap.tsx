@@ -8,6 +8,7 @@ import {
 } from 'react-kakao-maps-sdk';
 import {
   DataMarkerProps,
+  MarkerInterface,
   MarkerProps,
 } from 'configs/interface/KakaoMapInterface';
 import { useRecoilState } from 'recoil';
@@ -29,9 +30,9 @@ function KakaoMap() {
   // const [mapType, setMapType] = useState<'roadmap' | 'skyview'>('roadmap');
   const [category, setCategory] = useRecoilState(categoryState);
 
-  const { data, isLoading, isError } = useQuery<DataMarkerProps[], AxiosError>({
+  const { data, isLoading, isError } = useQuery<MarkerInterface[], AxiosError>({
     queryKey: ['marker'],
-    queryFn: ({ signal }) => getData(`/markers?category=${category}`, signal),
+    queryFn: ({ signal }) => getData('api/maps', signal),
     staleTime: 5000,
   });
 
@@ -57,14 +58,17 @@ function KakaoMap() {
       {/* 맵 중첩이가능함 */}
       {data !== undefined
         ? data
-            .filter((mark: DataMarkerProps) => mark.name === category)
-            .map((mark: DataMarkerProps, index: number) => {
+            .filter((mark: MarkerInterface) => mark.categoryName === category)
+            .map((mark: MarkerInterface, index: number) => {
+              const position = {
+                lat: mark.latitude,
+                lng: mark.longitude,
+              };
               return (
                 <Marker
-                  key={`${mark.Positions[index].lat},${mark.Positions[index].lng}`}
-                  Positions={mark.Positions}
-                  Origin={mark.Origin}
-                  name={mark.name}
+                  key={`${mark.mapId}`}
+                  position={position}
+                  name={mark.categoryName}
                 />
               );
             })
