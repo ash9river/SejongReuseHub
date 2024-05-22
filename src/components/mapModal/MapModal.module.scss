@@ -1,32 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
-.wrap {
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 1;
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  // justify-self: center;
-  align-content: center;
-}
-@keyframes move {
-  from {
-    margin-top: 30vh;
-  }
-  to {
-    margin-top: 0;
-  }
-}
+// .wrap {
+//   width: 100vw;
+//   height: 100vh;
+//   background-color: rgba(0, 0, 0, 0.3);
+//   z-index: 1;
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   display: flex;
+//   // justify-self: center;
+//   align-content: center;
+// }
+
 .modalWrap {
-  width: 30vw;
-  height: 80vh;
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
   z-index: 2;
   border-radius: 100px;
-  animation-name: move;
-  animation-duration: 0.5s;
 }
 .mapWrap {
   width: 100%;

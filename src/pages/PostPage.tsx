@@ -1,7 +1,14 @@
 import MapModal from 'components/mapModal/MapModal';
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, {
+  useState,
+  ChangeEvent,
+  FormEvent,
+  useRef,
+  useCallback,
+} from 'react';
 import styles from './PostPage.module.scss';
 import SelectLocation from '../components/selectLocation/SelectLocation';
+import Modal from '../components/UI/Modal';
 
 interface FormData {
   title: string;
@@ -12,13 +19,20 @@ interface FormData {
   latitude: number;
   longitude: number;
 }
-
+type ModalHandle = {
+  open: () => void;
+  close: () => void;
+};
+type coordinateType = {
+  lat: number;
+  lng: number;
+};
 export default function PostPage() {
   const [isOpen, setIsOpen] = useState(false);
-  const [location, setLocation] = useState<{
-    lat: number;
-    lng: number;
-  } | null>(null);
+  const [location, setLocation] = useState<coordinateType>({
+    lat: 0,
+    lng: 0,
+  });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,11 +52,21 @@ export default function PostPage() {
     console.log(data);
   };
 
+  const changeLocation = useCallback((prop: coordinateType) => {
+    setLocation(prop);
+  }, []);
+
+  const modalRef = useRef<ModalHandle>(null);
+
   const openModal = () => {
-    setIsOpen(true);
+    if (modalRef.current) {
+      modalRef.current.open();
+    }
   };
   const closeModal = () => {
-    setIsOpen(false);
+    if (modalRef.current) {
+      modalRef.current.close();
+    }
   };
   return (
     <div className={styles.container}>
@@ -138,18 +162,15 @@ export default function PostPage() {
               </div>
             </div>
           </div>
-          {isOpen ? (
+          <Modal ref={modalRef}>
             <MapModal
-              isOpen={isOpen}
-              closeModal={closeModal}
               lat={location ? location.lat : 0}
               lon={location ? location.lng : 0}
+              closeModal={closeModal}
             >
-              <SelectLocation setLocation={setLocation} />
+              <SelectLocation changeLocation={changeLocation} />
             </MapModal>
-          ) : (
-            ''
-          )}
+          </Modal>
           <input type="submit" value="제출" className={styles.form__submit} />{' '}
         </form>
       </div>

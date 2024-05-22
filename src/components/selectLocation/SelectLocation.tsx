@@ -7,9 +7,9 @@ import Myposition from '../map/Myposition';
 import styles from './SelectLocation.module.scss';
 
 interface SelectLocationProps {
-  setLocation: (location: { lat: number; lng: number }) => void;
+  changeLocation: (location: { lat: number; lng: number }) => void;
 }
-function SelectLocation({ setLocation }: SelectLocationProps): JSX.Element {
+function SelectLocation({ changeLocation }: SelectLocationProps): JSX.Element {
   useKakaoLoader();
   const { longitude, latitude } = getGeolocation();
 
@@ -21,14 +21,14 @@ function SelectLocation({ setLocation }: SelectLocationProps): JSX.Element {
     };
   }>();
 
-  useEffect(() => {
-    if (data) {
-      setLocation({
-        lat: data.position.lat,
-        lng: data.position.lng,
-      });
-    }
-  }, [data, setLocation]);
+  // useEffect(() => {
+  //   if (data) {
+  //     setLocation({
+  //       lat: data.position.lat,
+  //       lng: data.position.lng,
+  //     });
+  //   }
+  // }, [data, setLocation]);
 
   return (
     <div className={styles.mapWrap}>
@@ -50,6 +50,10 @@ function SelectLocation({ setLocation }: SelectLocationProps): JSX.Element {
               lng: latlng.getLng(),
             },
           });
+          changeLocation({
+            lat: latlng.getLat(),
+            lng: latlng.getLng(),
+          });
         }}
       >
         {!data && <MapMarker position={{ lat: latitude, lng: longitude }} />}
@@ -59,7 +63,7 @@ function SelectLocation({ setLocation }: SelectLocationProps): JSX.Element {
           />
         )}
 
-        <Myposition lat={latitude} lng={longitude} />
+        {/* <Myposition lat={latitude} lng={longitude} /> */}
       </Map>
     </div>
   );
