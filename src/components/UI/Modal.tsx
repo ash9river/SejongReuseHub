@@ -1,5 +1,7 @@
 import { ReactNode, forwardRef, useImperativeHandle, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import styles from './Modal.module.scss';
+// import { useEffect } from 'react';
 
 type ModalProps = {
   children: ReactNode;
@@ -14,7 +16,6 @@ const Modal = forwardRef<ModalHandle, ModalProps>(function Modal(
   ref,
 ) {
   const dialog = useRef<HTMLDialogElement>(null);
-
   const element = document.getElementById('modal');
 
   useImperativeHandle(ref, () => {
@@ -24,11 +25,23 @@ const Modal = forwardRef<ModalHandle, ModalProps>(function Modal(
           dialog.current.showModal();
         }
       },
+      close() {
+        if (dialog.current) {
+          dialog.current.close();
+        }
+      },
     };
   });
 
   if (element) {
-    return createPortal(<dialog ref={dialog}>{children}</dialog>, element);
+    return createPortal(
+      <dialog ref={dialog} className={styles.modal}>
+        {children}
+      </dialog>,
+      element,
+    );
   }
   return null;
 });
+
+export default Modal;
