@@ -34,10 +34,10 @@ function ImageUploader({ PreviewURL, setImage }: UploaderProps) {
         }}
         style={{ display: 'none' }}
       />
-      <div className="img-wrapper">
+      <div className={styles['img-wrapper']}>
         <img src={PreviewURL} alt="Preview" />
       </div>
-      <div className="upload-button">
+      <div className={styles['upload-button']}>
         <Button
           variant="outlined"
           color="primary"

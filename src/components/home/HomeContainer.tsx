@@ -1,4 +1,3 @@
-import Footer from 'components/UI/Footer';
 import styles from './HomeContainer.module.scss';
 import MainMapBackGround from './MainMapBackground';
 import MainLogo from './MainLogo';

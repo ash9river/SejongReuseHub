@@ -34,6 +34,10 @@ const router = createBrowserRouter([
             index: true,
             element: <PostViewPage />,
           },
+          {
+            path: 'Add',
+            element: <PostAddPage />,
+          },
         ],
       },
       {
@@ -53,10 +57,6 @@ const router = createBrowserRouter([
       {
         path: 'post',
         element: <PostPage />,
-      },
-      {
-        path: 'add',
-        element: <PostAddPage />,
       },
     ],
   },

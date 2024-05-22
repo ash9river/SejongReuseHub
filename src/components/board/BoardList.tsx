@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
 import moment from 'moment';
-import { User } from 'configs/interface/UserInterface';
+import { UserInterface } from 'configs/interface/UserInterface';
 import styles from './BoardList.module.scss';
 
 interface Item {
   id: number;
-  user: User;
+  user: UserInterface;
   created: string;
   title: string;
   content: string;
