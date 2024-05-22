@@ -6,18 +6,11 @@ import { useSearchParams } from 'react-router-dom';
 import moment from 'moment';
 import { UserInterface } from 'configs/interface/UserInterface';
 import styles from './BoardList.module.scss';
-
-interface Item {
-  id: number;
-  user: UserInterface;
-  created: string;
-  title: string;
-  content: string;
-}
+import { User } from '../../configs/interface/UserInterface';
 
 function BoardList() {
   const [pageCount, setPageCount] = useState(0);
-  const [boardList, setBoardList] = useState<Item[]>([]);
+  const [boardList, setBoardList] = useState<User[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   // 렌더링 되고 한번만 전체 게시물 갯수 가져와서 페이지 카운트 구하기
@@ -58,7 +51,7 @@ function BoardList() {
           />
         ))}
       </div>
-      <div className="boardList-footer">
+      <div className={styles['boardList-footer']}>
         {/* 페이지네이션: count에 페이지 카운트, page에 페이지 번호 넣기 */}
         <Pagination
           variant="outlined"
