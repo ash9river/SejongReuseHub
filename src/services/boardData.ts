@@ -1,15 +1,6 @@
-// 임시로 만든 데이터입니다
-import { UserInterface } from 'configs/interface/UserInterface';
+import { User } from '../configs/interface/UserInterface';
 
-interface Item {
-  id: number;
-  user: UserInterface;
-  created: string;
-  title: string;
-  content: string;
-}
-
-export const dummyData: Item[] = [
+export const dummyData: User[] = [
   {
     id: 0,
     user: {

@@ -1,6 +1,6 @@
-import { Commentinterface } from 'configs/interface/CommentInterface';
+import { CommentInterface } from 'configs/interface/CommentInterface';
 
-export const commentList: Commentinterface[] = [
+export const commentList: CommentInterface[] = [
   {
     id: 0,
     created: '2024-05-22T12:30:45',

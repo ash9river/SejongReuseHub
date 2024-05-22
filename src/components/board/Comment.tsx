@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DisabledByDefaultOutlinedIcon from '@mui/icons-material/DisabledByDefaultOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Commentinterface } from 'configs/interface/CommentInterface';
+import { CommentInterface } from 'configs/interface/CommentInterface';
 // import api from '../utils/api';
 // import { jwtUtils } from '../utils/jwtUtils';
 import { JsxElement } from 'typescript';
@@ -25,7 +25,7 @@ function Comment(boardId: CommentProps) {
   // 로그인 후 현재 경로로 돌아오기 위해 useLocation 사용
   const location = useLocation();
   const navigate = useNavigate();
-  const [commentList, setCommentList] = useState<Commentinterface[]>([]);
+  const [commentList, setCommentList] = useState<CommentInterface[]>([]);
   // 입력한 댓글 내용
   const [content, setContent] = useState('');
   // const token = useSelector((state) => state.Auth.token);

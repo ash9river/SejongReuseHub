@@ -4,12 +4,13 @@ import PostLayout from 'layouts/PostLayout';
 import ErrorPage from 'pages/ErrorPage';
 import HomePage from 'pages/HomePage';
 import MapPage from 'pages/MapPage';
-import PostViewPage from 'pages/PostViewPage';
+import PostListPage from 'pages/PostListPage';
 import PostPage from 'pages/PostPage';
 import TmpPage from 'pages/TmpPage';
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import PostAddPage from 'pages/PostAddPage';
+import PostViewPage from 'pages/PostViewPage';
 
 declare global {
   interface Window {
@@ -27,16 +28,20 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: 'postView',
+        path: 'post',
         element: <PostLayout />,
         children: [
           {
             index: true,
-            element: <PostViewPage />,
+            element: <PostListPage />,
           },
           {
-            path: 'Add',
+            path: 'add',
             element: <PostAddPage />,
+          },
+          {
+            path: 'view',
+            element: <PostViewPage />,
           },
         ],
       },

@@ -6,3 +6,11 @@ export interface UserInterface {
   username: string;
   date: string;
 }
+
+export interface User {
+  id: number;
+  user: UserInterface;
+  created: string;
+  title: string;
+  content: string;
+}
