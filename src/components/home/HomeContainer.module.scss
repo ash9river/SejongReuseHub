@@ -30,10 +30,9 @@
   width: 10rem;
   height: 10rem;
   z-index: 11;
-  top:10;
+  top: 10;
   right: 0;
-  position:absolute;
-  
+  position: absolute;
 }
 .content-wrap-bottom {
   display: flex;
@@ -47,7 +46,7 @@
   z-index: 5;
   background: #b91a4d;
   width: 40vw;
-  height: 100vh;
+  height: calc(100vh - 60px);
   opacity: 0.8;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 10% 100%);
 }

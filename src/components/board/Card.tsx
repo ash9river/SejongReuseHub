@@ -23,7 +23,7 @@ export function Card({
       className={styles['button-style']}
       type="button"
       onClick={() => {
-        navigate(`/board/${boardId}`);
+        navigate(`./${boardId}`);
       }}
     >
       <div className={styles['card-wrapper']}>

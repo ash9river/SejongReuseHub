@@ -29,7 +29,7 @@ function MainMapBackGround() {
         lng: longitude,
       }} // 지도의 중심 좌표
       className={styles['map-background']} // 지도 크기
-      level={1} // 지도 확대 레벨
+      level={2} // 지도 확대 레벨
       ref={mapRef}
     >
       <MapMarker // 인포윈도우를 생성하고 지도에 표시합니다

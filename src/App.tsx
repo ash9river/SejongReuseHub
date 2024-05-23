@@ -28,7 +28,7 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: 'post',
+        path: 'postView',
         element: <PostLayout />,
         children: [
           {
@@ -45,7 +45,6 @@ const router = createBrowserRouter([
           },
         ],
       },
-
       {
         path: 'map',
         element: <MapLayout />,
@@ -58,10 +57,6 @@ const router = createBrowserRouter([
       },
       {
         path: 'tmp',
-        element: <TmpPage />,
-      },
-      {
-        path: 'post',
         element: <PostPage />,
       },
     ],
