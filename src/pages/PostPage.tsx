@@ -1,28 +1,72 @@
-import React, { FormEvent } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { postFormData } from 'services/postForm';
+import MapModal from 'components/mapModal/MapModal';
+import React, {
+  useState,
+  ChangeEvent,
+  FormEvent,
+  useRef,
+  useCallback,
+} from 'react';
 import styles from './PostPage.module.scss';
+import SelectLocation from '../components/selectLocation/SelectLocation';
+import Modal from '../components/UI/Modal';
 
-interface FormDataObject {
-  [key: string]: FormDataEntryValue | FormDataEntryValue[] | null;
+interface FormData {
+  title: string;
+  content: string;
+  author: string;
+  password: string;
+  category: string;
+  latitude: number;
+  longitude: number;
 }
-
+type ModalHandle = {
+  open: () => void;
+  close: () => void;
+};
+type coordinateType = {
+  lat: number;
+  lng: number;
+};
 function PostPage() {
-  const { mutate } = useMutation({
-    mutationFn: postFormData,
+  const [isOpen, setIsOpen] = useState(false);
+  const [location, setLocation] = useState<coordinateType>({
+    lat: 0,
+    lng: 0,
   });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const fd = new FormData(e.target as HTMLFormElement);
-    const categoryData = fd!.get('category');
-    const data: FormDataObject = Object.fromEntries(fd.entries());
-    data.category = categoryData;
+    const categoryData = fd.get('category') ?? '';
+    const data: FormData = {
+      title: fd.get('title') as string,
+      content: fd.get('content') as string,
+      author: fd.get('author') as string,
+      password: fd.get('password') as string,
+      category: categoryData as string,
+      latitude: location ? location.lat : 0,
+      longitude: location ? location.lng : 0,
+    };
 
-    mutate({
-      form: data,
-    });
+    console.log(data);
+  };
+
+  const changeLocation = useCallback((prop: coordinateType) => {
+    setLocation(prop);
+  }, []);
+
+  const modalRef = useRef<ModalHandle>(null);
+
+  const openModal = () => {
+    if (modalRef.current) {
+      modalRef.current.open();
+    }
+  };
+  const closeModal = () => {
+    if (modalRef.current) {
+      modalRef.current.close();
+    }
   };
   return (
     <div className={styles.container}>
@@ -94,7 +138,40 @@ function PostPage() {
               />
             </div>
           </label>
-          <input type="submit" value="제출" className={styles.form__submit} />
+          <div className={styles.label}>
+            <div className={styles.leftBox}>위치 설정:</div>
+            <div className={styles.rightBox}>
+              <div className={styles.positionBox}>
+                <div className={styles.positionText}>
+                  <div className={styles.textWidth}>
+                    위도 :
+                    <span>{location ? location.lat.toFixed(4) : null}</span>
+                  </div>
+                  <div className={styles.textWidth}>
+                    경도 :
+                    <span>{location ? location.lng.toFixed(4) : null}</span>
+                  </div>
+                </div>
+                <button
+                  className={styles.mapModal}
+                  type="button"
+                  onClick={openModal}
+                >
+                  {null}
+                </button>
+              </div>
+            </div>
+          </div>
+          <Modal ref={modalRef}>
+            <MapModal
+              lat={location ? location.lat : 0}
+              lon={location ? location.lng : 0}
+              closeModal={closeModal}
+            >
+              <SelectLocation changeLocation={changeLocation} />
+            </MapModal>
+          </Modal>
+          <input type="submit" value="제출" className={styles.form__submit} />{' '}
         </form>
       </div>
     </div>
