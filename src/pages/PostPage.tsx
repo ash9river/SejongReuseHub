@@ -7,7 +7,7 @@ import React, {
   useCallback,
 } from 'react';
 import styles from './PostPage.module.scss';
-import SelectLocation from '../components/selectLocation/SelectLocation';
+import SelectLocation from '../components/mapModal/SelectLocation';
 import Modal from '../components/UI/Modal';
 
 interface FormData {
