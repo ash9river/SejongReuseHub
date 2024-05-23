@@ -1,29 +1,24 @@
-import Footer from 'components/UI/Footer';
 import styles from './HomeContainer.module.scss';
 import MainMapBackGround from './MainMapBackground';
 import MainLogo from './MainLogo';
 import Content from './Content';
-import DetailMore from './DetailMore';
 
 function HomeContainer() {
   return (
     <div className={styles['home-container']}>
       <div className={styles['main-area']}>
+        <img
+          className={styles['background-logo']}
+          src="/img/sejongwhite.png"
+          alt="logo"
+        />
         <MainMapBackGround />
-        <MainLogo />
+        <div className={styles['transparent-area']} />
         <div className={styles['content-wrap']}>
+          <MainLogo />
           <Content />
-          <div className={styles['content-wrap-bottom']}>
-            <DetailMore />
-            <img
-              className={styles['background-logo']}
-              src="/img/sejongwhite.png"
-              alt="logo"
-            />
-          </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

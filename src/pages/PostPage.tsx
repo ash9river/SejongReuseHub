@@ -27,7 +27,7 @@ type coordinateType = {
   lat: number;
   lng: number;
 };
-export default function PostPage() {
+function PostPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [location, setLocation] = useState<coordinateType>({
     lat: 0,
@@ -177,3 +177,5 @@ export default function PostPage() {
     </div>
   );
 }
+
+export default PostPage;

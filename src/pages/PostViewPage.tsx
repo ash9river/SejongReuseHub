@@ -1,5 +1,6 @@
-import ThisIsTmp from 'components/ThisIsTmp';
+import PostView from 'components/post/Postview';
 
-export default function PostViewPage() {
-  return <ThisIsTmp />;
+function PostViewPage() {
+  return <PostView />;
 }
+export default PostViewPage;

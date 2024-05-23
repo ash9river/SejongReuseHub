@@ -2,7 +2,7 @@
   display: flex;
   position: absolute;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
   width: 5rem;
   float: left;
   z-index: 300;
@@ -20,7 +20,7 @@
 }
 
 .profile-menu {
-  padding-top: 1%;
+  padding-top: 3%;
   border-top: 1px solid rgba(0, 0, 0, 0.15);
   align-items: center;
   position: absolute;
@@ -28,10 +28,11 @@
   z-index: 200;
   display: flex;
   flex-direction: column;
-  gap: 12%;
-  bottom: 0%;
+  gap: 3%;
+  bottom: 0;
   width: 5rem;
-  height: 5rem;
+  height: 7%;
+  background-color: white;
 }
 
 .ImgStyle {
