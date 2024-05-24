@@ -1,4 +1,6 @@
 import MapModal from 'components/mapModal/MapModal';
+import { postFormData } from 'services/postForm';
+
 import React, {
   useState,
   ChangeEvent,
@@ -13,9 +15,9 @@ import Modal from '../components/UI/Modal';
 interface FormData {
   title: string;
   content: string;
-  author: string;
+  nickname: string;
+  image: string;
   password: string;
-  category: string;
   latitude: number;
   longitude: number;
 }
@@ -28,28 +30,40 @@ type coordinateType = {
   lng: number;
 };
 function PostPage() {
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
   const [location, setLocation] = useState<coordinateType>({
     lat: 0,
     lng: 0,
   });
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const fd = new FormData(e.target as HTMLFormElement);
-    const categoryData = fd.get('category') ?? '';
+    const categoryData = fd.get('category')?.toString() ?? '';
     const data: FormData = {
       title: fd.get('title') as string,
       content: fd.get('content') as string,
-      author: fd.get('author') as string,
+      image: '',
+      nickname: fd.get('author') as string,
       password: fd.get('password') as string,
-      category: categoryData as string,
       latitude: location ? location.lat : 0,
       longitude: location ? location.lng : 0,
     };
 
-    console.log(data);
+    try {
+      const response = await postFormData(data, categoryData);
+
+      console.log('Response:', response);
+      // 성공적으로 전송된 후 추가적인 작업 수행
+    } catch (error) {
+      alert('통신 실패'); // 에러 객체의 상세 정보를 로그
+      // 에러 객체의 상세 정보를 로그
+
+      console.error('Error posting data:', error);
+    }
+
+    // console.log(data);
   };
 
   const changeLocation = useCallback((prop: coordinateType) => {
@@ -97,9 +111,9 @@ function PostPage() {
                 name="category"
                 className={styles.formCategory}
               >
-                <option value="share">나눔</option>
-                <option value="exchange">교환</option>
-                <option value="sale">판매</option>
+                <option value="Share">나눔</option>
+                <option value="Change">교환</option>
+                <option value="Sale">판매</option>
               </select>
             </div>
           </label>

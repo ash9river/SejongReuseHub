@@ -34,7 +34,15 @@ function BoardList() {
     // // 페이지 카운트 구하기: (전체 board 갯수) / (한 페이지 갯수) 결과 올림
     // getTotalBoard().then((result) => setPageCount(Math.ceil(result / 4)));
   }, []);
-
+  // useEffect(() => {
+  //   const getBoard = async () => {
+  //     const response = await axios.get(
+  //       `${process.env.REACT_APP_URL}/api/boards`,
+  //     ); // console.log(response);
+  //     return response;
+  //   };
+  //   getBoard().then((result) => console.log(result));
+  // }, []);
   return (
     <div className={styles['boardList-wrapper']}>
       <div className={styles['boardList-header']}>재활용 게시물 📝</div>
