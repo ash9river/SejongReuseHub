@@ -38,15 +38,17 @@ function PostView() {
   // modal이 보이는 여부 상태
   const [show, setShow] = useState(false);
   // board 가져오기
-  //   useEffect(() => {
-  //     const getBoard = async () => {
-  //       const { data } = await axios.get(`/api/board/${BoardId}`);
-  //       return data;
-  //     };
-  //     getBoard()
-  //       .then((result) => setBoard(result))
-  //       .then(() => setIsLoaded(true));
-  //   }, []);
+  // useEffect(() => {
+  //   const getBoard = async () => {
+  //     const response = await axios.get(
+  //       `${process.env.REACT_APP_URL}/api/boards`,
+  //     ); // console.log(response);
+  //     return response;
+  //   };
+  //   getBoard()
+  //     .then((result) => console.log(result))
+  //     .then(() => setIsLoaded(true));
+  // }, []);
   return (
     <>
       {isLoaded && (
