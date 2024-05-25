@@ -27,6 +27,8 @@ function PostView() {
       imgUrl: '../img/profile.jpg',
       username: 'john_doe',
       date: '2024-05-22',
+      latitude: 0,
+      longitude: 0,
     },
     created: '2024-05-22T10:00:00Z',
     title: 'User Sample Title',
@@ -45,6 +47,7 @@ function PostView() {
   //     };
   //     getBoard()
   //       .then((result) => setBoard(result))
+
   //       .then(() => setIsLoaded(true));
   //   }, []);
   return (

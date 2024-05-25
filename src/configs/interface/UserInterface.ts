@@ -5,6 +5,8 @@ export interface UserInterface {
   imgUrl: string;
   username: string;
   date: string;
+  latitude: number;
+  longitude: number;
 }
 
 export interface User {

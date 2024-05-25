@@ -11,5 +11,7 @@ export const userState = atom<UserInterface>({
     imgUrl: '',
     username: '',
     date: '',
+    latitude: 0,
+    longitude: 0,
   },
 });
