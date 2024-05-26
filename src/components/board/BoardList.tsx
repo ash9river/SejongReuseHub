@@ -5,12 +5,20 @@ import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
 import moment from 'moment';
 import { UserInterface } from 'configs/interface/UserInterface';
+import { getData } from 'services/getData';
 import styles from './BoardList.module.scss';
 import { User } from '../../configs/interface/UserInterface';
 
+interface BoardItem {
+  boardId: number;
+  title: string;
+  createdAt: string;
+  nickname: string;
+  boardType: string;
+}
 function BoardList() {
   const [pageCount, setPageCount] = useState(0);
-  const [boardList, setBoardList] = useState<User[]>([]);
+  const [boardList, setBoardList] = useState<BoardItem[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   // 렌더링 되고 한번만 전체 게시물 갯수 가져와서 페이지 카운트 구하기
@@ -34,28 +42,34 @@ function BoardList() {
     // // 페이지 카운트 구하기: (전체 board 갯수) / (한 페이지 갯수) 결과 올림
     // getTotalBoard().then((result) => setPageCount(Math.ceil(result / 4)));
   }, []);
-  // useEffect(() => {
-  //   const getBoard = async () => {
-  //     const response = await axios.get(
-  //       `${process.env.REACT_APP_URL}/api/boards`,
-  //     ); // console.log(response);
-  //     return response;
-  //   };
-  //   getBoard().then((result) => console.log(result));
-  // }, []);
+
+  useEffect(() => {
+    const getBoard = async () => {
+      const response = await getData<BoardItem[]>(
+        `${process.env.REACT_APP_URL}/api/boards`,
+      );
+      return response;
+    };
+    getBoard().then((result) => {
+      console.log(result);
+      setBoardList(result);
+    });
+  }, []);
+
   return (
     <div className={styles['boardList-wrapper']}>
       <div className={styles['boardList-header']}>재활용 게시물 📝</div>
       <div className={styles['boardList-body']}>
         {boardList.map((item, index) => (
           <Card
-            key={item.id}
-            username={item.user.username}
-            date={moment(item.created).add(9, 'hour').format('YYYY-MM-DD')}
+            key={item.boardId}
+            username={item.nickname}
+            date={moment(item.createdAt).add(9, 'hour').format('YYYY-MM-DD')}
             title={item.title}
-            content={item.content}
-            boardId={item.id}
-            imgUrl={`../img/test${item.id}.jpg`}
+            content="aeaeg"
+            boardId={item.boardId}
+            // imgUrl={`../img/test${item.id}.jpg`}
+            imgUrl="../img/profile.png"
           />
         ))}
       </div>

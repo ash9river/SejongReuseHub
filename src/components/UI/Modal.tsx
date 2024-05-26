@@ -9,6 +9,7 @@ type ModalProps = {
 
 type ModalHandle = {
   open: () => void;
+  close: () => void;
 };
 
 const Modal = forwardRef<ModalHandle, ModalProps>(function Modal(

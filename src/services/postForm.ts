@@ -10,17 +10,6 @@ export async function postFormData(formdata: any, boardType: string) {
     return response;
   } catch (err: any) {
     if (err.response) {
-      console.error('data:', err.response.data);
-      console.error('status:', err.response.status);
-      console.error('headers:', err.response.headers);
-    } else if (err.request) {
-      console.error('Error request:', err.request);
-    } else {
-      console.error('General Error message:', err.message);
-    }
-    console.log('---------------------------');
-
-    if (err.response) {
       const error: any = new Error(
         'An error occurred while creating the event',
       );
