@@ -27,7 +27,6 @@ function KakaoMapOpenSide() {
       >
         <p className={styles['inner-text']}>&#8227;</p>
       </button>
-
       <div className={styles[`sidebar-panel-${isSideBarOpen}`]}>
         <SidePanel />
       </div>

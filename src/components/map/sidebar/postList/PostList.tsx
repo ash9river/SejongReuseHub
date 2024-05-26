@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { isSideBarOpenState } from 'store/atom/SideBarAtom';
 import { getData } from 'services/getData';
+import { AxiosError } from 'axios';
+import { useQuery } from '@tanstack/react-query';
 
 import styles from './PostList.module.scss';
 
@@ -14,21 +16,15 @@ interface BoardItem {
 }
 function PostList() {
   const isSideBarOpen = useRecoilValue(isSideBarOpenState);
-  const [data, setData] = useState<BoardItem[]>([]);
+  const { data, isLoading, isError } = useQuery<BoardItem[], AxiosError>({
+    queryKey: ['postList'],
+    queryFn: ({ signal }) => getData('api/boards', signal),
+    staleTime: 5000,
+  });
   useEffect(() => {
-    if (isSideBarOpen === 1) {
-      const getBoard = async () => {
-        const response = await getData<BoardItem[]>(
-          `${process.env.REACT_APP_URL}/api/boards`,
-        );
-        return response;
-      };
-      getBoard().then((result) => {
-        console.log(result);
-        setData(result);
-      });
-    }
-  }, [isSideBarOpen]);
+    console.log(data);
+  }, [data]);
+
   function formatDate(dateString: string) {
     const date = new Date(dateString);
     return date.toISOString().split('T')[0];
