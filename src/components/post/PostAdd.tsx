@@ -1,20 +1,28 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useCallback, useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, Grid, TextField } from '@mui/material';
 import Comment from 'components/board/Comment';
 // import api from '../../utils/api';
 // import { jwtUtils } from '../../utils/jwtUtils';
 // import { toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 import TextArea from 'components/post/TextArea';
+
 import { UserInterface } from 'configs/interface/UserInterface';
 import { useRecoilState } from 'recoil';
 import { userState } from 'store/atom/UserAtom';
+import { Position } from 'configs/interface/KakaoMapInterface';
+import MapModal from 'components/mapModal/MapModal';
 import ImageUploader from './ImageUploader';
 import styles from './PostAdd.module.scss';
+import PostAddPostion from './PostAddPostion';
 
 function PostAdd() {
+  const [position, setPosition] = useState<Position>({
+    lat: 0,
+    lng: 0,
+  });
   // const token = useSelector((state) => state.Auth.token);
   const navigate = useNavigate();
 
@@ -25,8 +33,14 @@ function PostAdd() {
     preview_URL: './img/profile.png',
   });
   const canSubmit = useCallback(() => {
-    return image.image_file !== '' && user.content !== '' && user.title !== '';
-  }, [image, user.title, user.content]);
+    return (
+      image.image_file !== '' &&
+      user.content !== '' &&
+      user.title !== '' &&
+      position.lat !== 0 &&
+      position.lng !== 0
+    );
+  }, [image, user.title, user.content, user.latitude, user.longitude]);
 
   const handleSubmit = useCallback(async () => {
     try {
@@ -34,6 +48,8 @@ function PostAdd() {
       formData.append('title', user.title);
       formData.append('content', user.content);
       formData.append('file', image.image_file);
+      formData.append('latitude', position.lat.toString());
+      formData.append('longitude', position.lng.toString());
       // formData.append('user_id', jwtUtils.getId(token));
 
       // await api.post('/api/board', formData);
@@ -49,7 +65,7 @@ function PostAdd() {
       // );
     }
   }, [canSubmit]);
-
+  console.log(position);
   return (
     <div className={styles['addBoard-wrapper']}>
       <div className={styles['addBoard-header']}>게시물 등록하기 🖊️</div>
@@ -60,7 +76,7 @@ function PostAdd() {
             className={styles['success-button']}
             variant="outlined"
           >
-            등록하기😃
+            등록하기
           </Button>
         ) : (
           <Button
@@ -68,13 +84,14 @@ function PostAdd() {
             variant="outlined"
             size="large"
           >
-            사진과 내용을 모두 입력하세요😭
+            사진과 내용을 모두 입력하세요
           </Button>
         )}
       </div>
       <div className={styles['addBoard-body']}>
-        <ImageUploader setImage={setImage} PreviewURL={image.preview_URL} />
+        <PostAddPostion position={position} setPosition={setPosition} />
         <TextArea />
+        <ImageUploader setImage={setImage} />
       </div>
     </div>
   );

@@ -1,21 +1,21 @@
 .uploader-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0 15px;
-    .img-wrapper {
-      img {
-        width: 270px;
-        height: 270px;
-        object-fit: cover;
-      }
-    }
-    .upload-button {
-      button {
-        margin: 10px 5px;
-        font-size: 1.1rem;
-      }
-    }
-  }
+.img-wrapper {
+  margin-bottom: 10px;
+  /* 추가적인 스타일을 원할 경우 여기에 추가 */
+}
+
+.upload-button {
+  margin-bottom: 10px;
+}
+
+.file-name {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+}

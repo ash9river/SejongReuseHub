@@ -14,32 +14,33 @@
   animation: smoothAppear 1s forwards;
   animation-delay: 0.5s;
   font-family: 'Noto Sans KR', sans-serif;
-  .addBoard-header{
+
+  .addBoard-header {
     text-align: center;
     font-size: 32px;
     font-weight: bold;
     margin: 20px 0;
   }
-  .submitButton{
+  .submitButton {
     padding: 20px 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    button{
-
+    button {
     }
-    .disable-button{
+    .disable-button {
       font-size: 1.1rem;
       cursor: not-allowed;
     }
-    .success-button{
+    .success-button {
       font-size: 1.1rem;
     }
   }
   .addBoard-body {
     display: flex;
     margin: 20px 0;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     flex-wrap: wrap;
   }
 }
