@@ -91,7 +91,7 @@ function PostAdd() {
       <div className={styles['addBoard-body']}>
         <PostAddPostion position={position} setPosition={setPosition} />
         <TextArea />
-        <ImageUploader setImage={setImage} PreviewURL={image.preview_URL} />
+        <ImageUploader setImage={setImage} />
       </div>
     </div>
   );
