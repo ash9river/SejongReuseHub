@@ -68,6 +68,7 @@ function PostPage() {
       modalRef.current.close();
     }
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.wrap}>
