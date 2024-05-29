@@ -1,6 +1,6 @@
 import { Position } from 'configs/interface/KakaoMapInterface';
 import getGeolocation from 'utils/getGeolocation';
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 import {
   Map,
   MapMarker,
@@ -24,7 +24,7 @@ function PostAddPostion({ position, setPosition }: PositionProps) {
         node.setCenter(new kakao.maps.LatLng(longitude, latitude));
       }
     },
-    [longitude, latitude],
+    [latitude, longitude],
   );
 
   return (
@@ -44,7 +44,7 @@ function PostAddPostion({ position, setPosition }: PositionProps) {
         });
       }}
     >
-      <MapMarker position={position}>
+      <MapMarker position={position} draggable>
         <div style={{ padding: '5px', color: '#000' }}>좌표 선택</div>
       </MapMarker>
     </Map>

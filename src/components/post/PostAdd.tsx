@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useCallback, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { Button, Grid, TextField } from '@mui/material';
 import Comment from 'components/board/Comment';
 // import api from '../../utils/api';
@@ -14,15 +14,28 @@ import { useRecoilState } from 'recoil';
 import { userState } from 'store/atom/UserAtom';
 import { Position } from 'configs/interface/KakaoMapInterface';
 import MapModal from 'components/mapModal/MapModal';
+import getGeolocation from 'utils/getGeolocation';
+import { useMutation } from '@tanstack/react-query';
 import ImageUploader from './ImageUploader';
 import styles from './PostAdd.module.scss';
 import PostAddPostion from './PostAddPostion';
+import { postFormData } from '../../services/postFormData';
+
+interface FormDataEntryInterface {
+  [k: string]: FormDataEntryValue;
+}
 
 function PostAdd() {
+  const { longitude, latitude } = getGeolocation();
   const [position, setPosition] = useState<Position>({
     lat: 0,
     lng: 0,
   });
+  const { mutate } = useMutation({
+    mutationFn: postFormData,
+    // onSuccess: () => navigate('/postView'),
+  });
+
   // const token = useSelector((state) => state.Auth.token);
   const navigate = useNavigate();
 
@@ -42,19 +55,52 @@ function PostAdd() {
     );
   }, [image, user.title, user.content, user.latitude, user.longitude]);
 
+  useEffect(() => {
+    setPosition({
+      lat: latitude,
+      lng: longitude,
+    });
+  }, [latitude, longitude]);
+  /* 
+  const handleSubmit = (e: React.MouseEventHandler<HTMLAnchorElement>) => {
+    e.preventDefault();
+
+    const fd = new FormData(e.target as HTMLFormElement);
+    fd.append('nickname', '임시닉네임');
+    fd.append('password', '1234');
+
+    const data: FormDataEntryInterface = Object.fromEntries(fd.entries());
+    console.log(fd);
+    console.log(data);
+
+    mutate({
+      form: data,
+    });
+  }; */
   const handleSubmit = useCallback(async () => {
     try {
       const formData = new FormData();
+      formData.append('nickname', '임시닉네임');
+      formData.append('password', '1234');
       formData.append('title', user.title);
       formData.append('content', user.content);
-      formData.append('file', image.image_file);
+      formData.append('image', image.image_file);
       formData.append('latitude', position.lat.toString());
       formData.append('longitude', position.lng.toString());
       // formData.append('user_id', jwtUtils.getId(token));
+      const data: FormDataEntryInterface = Object.fromEntries(
+        formData.entries(),
+      );
+      console.log(user);
 
+      console.log(data);
+
+      mutate({
+        form: data,
+      });
       // await api.post('/api/board', formData);
       window.alert('😎등록이 완료되었습니다😎');
-      navigate('/postView');
+      // navigate('/postView');
     } catch (e) {
       // 서버에서 받은 에러 메시지 출력
       // toast.error(
@@ -65,7 +111,10 @@ function PostAdd() {
       // );
     }
   }, [canSubmit]);
-  console.log(position);
+  useEffect(() => {
+    console.log(position);
+  }, [position]);
+
   return (
     <div className={styles['addBoard-wrapper']}>
       <div className={styles['addBoard-header']}>게시물 등록하기 🖊️</div>
@@ -89,9 +138,9 @@ function PostAdd() {
         )}
       </div>
       <div className={styles['addBoard-body']}>
-        <PostAddPostion position={position} setPosition={setPosition} />
         <TextArea />
         <ImageUploader setImage={setImage} />
+        <PostAddPostion position={position} setPosition={setPosition} />
       </div>
     </div>
   );

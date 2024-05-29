@@ -34,6 +34,7 @@ export const postData = async <T>(
   try {
     const modifiedConfig = setRequsetPostHeader<T>(data, config || bracket);
     const response = await apiRequester.post<T>(url, data, modifiedConfig);
+    console.log(data);
 
     return response.data;
   } catch (error) {

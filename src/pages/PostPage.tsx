@@ -1,5 +1,5 @@
 import MapModal from 'components/mapModal/MapModal';
-import { postFormData } from 'services/postForm';
+import { postFormData } from 'services/postFormData';
 
 import React, {
   useState,
@@ -50,7 +50,7 @@ function PostPage() {
       latitude: location ? location.lat : 0,
       longitude: location ? location.lng : 0,
     };
-
+    /* 
     try {
       const response = await postFormData(data, categoryData);
 
@@ -61,7 +61,7 @@ function PostPage() {
       // 에러 객체의 상세 정보를 로그
 
       console.error('Error posting data:', error);
-    }
+    } */
 
     // console.log(data);
   };

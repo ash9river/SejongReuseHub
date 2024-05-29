@@ -6,31 +6,21 @@ import { RecoilRoot } from 'recoil';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-async function deferRender() {
-  if (process.env.NODE_ENV !== 'development') {
-    return;
-  }
-  const { worker } = await import('./services/mocks/browser');
-  return worker.start();
-}
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
 const queryClient = new QueryClient();
 
-deferRender().then(() => {
-  root.render(
-    <React.StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <RecoilRoot>
-          <App />
-        </RecoilRoot>
-      </QueryClientProvider>
-    </React.StrictMode>,
-  );
-});
+root.render(
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>
+    </QueryClientProvider>
+  </React.StrictMode>,
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
