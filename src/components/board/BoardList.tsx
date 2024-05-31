@@ -5,7 +5,9 @@ import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
 import moment from 'moment';
 import { UserInterface } from 'configs/interface/UserInterface';
+import { AxiosError } from 'axios';
 import { getData } from 'services/getData';
+import { useQuery } from '@tanstack/react-query';
 import styles from './BoardList.module.scss';
 import { User } from '../../configs/interface/UserInterface';
 
@@ -16,9 +18,19 @@ interface BoardItem {
   nickname: string;
   boardType: string;
 }
+interface PageInfo {
+  page: number;
+  pageSize: number;
+  totalNumber: number;
+  totalPages: number;
+}
+interface BoardListResponse {
+  boardListDto: BoardItem[];
+  pageInfo: PageInfo;
+}
 function BoardList() {
   const [pageCount, setPageCount] = useState(0);
-  const [boardList, setBoardList] = useState<BoardItem[]>([]);
+  // const [boardList, setBoardList] = useState<BoardItem[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   // 렌더링 되고 한번만 전체 게시물 갯수 가져와서 페이지 카운트 구하기
@@ -33,7 +45,7 @@ function BoardList() {
       return data;
     };
     // 현재 페이지에 해당하는 게시물로 상태 변경하기
-    getBoardList().then((result) => setBoardList(result));
+    // getBoardList().then((result) => setBoardList(result));
     // 게시물 전체 갯수 구하기
     // const getTotalBoard = async () => {
     //   const { data } = await axios.get('/board/count');
@@ -43,24 +55,29 @@ function BoardList() {
     // getTotalBoard().then((result) => setPageCount(Math.ceil(result / 4)));
   }, []);
 
-  useEffect(() => {
-    const getBoard = async () => {
-      const response = await getData<BoardItem[]>(
-        `${process.env.REACT_APP_URL}/api/boards`,
-      );
-      return response;
-    };
-    getBoard().then((result) => {
-      console.log(result);
-      setBoardList(result);
-    });
-  }, []);
-
+  // useEffect(() => {
+  //   const getBoard = async () => {
+  //     const response = await getData<BoardItem[]>(
+  //       `${process.env.REACT_APP_URL}/api/boards`,
+  //     );
+  //     return response;
+  //   };
+  //   getBoard().then((result) => {
+  //     console.log(result);
+  //     setBoardList(result);
+  //   });
+  // }, []);
+  const { data, isLoading, isError } = useQuery<BoardListResponse, AxiosError>({
+    queryKey: ['postList', 0, 9],
+    queryFn: ({ signal }) => getData(`api/boards?page=${0}&size=${9}`, signal),
+    staleTime: 5000,
+  });
+  const boardListDto = data?.boardListDto ?? [];
   return (
     <div className={styles['boardList-wrapper']}>
       <div className={styles['boardList-header']}>재활용 게시물 📝</div>
       <div className={styles['boardList-body']}>
-        {boardList.map((item, index) => (
+        {boardListDto.map((item, index) => (
           <Card
             key={item.boardId}
             username={item.nickname}

@@ -1,12 +1,9 @@
 import { AxiosError } from 'axios';
 import { postData } from './postData';
 
-export async function postFormData(formdata: any, boardType: string) {
+export async function postFormData(formdata: any) {
   try {
-    const response = await postData(
-      `/api/board?boardType=${boardType}`,
-      formdata,
-    );
+    const response = await postData(`/api/board`, formdata);
     return response;
   } catch (err: any) {
     if (err.response) {

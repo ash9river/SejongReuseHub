@@ -9,6 +9,7 @@ import DisabledByDefaultOutlinedIcon from '@mui/icons-material/DisabledByDefault
 import moment from 'moment';
 import { CommentInterface } from 'configs/interface/CommentInterface';
 import { User } from 'configs/interface/UserInterface';
+
 import styles from './Postview.module.scss';
 // import api from '../../utils/api';
 // import { jwtUtils } from '../../utils/jwtUtils';
@@ -51,6 +52,7 @@ function PostView() {
   //     .then((result) => console.log(result))
   //     .then(() => setIsLoaded(true));
   // }, []);
+
   return (
     <>
       {isLoaded && (

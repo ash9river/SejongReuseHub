@@ -40,7 +40,7 @@ function PostPage() {
     e.preventDefault();
 
     const fd = new FormData(e.target as HTMLFormElement);
-    const categoryData = fd.get('category')?.toString() ?? '';
+    // const categoryData = fd.get('category')?.toString() ?? '';
     const data: FormData = {
       title: fd.get('title') as string,
       content: fd.get('content') as string,
@@ -52,9 +52,10 @@ function PostPage() {
     };
 
     try {
-      const response = await postFormData(data, categoryData);
+      const response = await postFormData(data);
 
       console.log('Response:', response);
+      alert('게시글 업로드 완료!');
       // 성공적으로 전송된 후 추가적인 작업 수행
     } catch (error) {
       alert('통신 실패'); // 에러 객체의 상세 정보를 로그
