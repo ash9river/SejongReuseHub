@@ -84,14 +84,18 @@ function PostAdd() {
       formData.append('password', '1234');
       formData.append('title', user.title);
       formData.append('content', user.content);
-      formData.append('image', image.image_file);
+
+      formData.append('image', image.preview_URL);
+      console.log(typeof image.preview_URL === 'string');
+      console.log(typeof image.preview_URL);
+      console.log(image.preview_URL);
+
       formData.append('latitude', position.lat.toString());
       formData.append('longitude', position.lng.toString());
       // formData.append('user_id', jwtUtils.getId(token));
       const data: FormDataEntryInterface = Object.fromEntries(
         formData.entries(),
       );
-      console.log(user);
 
       console.log(data);
 

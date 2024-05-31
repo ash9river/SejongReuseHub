@@ -9,23 +9,41 @@ interface UploaderProps {
 // 사진 미리보기 삭제해서 previewURL없음
 function ImageUploader({ setImage }: UploaderProps) {
   const [fileName, setFileName] = useState<string | null>(null);
+  const [fileUrl, setFileUrl] = useState<string>('');
   let inputRef: any;
 
   const saveImage = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
+      console.log('a');
+      const file = e.target.files?.[0];
+      if (!file) {
+        alert('파일이 없습니다.');
+        return;
+      }
+      console.log(file);
+
       const fileReader = new FileReader();
-      if (e.target.files && e.target.files[0]) {
+      fileReader.readAsDataURL(file);
+      /*       if (e.target.files && e.target.files[0]) {
         const file = e.target.files[0];
         setFileName(file.name);
-        fileReader.readAsDataURL(file);
-      }
 
-      fileReader.onload = () => {
-        setImage({
-          image_file: e.target.files ? e.target.files[0] : null,
-          preview_URL: fileReader.result,
-        });
+        const newFile = new File([], 'imageFile');
+        console.log('b');
+      } */
+
+      fileReader.onload = (data) => {
+        console.log('c');
+        if (typeof data.target?.result === 'string') {
+          console.log('d');
+          console.log(data.target?.result);
+
+          setImage({
+            image_file: e.target.files ? e.target.files[0] : null,
+            preview_URL: data.target?.result,
+          });
+        }
       };
     },
     [fileName],

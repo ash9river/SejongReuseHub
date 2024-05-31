@@ -4,6 +4,7 @@ import styles from './KakaoHeader.module.scss';
 import SideBar from '../sidebar/SideBar';
 import HeaderCategory from './HeaderCategory';
 import HeaderProfileMenu from './HeaderProfileMenu';
+import HeaderWrite from './HeaderWrite';
 
 // 카테고리 헤더
 
@@ -25,10 +26,7 @@ function KakaoHeader(): ReactElement {
       />
       <HeaderCategory />
       <SideBar />
-      <div className={styles['profile-menu']}>
-        <HeaderProfileMenu isButton={false} name="profile" />
-        <HeaderProfileMenu isButton name="menu" />
-      </div>
+      <HeaderWrite />
     </div>
   );
 }

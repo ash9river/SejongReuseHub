@@ -14,12 +14,9 @@ function KakaoMapOpenSide() {
       setIsSideBarOpen((prevState) => prevState - 1);
     }
   }
-  useEffect(() => {
-    console.log(isSideBarOpen);
-  }, [isSideBarOpen]);
 
   return (
-    <>
+    <div className={styles['sidebar-container']}>
       <button
         type="button"
         className={styles[`sidebar-open-${isSideBarOpen}`]}
@@ -30,7 +27,7 @@ function KakaoMapOpenSide() {
       <div className={styles[`sidebar-panel-${isSideBarOpen}`]}>
         <SidePanel />
       </div>
-    </>
+    </div>
   );
 }
 

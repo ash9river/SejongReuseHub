@@ -49,10 +49,14 @@
 .sidebar-panel-0,
 .sidebar-panel-2 {
   left: -3px;
-  transform: translateX(-150%);
+  transform: translateX(-100%);
 }
 .sidebar-panel-1,
 .sidebar-panel-3 {
   left: -1px;
   transform: translateX(0%);
+}
+
+.sidebar-container {
+  transition: all 0.3s ease-in;
 }

@@ -51,7 +51,7 @@ function HeaderCategory() {
                 key={mark.name}
               />
             </button>
-            {mark.name}
+            <p className={styles['category-text']}>{mark.name}</p>
           </div>
         );
       })}

@@ -6,6 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import moment from 'moment';
 import { UserInterface } from 'configs/interface/UserInterface';
 import { getData } from 'services/getData';
+import { useQuery } from '@tanstack/react-query';
 import styles from './BoardList.module.scss';
 import { User } from '../../configs/interface/UserInterface';
 
@@ -28,9 +29,12 @@ interface BoardListType {
 }
 function BoardList() {
   const [pageCount, setPageCount] = useState(0);
-  const [boardList, setBoardList] = useState<BoardItemType[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const { data: boardList } = useQuery({
+    queryKey: ['boards'],
+    queryFn: ({ signal }) => getData<BoardListType>('api/boards?page=0&size=2'),
+  });
   // 렌더링 되고 한번만 전체 게시물 갯수 가져와서 페이지 카운트 구하기
   // 렌더링 되고 한번만 페이지에 해당하는 게시물 가져오기
   /*   useEffect(() => {
@@ -55,22 +59,12 @@ function BoardList() {
     // getTotalBoard().then((result) => setPageCount(Math.ceil(result / 4)));
   }, []); */
 
-  useEffect(() => {
-    const getBoard = async () => {
-      const response = await getData<BoardListType>('api/boards?page=0&size=2');
-      return response;
-    };
-    getBoard().then((result) => {
-      setBoardList(result.boardListDto);
-    });
-  }, []);
-
   return (
     <div className={styles['boardList-wrapper']}>
       <div className={styles['boardList-header']}>재활용 게시물 📝</div>
       <div className={styles['boardList-body']}>
-        {boardList.length > 0 &&
-          boardList.map((item, index) => (
+        {boardList !== undefined &&
+          boardList.boardListDto.map((item, index) => (
             <Card
               key={item.boardId}
               username={item.nickname}

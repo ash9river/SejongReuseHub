@@ -5,6 +5,7 @@ import { getData } from 'services/getData';
 import { AxiosError } from 'axios';
 import { useQuery } from '@tanstack/react-query';
 
+import { useNavigate } from 'react-router-dom';
 import styles from './PostList.module.scss';
 
 interface BoardItem {
@@ -14,42 +15,56 @@ interface BoardItem {
   nickname: string;
   boardType: string;
 }
+
+interface BoardListInterface {
+  boardListDto: BoardItem[];
+  pageinfo: any;
+}
 function PostList() {
   const isSideBarOpen = useRecoilValue(isSideBarOpenState);
-  const { data, isLoading, isError } = useQuery<BoardItem[], AxiosError>({
+  const {
+    data: postListItems,
+    isLoading,
+    isError,
+  } = useQuery<BoardListInterface, AxiosError>({
     queryKey: ['postList'],
-    queryFn: ({ signal }) => getData('api/boards', signal),
+    queryFn: ({ signal }) => getData('api/boards?page=0&size=3', signal),
     staleTime: 5000,
   });
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const naviagte = useNavigate();
 
+  function handleClick(boardId: number) {
+    naviagte(`../postView/${boardId}`);
+  }
   function formatDate(dateString: string) {
     const date = new Date(dateString);
     return date.toISOString().split('T')[0];
   }
   return (
     <div className={styles.wrapper}>
-      {data?.map((item) => (
-        <div className={styles.postContainer} key={item.boardId}>
-          <div className={styles.image}>{null}</div>
-          <div className={styles.textContainer}>
-            <p className={styles.topBox}>
-              <span className={styles.title}>{item.title}</span>{' '}
-            </p>
-            <p className={styles.content}>
-              사용감 없는 새상품입니다.! 상세샷 원하시면 보내드릴게요 사용감
-              없는 새상품입니다.! 상세샷 원하시면 보내드릴게요 사용감 없는
-              새상품입니다.! 상세샷 원하시면 보내드릴게요
-            </p>
-            <p>
-              <span className={styles.date}>{formatDate(item.createdAt)}</span>
-              <span className={styles.nickname}>{item.nickname}</span>
-            </p>
+      {postListItems !== undefined &&
+        postListItems.boardListDto.map((item) => (
+          <div
+            className={styles.postContainer}
+            key={item.boardId}
+            onClick={() => handleClick(item.boardId)}
+            aria-hidden
+          >
+            <div className={styles.image}>{null}</div>
+            <div className={styles.textContainer}>
+              <p className={styles.topBox}>
+                <span className={styles.title}>{item.title}</span>{' '}
+              </p>
+
+              <p>
+                <span className={styles.date}>
+                  {formatDate(item.createdAt)}
+                </span>
+                <span className={styles.nickname}>{item.nickname}</span>
+              </p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 }
