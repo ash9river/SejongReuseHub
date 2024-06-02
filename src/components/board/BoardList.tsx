@@ -17,7 +17,9 @@ interface BoardItemType {
   title: string;
   createdAt: string;
   nickname: string;
+
   image: string | null;
+
 }
 interface pageType {
   page: number;
@@ -35,7 +37,9 @@ function BoardList() {
 
   const { data: boardList } = useQuery({
     queryKey: ['boards'],
+
     queryFn: ({ signal }) => getData<BoardListType>('api/boards?page=0&size=9'),
+
   });
   // 렌더링 되고 한번만 전체 게시물 갯수 가져와서 페이지 카운트 구하기
   // 렌더링 되고 한번만 페이지에 해당하는 게시물 가져오기
@@ -74,8 +78,10 @@ function BoardList() {
               title={item.title}
               content="aeaeg"
               boardId={item.boardId}
+
               imgUrl={item.image ? `../img/test${item.boardId}.jpg` : null}
               // imgUrl="../img/profile.png"
+
             />
           ))}
       </div>
