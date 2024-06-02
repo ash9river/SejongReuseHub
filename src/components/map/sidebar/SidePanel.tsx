@@ -13,7 +13,6 @@ interface MapPostListInterface {
 function SidePanel() {
   return (
     <div className={styles['panel-container']}>
-      <p>게시글 리스트</p>
       <PostList />
     </div>
   );

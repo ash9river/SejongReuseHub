@@ -1,23 +1,31 @@
 .postContainer {
   width: 90%;
-  height: 30%;
+  height: 30vh;
   //   background-color: antiquewhite;
   margin: 5% auto;
   cursor: pointer;
 }
-.image {
+.imageBox {
   width: 100%;
   //   height: 60%;
   aspect-ratio: 2/1;
-  background-image: url('../../../../../public/img/profile.png');
+  // background-image: url('../../../../../public/img/profile.png');
+  background-color: rgba(0, 0, 0, 0.115);
+  color: #9c9c9c;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
   margin: 0 auto;
   transition: background-size 2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.image:hover {
+.imageBox:hover {
   background-size: 120%;
+}
+.imageBox .image {
+  display: block;
 }
 
 .textContainer {
