@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
 import moment from 'moment';
 import { UserInterface } from 'configs/interface/UserInterface';
+import { AxiosError } from 'axios';
 import { getData } from 'services/getData';
 import { useQuery } from '@tanstack/react-query';
 import styles from './BoardList.module.scss';
@@ -16,6 +17,9 @@ interface BoardItemType {
   title: string;
   createdAt: string;
   nickname: string;
+
+  image: string | null;
+
 }
 interface pageType {
   page: number;
@@ -33,7 +37,9 @@ function BoardList() {
 
   const { data: boardList } = useQuery({
     queryKey: ['boards'],
-    queryFn: ({ signal }) => getData<BoardListType>('api/boards?page=0&size=2'),
+
+    queryFn: ({ signal }) => getData<BoardListType>('api/boards?page=0&size=9'),
+
   });
   // 렌더링 되고 한번만 전체 게시물 갯수 가져와서 페이지 카운트 구하기
   // 렌더링 되고 한번만 페이지에 해당하는 게시물 가져오기
@@ -49,7 +55,7 @@ function BoardList() {
       return data;
     };
     // 현재 페이지에 해당하는 게시물로 상태 변경하기
-    getBoardList().then((result) => setBoardList(result));
+    // getBoardList().then((result) => setBoardList(result));
     // 게시물 전체 갯수 구하기
     // const getTotalBoard = async () => {
     //   const { data } = await axios.get('/board/count');
@@ -72,8 +78,10 @@ function BoardList() {
               title={item.title}
               content="aeaeg"
               boardId={item.boardId}
-              // imgUrl={`../img/test${item.id}.jpg`}
-              imgUrl="../img/profile.png"
+
+              imgUrl={item.image ? `../img/test${item.boardId}.jpg` : null}
+              // imgUrl="../img/profile.png"
+
             />
           ))}
       </div>

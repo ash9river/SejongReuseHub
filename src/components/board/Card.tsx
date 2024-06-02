@@ -5,7 +5,7 @@ interface User {
   boardId: number;
   title: string;
   content: string;
-  imgUrl: string;
+  imgUrl: string | null;
   username: string;
   date: string;
 }
@@ -28,7 +28,11 @@ export function Card({
     >
       <div className={styles['card-wrapper']}>
         <div className={styles['card-body-img']}>
-          <img src={imgUrl} alt="Img" />
+          {imgUrl ? (
+            <img src={imgUrl} alt="게시물 이미지" className={styles.image} />
+          ) : (
+            <p className={styles.noImage}>이미지가 존재하지 않습니다.</p>
+          )}
         </div>
         <div className={styles['card-body-text']}>
           <div className={styles['card-body-text-title']}>{title}</div>

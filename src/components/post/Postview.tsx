@@ -9,6 +9,7 @@ import DisabledByDefaultOutlinedIcon from '@mui/icons-material/DisabledByDefault
 import moment from 'moment';
 import { CommentInterface } from 'configs/interface/CommentInterface';
 import { User } from 'configs/interface/UserInterface';
+
 import { useQuery } from '@tanstack/react-query';
 import { getData } from 'services/getData';
 import styles from './Postview.module.scss';
