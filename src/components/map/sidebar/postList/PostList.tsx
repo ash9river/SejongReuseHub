@@ -34,23 +34,31 @@ function PostList() {
       getData(`api/boards?page=${0}&size=${1000}`, signal),
     staleTime: 5000,
   });
-  const naviagte = useNavigate();
+  const naviagate = useNavigate();
   useEffect(() => {
     console.log(data);
   }, [data]);
 
-  function handleClick(boardId: number) {
-    naviagte(`../postView/${boardId}`);
-  }
+  // function handleClick(boardId: number) {
+  //   naviagte(`../postView/${boardId}`);
+  // }
   function formatDate(dateString: string) {
     const date = new Date(dateString);
     return date.toISOString().split('T')[0];
   }
+
   const boardListDto = data?.boardListDto ?? [];
   return (
     <div className={styles.wrapper}>
       {boardListDto?.map((item) => (
-        <div className={styles.postContainer} key={item.boardId}>
+        <button
+          type="button"
+          className={styles.postContainer}
+          key={item.boardId}
+          onClick={() => {
+            naviagate(`../postView/${item.boardId}`);
+          }}
+        >
           <div className={styles.imageBox}>
             {item.image ? (
               <img
@@ -72,7 +80,7 @@ function PostList() {
               <span className={styles.nickname}>{item.nickname}</span>
             </p>
           </div>
-        </div>
+        </button>
       ))}
     </div>
   );

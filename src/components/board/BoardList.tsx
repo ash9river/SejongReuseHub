@@ -40,7 +40,7 @@ function BoardList() {
   >({
     queryKey: ['postList', pageCount, 9],
     queryFn: ({ signal }) =>
-      getData(`api/boards?page=${pageCount}&size=${9}`, signal),
+      getData(`api/boards?page=${pageCount - 1}&size=${9}`, signal),
     staleTime: 5000,
   });
   const boardListDto = data?.boardListDto ?? [];
