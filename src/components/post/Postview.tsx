@@ -9,16 +9,29 @@ import DisabledByDefaultOutlinedIcon from '@mui/icons-material/DisabledByDefault
 import moment from 'moment';
 import { CommentInterface } from 'configs/interface/CommentInterface';
 import { User } from 'configs/interface/UserInterface';
+
+import { useQuery } from '@tanstack/react-query';
+import { getData } from 'services/getData';
 import styles from './Postview.module.scss';
 // import api from '../../utils/api';
 // import { jwtUtils } from '../../utils/jwtUtils';
 import Comments from '../board/Comment';
 
+interface postDetailItemType {
+  id: number;
+  user: any;
+}
+
 function PostView() {
   // URL 파라미터 받기 - board의 id
-  // const { board_id } = useParams();
+  const { postId } = useParams();
   const BoardId = 0;
-  const [board, setBoard] = useState<User>({
+
+  const { data: board, isSuccess } = useQuery({
+    queryKey: ['postList', postId],
+    queryFn: ({ signal }) => getData<any>(`api/boards/${postId}`, signal),
+  });
+  /*   const [board, setBoard] = useState<User>({
     id: 1,
     user: {
       boardId: 1,
@@ -33,7 +46,7 @@ function PostView() {
     created: '2024-05-22T10:00:00Z',
     title: 'User Sample Title',
     content: 'This is the user sample content.',
-  });
+  }); */
   const [isLoaded, setIsLoaded] = useState(true);
   // const token = useSelector((state) => state.Auth.token);
   const navigate = useNavigate();
@@ -51,9 +64,13 @@ function PostView() {
   //     .then((result) => console.log(result))
   //     .then(() => setIsLoaded(true));
   // }, []);
+
+  useEffect(() => {
+    console.log(board);
+  }, [board]);
   return (
     <>
-      {isLoaded && (
+      {board && (
         <div className={styles['board-wrapper']}>
           <div className={styles['edit-delete-button']}>
             <Button
@@ -71,7 +88,7 @@ function PostView() {
               variant="outlined"
               endIcon={<BuildOutlinedIcon />}
               onClick={() => {
-                navigate(`/edit-board/${BoardId}`);
+                navigate(`/edit-board/${board.boardId}`);
               }}
             >
               수정
@@ -79,25 +96,25 @@ function PostView() {
           </div>
           <div className={styles['board-header']}>
             <div className={styles['board-header-username']}>
-              {board!.user.username}
+              {board.nickname}
             </div>
             <div className={styles['board-header-date']}>
-              {moment(board!.user.date).add(9, 'hour').format('YYYY-MM-DD')}
+              {moment(board.createdAt).add(9, 'hour').format('YYYY-MM-DD')}
             </div>
           </div>
           <hr />
           <div className={styles['board-body']}>
             <div className={styles['board-image']}>
-              <img src={`/api/image/view/${BoardId}`} alt="IMG" />
+              <img src={`/api/image/view/${board.boardId}`} alt="IMG" />
             </div>
             <div className={styles['board-title-content']}>
-              <div className={styles['board-title']}>{board!.title}</div>
-              <div className={styles['board-content']}>{board!.content}</div>
+              <div className={styles['board-title']}>{board.title}</div>
+              <div className={styles['board-content']}>{board.content}</div>
             </div>
           </div>
           <hr />
           <div className={styles['board-footer']}>
-            <Comments boardId={BoardId} />
+            <Comments boardId={board.boardId} />
           </div>
         </div>
       )}

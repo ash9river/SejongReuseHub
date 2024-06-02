@@ -11,6 +11,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import PostAddPage from 'pages/PostAddPage';
 import PostViewPage from 'pages/PostViewPage';
 import PostListPage from 'pages/PostListPage';
+import PostListItemPage from 'pages/PostListItemPage';
 
 declare global {
   interface Window {
@@ -34,6 +35,11 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <PostListPage />,
+          },
+          {
+            path: ':postId',
+            id: ':postId',
+            element: <PostListItemPage />,
           },
           {
             path: 'add',

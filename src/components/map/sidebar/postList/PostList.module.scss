@@ -1,8 +1,8 @@
 .postContainer {
   width: 90%;
-  height: 30vh;
+  height: 30%;
   //   background-color: antiquewhite;
-  margin: 3vh auto;
+  margin: 5% auto;
   cursor: pointer;
 }
 .image {
@@ -46,6 +46,9 @@
   font-size: 1.5em;
   color: rgb(28, 37, 107);
   font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .nickname {
   color: #9c9c9c;

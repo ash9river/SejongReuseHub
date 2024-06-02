@@ -32,11 +32,16 @@ export const postData = async <T>(
   config?: AxiosRequestConfig,
 ): Promise<T> => {
   try {
+    console.log(data);
+
     const modifiedConfig = setRequsetPostHeader<T>(data, config || bracket);
     const response = await apiRequester.post<T>(url, data, modifiedConfig);
+    console.error(response.data);
 
     return response.data;
   } catch (error) {
+    console.log(error);
+
     if (isAxiosError(error)) throw new Error(error.message);
     else throw error;
   }

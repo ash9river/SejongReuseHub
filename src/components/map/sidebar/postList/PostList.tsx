@@ -3,6 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { isSideBarOpenState } from 'store/atom/SideBarAtom';
 import { getData } from 'services/getData';
 import { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
 import styles from './PostList.module.scss';
@@ -12,15 +13,25 @@ interface BoardItem {
   title: string;
   createdAt: string;
   nickname: string;
-  boardType: string;
+  content: string;
+}
+interface PageInfo {
+  page: number;
+  pageSize: number;
+  totalNumber: number;
+  totalPages: number;
+}
+interface BoardListResponse {
+  boardListDto: BoardItem[];
+  pageInfo: PageInfo;
 }
 function PostList() {
-  const isSideBarOpen = useRecoilValue(isSideBarOpenState);
-  const { data, isLoading, isError } = useQuery<BoardItem[], AxiosError>({
-    queryKey: ['postList'],
-    queryFn: ({ signal }) => getData('api/boards', signal),
+  const { data, isLoading, isError } = useQuery<BoardListResponse, AxiosError>({
+    queryKey: ['postList', 0, 10],
+    queryFn: ({ signal }) => getData(`api/boards?page=${0}&size=${10}`, signal),
     staleTime: 5000,
   });
+  const naviagte = useNavigate();
   useEffect(() => {
     console.log(data);
   }, [data]);
@@ -29,20 +40,17 @@ function PostList() {
     const date = new Date(dateString);
     return date.toISOString().split('T')[0];
   }
+  const boardListDto = data?.boardListDto ?? [];
   return (
     <div className={styles.wrapper}>
-      {data?.map((item) => (
+      {boardListDto?.map((item) => (
         <div className={styles.postContainer} key={item.boardId}>
           <div className={styles.image}>{null}</div>
           <div className={styles.textContainer}>
             <p className={styles.topBox}>
               <span className={styles.title}>{item.title}</span>{' '}
             </p>
-            <p className={styles.content}>
-              사용감 없는 새상품입니다.! 상세샷 원하시면 보내드릴게요 사용감
-              없는 새상품입니다.! 상세샷 원하시면 보내드릴게요 사용감 없는
-              새상품입니다.! 상세샷 원하시면 보내드릴게요
-            </p>
+            <p className={styles.content}>{item.content}</p>
             <p>
               <span className={styles.date}>{formatDate(item.createdAt)}</span>
               <span className={styles.nickname}>{item.nickname}</span>

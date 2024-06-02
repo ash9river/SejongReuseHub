@@ -9,7 +9,6 @@
   background-color: white;
   justify-content: flex-start;
   border-right: 1px solid #dbdbdb;
-  gap: 2%;
 }
 .category > * {
   z-index: auto;
@@ -23,7 +22,7 @@
   padding-top: 3%;
   border-top: 1px solid rgba(0, 0, 0, 0.15);
   align-items: center;
-  position: absolute;
+  position: relative;
   background-color: white;
   z-index: 200;
   display: flex;
@@ -38,5 +37,6 @@
 .ImgStyle {
   cursor: pointer;
   position: relative;
+  background-color: white;
   z-index: 200;
 }

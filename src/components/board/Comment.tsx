@@ -16,12 +16,16 @@ import { CommentInterface } from 'configs/interface/CommentInterface';
 // import api from '../utils/api';
 // import { jwtUtils } from '../utils/jwtUtils';
 import { JsxElement } from 'typescript';
+import { getData } from 'services/getData';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { postComment } from 'services/postComment';
+import { queryClient } from 'index';
 import styles from './Comment.module.scss';
 
 interface CommentProps {
   boardId: number;
 }
-function Comment(boardId: CommentProps) {
+function Comment({ boardId }: CommentProps) {
   // 로그인 후 현재 경로로 돌아오기 위해 useLocation 사용
   const location = useLocation();
   const navigate = useNavigate();
@@ -36,17 +40,19 @@ function Comment(boardId: CommentProps) {
 
   // 페이지에 해당하는 댓글 목록은 page 상태가 변경될 때마다 가져옴
   // 맨 처음 페이지가 1이므로 처음엔 1페이지에 해당하는 댓글을 가져온다
-  useEffect(() => {
-    const getCommentList = async () => {
-      //  `/comment/list?board_id=${boardId}&page_number=${page}&page_size=${5}`,
-      const { data } = await axios.get('/comment');
-      return data;
-    };
-    // 기존 commentList에 데이터를 덧붙임
-    getCommentList().then((result) =>
-      setCommentList([...commentList, ...result]),
-    );
-  }, [page]);
+  const { data } = useQuery({
+    queryKey: ['boards', `comments${boardId}`],
+    queryFn: ({ signal }) => getData<any>(`boards/${boardId}/comments`, signal),
+  });
+
+  const { mutate } = useMutation({
+    mutationFn: postComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [`comments${boardId}`],
+      });
+    },
+  });
 
   // 페이지 카운트는 컴포넌트가 마운트되고 딱 한번만 가져오면됨
   useEffect(() => {
@@ -64,19 +70,30 @@ function Comment(boardId: CommentProps) {
 
   // 댓글 추가하기, 댓글 추가하는 API는 인증 미들웨어가 설정되어 있으므로
   // HTTP HEADER에 jwt-token 정보를 보내는 interceptor 사용
-  const submit = useCallback(async () => {
+  /*   const submit = useCallback(async () => {
     const comment = {
       boardId,
       // DB에 엔터가 먹힌 상태로 들어가므로 제대로 화면에 띄우기 위해 <br>로 치환
       content,
       user_id: 'sins051301', // jwtUtils.getId(token),
     };
+    console.log(comment);
+
     // axios interceptor 사용 : 로그인한 사용자만 쓸 수 있다!
-    await axios.post('/api/comment', comment);
-    alert('댓글 등록 완료');
-    window.location.reload();
+  }, [content]); */
+
+  const handleSubmit = useCallback(() => {
+    const comment = {
+      content,
+      writer: 'ash9river',
+      password: '1234',
+    };
+
+    mutate({
+      comment,
+      boardId,
+    });
   }, [content]);
-  console.log(commentList);
   /* modal 관련 코드 */
   // 로그인 후 돌아올 수 있게 현재 경로 세팅
   const goLogin = () => {
@@ -104,7 +121,7 @@ function Comment(boardId: CommentProps) {
           placeholder="댓글을 입력해주세요✏️"
         />
         {content !== '' ? (
-          <Button variant="outlined" onClick={submit}>
+          <Button variant="outlined" onClick={handleSubmit} type="submit">
             등록하기
           </Button>
         ) : (

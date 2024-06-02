@@ -13,6 +13,7 @@ export const getData = async <T>(
   try {
     const modifiedConfig = setRequestDefaultHeader(config || bracket, signal);
     const response = await apiRequester.get<T>(url, modifiedConfig);
+
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) throw new Error(error.message);
