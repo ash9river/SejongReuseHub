@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import React, { useState, ChangeEvent, useCallback } from 'react';
+import React, { useState, ChangeEvent, useCallback, useEffect } from 'react';
 import styles from './ImageUploader.module.scss';
 
 interface UploaderProps {
@@ -15,36 +15,18 @@ function ImageUploader({ setImage }: UploaderProps) {
   const saveImage = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
-      console.log('a');
       const file = e.target.files?.[0];
       if (!file) {
         alert('파일이 없습니다.');
         return;
       }
-      console.log(file);
 
       const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      /*       if (e.target.files && e.target.files[0]) {
-        const file = e.target.files[0];
-        setFileName(file.name);
 
-        const newFile = new File([], 'imageFile');
-        console.log('b');
-      } */
-
-      fileReader.onload = (data) => {
-        console.log('c');
-        if (typeof data.target?.result === 'string') {
-          console.log('d');
-          console.log(data.target?.result);
-
-          setImage({
-            image_file: e.target.files ? e.target.files[0] : null,
-            preview_URL: data.target?.result,
-          });
-        }
-      };
+      setImage({
+        image_file: e.target.files ? e.target.files[0] : null,
+        preview_URL: file,
+      });
     },
     [fileName],
   );
