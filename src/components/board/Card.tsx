@@ -6,7 +6,7 @@ interface User {
   title: string;
   content: string;
   imgUrl: string | null;
-  username: string;
+  nickname: string;
   date: string;
 }
 export function Card({
@@ -14,7 +14,7 @@ export function Card({
   title,
   content,
   imgUrl,
-  username,
+  nickname,
   date,
 }: User) {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ export function Card({
           <div className={styles['card-body-text-content']}>{content}</div>
         </div>
         <div className={styles['card-footer']}>
-          <div className={styles.username}>{username}</div>
+          <div className={styles.username}>{nickname}</div>
           <div className={styles.date}>{date}</div>
         </div>
       </div>

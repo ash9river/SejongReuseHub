@@ -14,6 +14,7 @@ interface BoardItem {
   createdAt: string;
   nickname: string;
   content: string;
+  image: string | null;
 }
 interface PageInfo {
   page: number;
@@ -45,7 +46,17 @@ function PostList() {
     <div className={styles.wrapper}>
       {boardListDto?.map((item) => (
         <div className={styles.postContainer} key={item.boardId}>
-          <div className={styles.image}>{null}</div>
+          <div className={styles.imageBox}>
+            {item.image ? (
+              <img
+                src={item.image}
+                alt="게시물 이미지"
+                className={styles.image}
+              />
+            ) : (
+              <p className={styles.noImage}>이미지가 존재하지 않습니다.</p>
+            )}
+          </div>
           <div className={styles.textContainer}>
             <p className={styles.topBox}>
               <span className={styles.title}>{item.title}</span>{' '}
