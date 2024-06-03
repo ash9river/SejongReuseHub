@@ -20,11 +20,17 @@ import { getData } from 'services/getData';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { postComment } from 'services/postComment';
 import { queryClient } from 'index';
+import { Password } from '@mui/icons-material';
 import styles from './Comment.module.scss';
 
 interface CommentProps {
   boardId: number;
 }
+interface CommentGet {
+  content: string;
+  writer: string;
+}
+
 function Comment({ boardId }: CommentProps) {
   // 로그인 후 현재 경로로 돌아오기 위해 useLocation 사용
   const location = useLocation();
@@ -32,16 +38,29 @@ function Comment({ boardId }: CommentProps) {
   const [commentList, setCommentList] = useState<CommentInterface[]>([]);
   // 입력한 댓글 내용
   const [content, setContent] = useState('');
+  const [newNickname, setNewNickname] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   // const token = useSelector((state) => state.Auth.token);
   // 현재 페이지, 전체 페이지 갯수
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
   const [show, setShow] = useState(false);
 
+  function handleNicknameChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setNewNickname(e.target.value);
+  }
+
+  function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setNewPassword(e.target.value);
+  }
+  // function handleContenthange(e: React.ChangeEvent<HTMLInputElement>) {
+  //   setContent(e.target.value);
+  // }
+
   // 페이지에 해당하는 댓글 목록은 page 상태가 변경될 때마다 가져옴
   // 맨 처음 페이지가 1이므로 처음엔 1페이지에 해당하는 댓글을 가져온다
   const { data } = useQuery({
-    queryKey: ['boards', `comments${boardId}`],
+    queryKey: ['boards', `comments/${boardId}`],
     queryFn: ({ signal }) => getData<any>(`boards/${boardId}/comments`, signal),
   });
 
@@ -49,10 +68,18 @@ function Comment({ boardId }: CommentProps) {
     mutationFn: postComment,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [`comments${boardId}`],
+        queryKey: [`comments/${boardId}`],
       });
     },
+    onError: () => {
+      console.log('mutate error');
+    },
   });
+
+  // useEffect(() => {
+  //   // 기존 commentList에 데이터를 덧붙임
+  //   setCommentList([...commentList, data]);
+  // }, [data]);
 
   // 페이지 카운트는 컴포넌트가 마운트되고 딱 한번만 가져오면됨
   useEffect(() => {
@@ -82,23 +109,9 @@ function Comment({ boardId }: CommentProps) {
     // axios interceptor 사용 : 로그인한 사용자만 쓸 수 있다!
   }, [content]); */
 
-  const handleSubmit = useCallback(() => {
-    const comment = {
-      content,
-      writer: 'ash9river',
-      password: '1234',
-    };
-
-    mutate({
-      comment,
-      boardId,
-    });
-  }, [content]);
-  /* modal 관련 코드 */
-  // 로그인 후 돌아올 수 있게 현재 경로 세팅
   const goLogin = () => {
-    setShow(false);
-    navigate(`/login?redirectUrl=${location.pathname}`);
+    // setShow(false);
+    // navigate(`/login?redirectUrl=${location.pathname}`);
   };
   // 로그인을 하지 않은 상태에서 댓글 입력 창을 클릭하면 Modal이 열림.
   const isLogin = () => {
@@ -107,9 +120,51 @@ function Comment({ boardId }: CommentProps) {
     // }
   };
 
+  const handleSubmit = useCallback(() => {
+    const comment = {
+      content,
+      writer: newNickname,
+      password: newPassword,
+    };
+
+    mutate({ comment, boardId });
+    const newComment = {
+      id: commentList.length ? commentList[commentList.length - 1].id + 1 : 1,
+      created: new Date().toISOString(),
+      content: comment.content,
+      writer: comment.writer,
+      Password: comment.password,
+    };
+    // const formData = new FormData();
+    // formData.append('id', newComment.id.toString());
+    // formData.append('created', newComment.created);
+    // formData.append('content', newComment.content);
+    // formData.append('writer', newComment.writer);
+
+    // setCommentList((prevList) => [...prevList, newComment]);
+    setCommentList((prevList) => [...prevList, data]);
+    setContent(''); // 댓글 입력 필드를 초기화
+    setNewNickname('');
+    setNewPassword('');
+  }, [content, newNickname, newPassword, commentList, boardId]);
+
   return (
     <div className={styles['comments-wrapper']}>
       <div className={styles['comments-header']}>
+        <input
+          className="comments-header-textarea"
+          type="text"
+          value={newNickname}
+          onChange={handleNicknameChange}
+          placeholder="닉네임"
+        />
+        <input
+          className="comments-header-textarea"
+          type="password"
+          value={newPassword}
+          onChange={handlePasswordChange}
+          placeholder="패스워드"
+        />
         <TextField
           className="comments-header-textarea"
           maxRows={3}
@@ -120,7 +175,8 @@ function Comment({ boardId }: CommentProps) {
           multiline
           placeholder="댓글을 입력해주세요✏️"
         />
-        {content !== '' ? (
+
+        {content !== '' && newNickname !== '' && newPassword !== '' ? (
           <Button variant="outlined" onClick={handleSubmit} type="submit">
             등록하기
           </Button>
@@ -141,9 +197,7 @@ function Comment({ boardId }: CommentProps) {
               </div>
             </div>
             <div className={styles['comment-content']}>{item.content}</div>
-            <div className={styles['comment-username']}>
-              {item.user.username}
-            </div>
+            <div className={styles['comment-username']}>익명{item.id}</div>
             <hr />
           </div>
         ))}
