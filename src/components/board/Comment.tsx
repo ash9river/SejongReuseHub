@@ -68,7 +68,7 @@ function Comment({ boardId }: CommentProps) {
     mutationFn: postComment,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [`comments/${boardId}`],
+        queryKey: [`boards/${boardId}/comments`],
       });
     },
     onError: () => {
@@ -126,7 +126,7 @@ function Comment({ boardId }: CommentProps) {
       writer: newNickname,
       password: newPassword,
     };
-
+    console.log(comment);
     mutate({ comment, boardId });
     const newComment = {
       id: commentList.length ? commentList[commentList.length - 1].id + 1 : 1,

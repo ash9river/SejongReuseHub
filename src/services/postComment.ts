@@ -14,7 +14,7 @@ interface PostDataType {
 export async function postComment({ comment, boardId }: PostDataType) {
   try {
     console.log(comment);
-    const response = await postData(`comments`, comment);
+    const response = await postData(`comments?boardId=${boardId}`, comment);
 
     console.log(response);
 

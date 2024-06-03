@@ -1,11 +1,11 @@
 import { Pagination } from '@mui/material';
 import { Card } from 'components/board/Card';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useSearchParams } from 'react-router-dom';
 import moment from 'moment';
 import { UserInterface } from 'configs/interface/UserInterface';
-import { AxiosError } from 'axios';
+
 import { getData } from 'services/getData';
 import { useQuery } from '@tanstack/react-query';
 import styles from './BoardList.module.scss';
@@ -19,7 +19,6 @@ interface BoardItemType {
   nickname: string;
 
   image: string | null;
-
 }
 interface pageType {
   page: number;
@@ -39,7 +38,6 @@ function BoardList() {
     queryKey: ['boards'],
 
     queryFn: ({ signal }) => getData<BoardListType>('api/boards?page=0&size=9'),
-
   });
   // 렌더링 되고 한번만 전체 게시물 갯수 가져와서 페이지 카운트 구하기
   // 렌더링 되고 한번만 페이지에 해당하는 게시물 가져오기
@@ -78,10 +76,8 @@ function BoardList() {
               title={item.title}
               content="aeaeg"
               boardId={item.boardId}
-
               imgUrl={item.image ? `../img/test${item.boardId}.jpg` : null}
               // imgUrl="../img/profile.png"
-
             />
           ))}
       </div>
