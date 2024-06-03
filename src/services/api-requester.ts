@@ -20,7 +20,7 @@ export const setRequestDefaultHeader = (
   const config = requestConfig;
   config.headers = {
     ...config.headers,
-    'Content-Type': 'application/json;charset=utf-8',
+    'Content-Type': 'application/json',
   };
   if (signal) {
     config.signal = signal;

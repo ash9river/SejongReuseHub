@@ -19,11 +19,10 @@ import { useMutation } from '@tanstack/react-query';
 import ImageUploader from './ImageUploader';
 import styles from './PostAdd.module.scss';
 import PostAddPostion from './PostAddPostion';
-import { postFormData } from '../../services/postFormData';
-
-interface FormDataEntryInterface {
-  [k: string]: FormDataEntryValue;
-}
+import {
+  FormDataEntryInterface,
+  postFormData,
+} from '../../services/postFormData';
 
 function PostAdd() {
   const { longitude, latitude } = getGeolocation();
@@ -33,7 +32,7 @@ function PostAdd() {
   });
   const { mutate } = useMutation({
     mutationFn: postFormData,
-    // onSuccess: () => navigate('/postView'),
+    onSuccess: () => navigate('/postView'),
   });
 
   // const token = useSelector((state) => state.Auth.token);
@@ -61,22 +60,7 @@ function PostAdd() {
       lng: longitude,
     });
   }, [latitude, longitude]);
-  /* 
-  const handleSubmit = (e: React.MouseEventHandler<HTMLAnchorElement>) => {
-    e.preventDefault();
 
-    const fd = new FormData(e.target as HTMLFormElement);
-    fd.append('nickname', '임시닉네임');
-    fd.append('password', '1234');
-
-    const data: FormDataEntryInterface = Object.fromEntries(fd.entries());
-    console.log(fd);
-    console.log(data);
-
-    mutate({
-      form: data,
-    });
-  }; */
   const handleSubmit = useCallback(async () => {
     try {
       const formData = new FormData();
@@ -86,9 +70,6 @@ function PostAdd() {
       formData.append('content', user.content);
 
       formData.append('image', image.preview_URL);
-      console.log(typeof image.preview_URL === 'string');
-      console.log(typeof image.preview_URL);
-      console.log(image.preview_URL);
 
       formData.append('latitude', position.lat.toString());
       formData.append('longitude', position.lng.toString());
@@ -96,8 +77,6 @@ function PostAdd() {
       const data: FormDataEntryInterface = Object.fromEntries(
         formData.entries(),
       );
-
-      console.log(data);
 
       mutate({
         form: data,
@@ -115,9 +94,6 @@ function PostAdd() {
       // );
     }
   }, [canSubmit]);
-  useEffect(() => {
-    console.log(position);
-  }, [position]);
 
   return (
     <div className={styles['addBoard-wrapper']}>

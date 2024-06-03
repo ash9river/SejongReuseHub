@@ -3,9 +3,13 @@ import { apiRequester, setRequestDefaultHeader } from './api-requester';
 
 const bracket = {};
 
-const setRequsetPostHeader = <T>(data: T, config: AxiosRequestConfig) => {
+const setRequsetPostHeader = <T>(
+  url: string,
+  data: T,
+  config: AxiosRequestConfig,
+) => {
   const modifiedConfig = setRequestDefaultHeader(config);
-  if (data instanceof FormData) {
+  if (url === 'api/images') {
     modifiedConfig.headers = {
       ...config.headers,
       'Content-Type': 'multipart/form-data',
@@ -32,11 +36,13 @@ export const postData = async <T>(
   config?: AxiosRequestConfig,
 ): Promise<T> => {
   try {
-    console.log(data);
+    const modifiedConfig = setRequsetPostHeader<T>(
+      url,
+      data,
+      config || bracket,
+    );
 
-    const modifiedConfig = setRequsetPostHeader<T>(data, config || bracket);
     const response = await apiRequester.post<T>(url, data, modifiedConfig);
-    console.error(response.data);
 
     return response.data;
   } catch (error) {
