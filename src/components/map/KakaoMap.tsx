@@ -9,6 +9,7 @@ import {
 import {
   DataMarkerProps,
   MarkerInterface,
+  BoardMarkerInterface,
   MarkerProps,
 } from 'configs/interface/KakaoMapInterface';
 import { useRecoilState } from 'recoil';
@@ -35,10 +36,19 @@ function KakaoMap() {
     queryFn: ({ signal }) => getData('api/maps', signal),
     staleTime: 5000,
   });
+  const {
+    data: boardData,
+    isLoading: isBoardDataLoading,
+    isError: isBoardDataError,
+  } = useQuery<BoardMarkerInterface[], AxiosError>({
+    queryKey: ['boardMarker'], // 고유한 쿼리 키를 지정
+    queryFn: ({ signal }) => getData('api/boards/map', signal), // 새로운 API 엔드포인트를 지정
+    staleTime: 5000,
+  });
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    console.log(boardData);
+  }, [boardData]);
 
   return (
     <Map
@@ -56,8 +66,23 @@ function KakaoMap() {
       <ZoomControl position="BOTTOMRIGHT" />
       <MapMarker position={{ lat: latitude, lng: longitude }} />
       {/* 맵 중첩이가능함 */}
-      {data !== undefined
-        ? data
+      {category === '게시글' && boardData !== undefined
+        ? boardData.map((mark: BoardMarkerInterface) => {
+            const position = {
+              lat: mark.latitude,
+              lng: mark.longitude,
+            };
+            return (
+              <Marker
+                key={`${mark.id}`}
+                position={position}
+                id={mark.id}
+                name="페트병"
+              />
+            );
+          })
+        : data !== undefined &&
+          data
             .filter((mark: MarkerInterface) => mark.categoryName === category)
             .map((mark: MarkerInterface, index: number) => {
               const position = {
@@ -67,12 +92,13 @@ function KakaoMap() {
               return (
                 <Marker
                   key={`${mark.mapId}`}
+                  id={mark.mapId}
                   position={position}
                   name={mark.categoryName}
                 />
               );
-            })
-        : null}
+            })}
+
       {/* 내 위치가는 버튼 */}
       <Myposition lat={latitude} lng={longitude} />
     </Map>
