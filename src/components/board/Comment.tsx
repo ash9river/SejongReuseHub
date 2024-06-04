@@ -20,7 +20,8 @@ import { postComment } from 'services/postComment';
 import { queryClient } from 'index';
 import { Password } from '@mui/icons-material';
 import styles from './Comment.module.scss';
-import CommentModal from './CommentModal';
+import CommentDeleteModal from './Modal/CommentDeleteModal';
+import CommentEditModal from './Modal/CommentEditModal';
 
 interface CommentProps {
   boardId: number;
@@ -32,7 +33,7 @@ function Comment({ boardId }: CommentProps) {
   const navigate = useNavigate();
   const [commentList, setCommentList] = useState<CommentInterface[]>([]);
   // 입력한 댓글 내용
-  const [content, setContent] = useState('');
+  const [firstcontent, setfirstContent] = useState('');
   const [newNickname, setNewNickname] = useState('');
   const [newPassword, setNewPassword] = useState('');
   // const token = useSelector((state) => state.Auth.token);
@@ -41,7 +42,7 @@ function Comment({ boardId }: CommentProps) {
   const [pageCount, setPageCount] = useState(0);
   const [show, setShow] = useState(false);
   const [deleteShow, setdeleteShow] = useState<number | null>(null);
-
+  const [editShow, seteditShow] = useState<number | null>(null);
   function handleNicknameChange(e: React.ChangeEvent<HTMLInputElement>) {
     setNewNickname(e.target.value);
   }
@@ -49,12 +50,15 @@ function Comment({ boardId }: CommentProps) {
   function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
     setNewPassword(e.target.value);
   }
-  // function handleContenthange(e: React.ChangeEvent<HTMLInputElement>) {
-  //   setContent(e.target.value);
-  // }
 
   function handleDelete(id: number) {
     setdeleteShow(deleteShow === id ? null : id);
+    seteditShow(null);
+  }
+
+  function handleEdit(id: number) {
+    seteditShow(editShow === id ? null : id);
+    setdeleteShow(null);
   }
   // 페이지에 해당하는 댓글 목록은 page 상태가 변경될 때마다 가져옴
   // 맨 처음 페이지가 1이므로 처음엔 1페이지에 해당하는 댓글을 가져온다
@@ -62,18 +66,6 @@ function Comment({ boardId }: CommentProps) {
     queryKey: ['boards', `comments/${boardId}`],
     queryFn: ({ signal }) => getData<any>(`boards/${boardId}/comments`, signal),
   });
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     if (data) {
-  //       await refetch();
-  //       queryClient.invalidateQueries({
-  //         queryKey: [`boards/${boardId}/comments`],
-  //       });
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [data]);
 
   const { mutate } = useMutation({
     mutationFn: postComment,
@@ -111,10 +103,42 @@ function Comment({ boardId }: CommentProps) {
     },
   });
 
+  const editCommentMutation = useMutation({
+    mutationFn: ({
+      commentId,
+      content,
+      password,
+    }: {
+      commentId: number;
+      content: string;
+      password: string;
+    }) =>
+      api.patch(`/comments/${commentId}`, {
+        content,
+        password,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [`boards/${boardId}/comments`],
+      });
+    },
+    onError: () => {
+      console.log('edit error');
+    },
+  });
+
   const handleDeleteSubmit = (commentId: number, password: string) => {
     deleteCommentMutation.mutate({ commentId, password });
     setdeleteShow(null);
-    setCommentList(data);
+  };
+
+  const handleEditSubmit = (
+    commentId: number,
+    content: string,
+    password: string,
+  ) => {
+    editCommentMutation.mutate({ commentId, content, password });
+    seteditShow(null);
   };
 
   // const { mutate } = useMutation({
@@ -170,18 +194,17 @@ function Comment({ boardId }: CommentProps) {
 
   const handleSubmit = useCallback(() => {
     const comment = {
-      content,
+      content: firstcontent,
       writer: newNickname,
       password: newPassword,
     };
-    // console.log(comment);
     mutate({ comment, boardId });
 
-    setContent(''); // 댓글 입력 필드를 초기화
+    setfirstContent(''); // 댓글 입력 필드를 초기화
     setNewNickname('');
     setNewPassword('');
     setCommentList(data);
-  }, [content, newNickname, newPassword]);
+  }, [firstcontent, newNickname, newPassword]);
 
   return (
     <div className={styles['comments-wrapper']}>
@@ -205,13 +228,13 @@ function Comment({ boardId }: CommentProps) {
           maxRows={3}
           onClick={isLogin}
           onChange={(e) => {
-            setContent(e.target.value);
+            setfirstContent(e.target.value);
           }}
           multiline
           placeholder="댓글을 입력해주세요✏️"
         />
 
-        {content !== '' && newNickname !== '' && newPassword !== '' ? (
+        {firstcontent !== '' && newNickname !== '' && newPassword !== '' ? (
           <Button variant="outlined" onClick={handleSubmit} type="submit">
             등록하기
           </Button>
@@ -241,14 +264,21 @@ function Comment({ boardId }: CommentProps) {
               >
                 삭제
               </Button>
-              {/* <button type="button" onClick={() => handleEdit(item.id)}>
-              수정
-            </button> */}
+              <Button type="button" onClick={() => handleEdit(item.commentId)}>
+                수정
+              </Button>
               <hr />
               {deleteShow === item.commentId && (
-                <CommentModal
+                <CommentDeleteModal
                   onSubmit={(password: any) =>
                     handleDeleteSubmit(item.commentId, password)
+                  }
+                />
+              )}
+              {editShow === item.commentId && (
+                <CommentEditModal
+                  onSubmit={(password: string, NewComment: string) =>
+                    handleEditSubmit(item.commentId, NewComment, password)
                   }
                 />
               )}
