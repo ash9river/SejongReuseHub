@@ -63,7 +63,7 @@ function Comment({ boardId }: CommentProps) {
   // 페이지에 해당하는 댓글 목록은 page 상태가 변경될 때마다 가져옴
   // 맨 처음 페이지가 1이므로 처음엔 1페이지에 해당하는 댓글을 가져온다
   const { data } = useQuery({
-    queryKey: ['boards', `comments/${boardId}`],
+    queryKey: [`comments/${boardId}`],
     queryFn: ({ signal }) => getData<any>(`boards/${boardId}/comments`, signal),
   });
 
@@ -71,7 +71,7 @@ function Comment({ boardId }: CommentProps) {
     mutationFn: postComment,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [`boards/${boardId}/comments`],
+        queryKey: [`comments/${boardId}`],
       });
     },
     onError: () => {
@@ -95,7 +95,7 @@ function Comment({ boardId }: CommentProps) {
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [`boards/${boardId}/comments`],
+        queryKey: [`comments/${boardId}`],
       });
     },
     onError: () => {
@@ -119,7 +119,7 @@ function Comment({ boardId }: CommentProps) {
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [`boards/${boardId}/comments`],
+        queryKey: [`comments/${boardId}`],
       });
     },
     onError: () => {
