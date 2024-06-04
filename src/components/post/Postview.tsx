@@ -6,12 +6,18 @@ import { Button, Dialog, DialogContent, IconButton } from '@mui/material';
 import BuildOutlinedIcon from '@mui/icons-material/BuildOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import DisabledByDefaultOutlinedIcon from '@mui/icons-material/DisabledByDefaultOutlined';
+import DialogActions from '@mui/material/DialogActions';
+import TextField from '@mui/material/TextField';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import moment from 'moment';
 import { CommentInterface } from 'configs/interface/CommentInterface';
 import { User } from 'configs/interface/UserInterface';
 
 import { useQuery } from '@tanstack/react-query';
 import { getData } from 'services/getData';
+import { deleteData } from 'services/deleteData';
+
 import styles from './Postview.module.scss';
 // import api from '../../utils/api';
 // import { jwtUtils } from '../../utils/jwtUtils';
@@ -31,43 +37,20 @@ function PostView() {
     queryKey: ['postList', postId],
     queryFn: ({ signal }) => getData<any>(`api/boards/${postId}`, signal),
   });
-  /*   const [board, setBoard] = useState<User>({
-    id: 1,
-    user: {
-      boardId: 1,
-      title: 'Sample Title',
-      content: 'This is a sample content.',
-      imgUrl: '../img/profile.jpg',
-      username: 'john_doe',
-      date: '2024-05-22',
-      latitude: 0,
-      longitude: 0,
-    },
-    created: '2024-05-22T10:00:00Z',
-    title: 'User Sample Title',
-    content: 'This is the user sample content.',
-  }); */
+
   const [isLoaded, setIsLoaded] = useState(true);
   // const token = useSelector((state) => state.Auth.token);
   const navigate = useNavigate();
   // modal이 보이는 여부 상태
   const [show, setShow] = useState(false);
-  // board 가져오기
-  // useEffect(() => {
-  //   const getBoard = async () => {
-  //     const response = await axios.get(
-  //       `${process.env.REACT_APP_URL}/api/boards`,
-  //     ); // console.log(response);
-  //     return response;
-  //   };
-  //   getBoard()
-  //     .then((result) => console.log(result))
-  //     .then(() => setIsLoaded(true));
-  // }, []);
+  const [passwordShow, setPasswordShow] = useState(false);
 
   useEffect(() => {
     console.log(board);
   }, [board]);
+  const handleClose = () => {
+    setPasswordShow(false);
+  };
   return (
     <>
       {board && (
@@ -79,7 +62,7 @@ function PostView() {
               endIcon={<DeleteForeverOutlinedIcon />}
               className={styles['delete-button']}
               onClick={() => {
-                setShow(true);
+                setPasswordShow(true);
               }}
             >
               삭제
@@ -119,45 +102,56 @@ function PostView() {
         </div>
       )}
       {/* modal */}
-      <Dialog open={show}>
-        <DialogContent style={{ position: 'relative' }}>
-          <IconButton
-            style={{ position: 'absolute', top: '0', right: '0' }}
-            onClick={() => setShow(false)}
-          >
-            <DisabledByDefaultOutlinedIcon />
-          </IconButton>
-          <div className={styles.modal}>
-            <div className={styles['modal-title']}>
-              {' '}
-              정말 삭제하시겠습니까 ?
-            </div>
-            <div className={styles['modal-button']}>
-              <Button
-                variant="outlined"
-                color="error"
-                onClick={async () => {
-                  setShow(false);
-                  // 모달의 예 버튼 클릭시 게시물 삭제
-                  // await api.delete(`/api/board/${board_id}`);
-                  alert('게시물이 삭제되었습니다😎');
-                  window.location.href = '/myboard-list';
-                }}
-              >
-                예
-              </Button>
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={() => {
-                  setShow(false);
-                }}
-              >
-                아니오
-              </Button>
-            </div>
-          </div>
+      {/* 비밀번호 입력 */}
+      <Dialog
+        open={passwordShow}
+        onClose={handleClose}
+        PaperProps={{
+          component: 'form',
+          onSubmit: async (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            const formData = new FormData(event.currentTarget);
+            const formJson = Object.fromEntries((formData as any).entries());
+            console.log('password:', formJson.password);
+
+            try {
+              const response = await deleteData(
+                `api/boards/${postId}`,
+                formJson.password,
+              );
+
+              console.log(response);
+              alert('게시물이 삭제되었습니다😎');
+              setShow(true);
+              handleClose();
+              navigate('/postView');
+            } catch (error) {
+              console.error('Error deleting data:', error);
+            }
+            setShow(true);
+            handleClose();
+          },
+        }}
+      >
+        <DialogTitle>비밀번호를 입력해주세요</DialogTitle>
+        <DialogContent>
+          {/* <DialogContentText>{null}</DialogContentText> */}
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="name"
+            name="password"
+            label="비밀번호"
+            type="input"
+            fullWidth
+            variant="standard"
+          />
         </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>취소</Button>
+          <Button type="submit">삭제</Button>
+        </DialogActions>
       </Dialog>
     </>
   );

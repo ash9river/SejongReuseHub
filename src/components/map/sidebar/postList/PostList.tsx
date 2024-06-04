@@ -14,6 +14,7 @@ interface BoardItem {
   createdAt: string;
   nickname: string;
   content: string;
+  image: string | null;
 }
 
 interface PageInfo {
@@ -28,28 +29,21 @@ interface BoardListResponse {
   pageInfo: PageInfo;
 }
 
-interface BoardListInterface {
-  boardListDto: BoardItem[];
-  pageinfo: any;
-}
-
 function PostList() {
   const { data, isLoading, isError } = useQuery<BoardListResponse, AxiosError>({
-    queryKey: ['postList', 0, 10],
-    queryFn: ({ signal }) => getData(`api/boards?page=${0}&size=${10}`, signal),
+    queryKey: ['postList', 0, 1000],
+    queryFn: ({ signal }) =>
+      getData(`api/boards?page=${0}&size=${1000}`, signal),
     staleTime: 5000,
   });
-
-  const navigate = useNavigate();
-
+  const naviagate = useNavigate();
   useEffect(() => {
     console.log(data);
   }, [data]);
 
-  function handleClick(boardId: number) {
-    navigate(`../postView/${boardId}`);
-  }
-
+  // function handleClick(boardId: number) {
+  //   naviagte(`../postView/${boardId}`);
+  // }
   function formatDate(dateString: string) {
     const date = new Date(dateString);
     return date.toISOString().split('T')[0];
@@ -59,14 +53,26 @@ function PostList() {
 
   return (
     <div className={styles.wrapper}>
-      {boardListDto.map((item) => (
+      {boardListDto?.map((item) => (
         <button
           type="button"
           className={styles.postContainer}
           key={item.boardId}
-          onClick={() => handleClick(item.boardId)}
+          onClick={() => {
+            naviagate(`../postView/${item.boardId}`);
+          }}
         >
-          <div className={styles.image}>{null}</div>
+          <div className={styles.imageBox}>
+            {item.image ? (
+              <img
+                src={item.image}
+                alt="게시물 이미지"
+                className={styles.image}
+              />
+            ) : (
+              <p className={styles.noImage}>이미지가 존재하지 않습니다.</p>
+            )}
+          </div>
           <div className={styles.textContainer}>
             <p className={styles.topBox}>
               <span className={styles.title}>{item.title}</span>
