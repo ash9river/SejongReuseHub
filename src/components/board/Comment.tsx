@@ -13,8 +13,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import DisabledByDefaultOutlinedIcon from '@mui/icons-material/DisabledByDefaultOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { CommentInterface } from 'configs/interface/CommentInterface';
-// import api from '../utils/api';
-// import { jwtUtils } from '../utils/jwtUtils';
 import { JsxElement } from 'typescript';
 import { getData } from 'services/getData';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -22,13 +20,10 @@ import { postComment } from 'services/postComment';
 import { queryClient } from 'index';
 import { Password } from '@mui/icons-material';
 import styles from './Comment.module.scss';
+import CommentModal from './CommentModal';
 
 interface CommentProps {
   boardId: number;
-}
-interface CommentGet {
-  content: string;
-  writer: string;
 }
 
 function Comment({ boardId }: CommentProps) {
@@ -45,6 +40,7 @@ function Comment({ boardId }: CommentProps) {
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
   const [show, setShow] = useState(false);
+  const [deleteShow, setdeleteShow] = useState<number | null>(null);
 
   function handleNicknameChange(e: React.ChangeEvent<HTMLInputElement>) {
     setNewNickname(e.target.value);
@@ -57,12 +53,27 @@ function Comment({ boardId }: CommentProps) {
   //   setContent(e.target.value);
   // }
 
+  function handleDelete(id: number) {
+    setdeleteShow(deleteShow === id ? null : id);
+  }
   // 페이지에 해당하는 댓글 목록은 page 상태가 변경될 때마다 가져옴
   // 맨 처음 페이지가 1이므로 처음엔 1페이지에 해당하는 댓글을 가져온다
   const { data } = useQuery({
     queryKey: ['boards', `comments/${boardId}`],
     queryFn: ({ signal }) => getData<any>(`boards/${boardId}/comments`, signal),
   });
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (data) {
+  //       await refetch();
+  //       queryClient.invalidateQueries({
+  //         queryKey: [`boards/${boardId}/comments`],
+  //       });
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [data]);
 
   const { mutate } = useMutation({
     mutationFn: postComment,
@@ -75,25 +86,62 @@ function Comment({ boardId }: CommentProps) {
       console.log('mutate error');
     },
   });
+  const api = axios.create({
+    baseURL: process.env.REACT_APP_URL,
+  });
 
-  // useEffect(() => {
-  //   // 기존 commentList에 데이터를 덧붙임
-  //   setCommentList([...commentList, data]);
-  // }, [data]);
+  const deleteCommentMutation = useMutation({
+    mutationFn: ({
+      commentId,
+      password,
+    }: {
+      commentId: number;
+      password: string;
+    }) =>
+      api.delete(`/comments/${commentId}`, {
+        data: { password },
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [`boards/${boardId}/comments`],
+      });
+    },
+    onError: () => {
+      console.log('delete error');
+    },
+  });
+
+  const handleDeleteSubmit = (commentId: number, password: string) => {
+    deleteCommentMutation.mutate({ commentId, password });
+    setdeleteShow(null);
+    setCommentList(data);
+  };
+
+  // const { mutate } = useMutation({
+  //   mutationFn: postComment,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({
+  //       queryKey: [`boards/${boardId}/comments`],
+  //     });
+  //   },
+  //   onError: () => {
+  //     console.log('mutate error');
+  //   },
+  // });
 
   // 페이지 카운트는 컴포넌트가 마운트되고 딱 한번만 가져오면됨
-  useEffect(() => {
-    // 댓글 전체 갯수 구하기
-    // const getTotalBoard = async () => {
-    //   const { data } = await axios.get(
-    //     `/api/comment/count?board_id=${board_id}`,
-    //   );
-    //   return data.total;
-    // };
-    // // 페이지 카운트 구하기: (전체 comment 갯수) / (한 페이지 갯수) 결과 올림
-    // getTotalBoard().then((result) => setPageCount(Math.ceil(result / 5)));
-    setPageCount(1);
-  }, []);
+  // useEffect(() => {
+  //   // 댓글 전체 갯수 구하기
+  //   // const getTotalBoard = async () => {
+  //   //   const { data } = await axios.get(
+  //   //     `/api/comment/count?board_id=${board_id}`,
+  //   //   );
+  //   //   return data.total;
+  //   // };
+  //   // // 페이지 카운트 구하기: (전체 comment 갯수) / (한 페이지 갯수) 결과 올림
+  //   // getTotalBoard().then((result) => setPageCount(Math.ceil(result / 5)));
+  //   setPageCount(1);
+  // }, []);
 
   // 댓글 추가하기, 댓글 추가하는 API는 인증 미들웨어가 설정되어 있으므로
   // HTTP HEADER에 jwt-token 정보를 보내는 interceptor 사용
@@ -126,27 +174,14 @@ function Comment({ boardId }: CommentProps) {
       writer: newNickname,
       password: newPassword,
     };
-    console.log(comment);
+    // console.log(comment);
     mutate({ comment, boardId });
-    const newComment = {
-      id: commentList.length ? commentList[commentList.length - 1].id + 1 : 1,
-      created: new Date().toISOString(),
-      content: comment.content,
-      writer: comment.writer,
-      Password: comment.password,
-    };
-    // const formData = new FormData();
-    // formData.append('id', newComment.id.toString());
-    // formData.append('created', newComment.created);
-    // formData.append('content', newComment.content);
-    // formData.append('writer', newComment.writer);
 
-    // setCommentList((prevList) => [...prevList, newComment]);
-    setCommentList((prevList) => [...prevList, data]);
     setContent(''); // 댓글 입력 필드를 초기화
     setNewNickname('');
     setNewPassword('');
-  }, [content, newNickname, newPassword, commentList, boardId]);
+    setCommentList(data);
+  }, [content, newNickname, newPassword]);
 
   return (
     <div className={styles['comments-wrapper']}>
@@ -186,21 +221,39 @@ function Comment({ boardId }: CommentProps) {
           </Button>
         )}
       </div>
+
       <div className={styles['comments-body']}>
-        {commentList.map((item) => (
-          <div key={item.id} className={styles['comments-comment']}>
-            <div className={styles['comment-username-date']}>
-              <div className={styles['comment-date']}>
-                {moment(item.created)
-                  .add(9, 'hour')
-                  .format('YYYY-MM-DD HH:mm:ss')}
+        {data &&
+          data.map((item: any, index: any) => (
+            <div key={item.commentId} className={styles['comments-comment']}>
+              <div className={styles['comment-username-date']}>
+                <div className={styles['comment-date']}>
+                  {moment(item.created)
+                    .add(9, 'hour')
+                    .format('YYYY-MM-DD HH:mm:ss')}
+                </div>
               </div>
+              <div className={styles['comment-content']}>{item.content}</div>
+              <div className={styles['comment-username']}>익명 {index + 1}</div>
+              <Button
+                type="button"
+                onClick={() => handleDelete(item.commentId)}
+              >
+                삭제
+              </Button>
+              {/* <button type="button" onClick={() => handleEdit(item.id)}>
+              수정
+            </button> */}
+              <hr />
+              {deleteShow === item.commentId && (
+                <CommentModal
+                  onSubmit={(password: any) =>
+                    handleDeleteSubmit(item.commentId, password)
+                  }
+                />
+              )}
             </div>
-            <div className={styles['comment-content']}>{item.content}</div>
-            <div className={styles['comment-username']}>익명{item.id}</div>
-            <hr />
-          </div>
-        ))}
+          ))}
       </div>
       {
         /*
