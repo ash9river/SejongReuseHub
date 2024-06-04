@@ -16,12 +16,14 @@ interface BoardItem {
   content: string;
   image: string | null;
 }
+
 interface PageInfo {
   page: number;
   pageSize: number;
   totalNumber: number;
   totalPages: number;
 }
+
 interface BoardListResponse {
   boardListDto: BoardItem[];
   pageInfo: PageInfo;
@@ -48,6 +50,7 @@ function PostList() {
   }
 
   const boardListDto = data?.boardListDto ?? [];
+
   return (
     <div className={styles.wrapper}>
       {boardListDto?.map((item) => (
@@ -72,7 +75,7 @@ function PostList() {
           </div>
           <div className={styles.textContainer}>
             <p className={styles.topBox}>
-              <span className={styles.title}>{item.title}</span>{' '}
+              <span className={styles.title}>{item.title}</span>
             </p>
             <p className={styles.content}>{item.content}</p>
             <p>

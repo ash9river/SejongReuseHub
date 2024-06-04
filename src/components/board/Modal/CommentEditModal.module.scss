@@ -1,0 +1,19 @@
+.modal-wrap {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.password-wrap {
+  width: 30%;
+}
+
+.confirm-wrap {
+  display: flex;
+  flex-direction: row;
+  flex-flow: row-reverse;
+  margin-top: 2%;
+}
+
+.button-wrap {
+}

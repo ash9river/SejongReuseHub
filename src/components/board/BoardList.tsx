@@ -1,11 +1,11 @@
 import { Pagination } from '@mui/material';
 import { Card } from 'components/board/Card';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useSearchParams } from 'react-router-dom';
 import moment from 'moment';
 import { UserInterface } from 'configs/interface/UserInterface';
-import { AxiosError } from 'axios';
+
 import { getData } from 'services/getData';
 import { useQuery } from '@tanstack/react-query';
 import styles from './BoardList.module.scss';

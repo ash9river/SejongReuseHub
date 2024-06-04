@@ -1,8 +1,6 @@
 export interface CommentInterface {
-  id: number;
+  commentId: number;
   created: string;
   content: string;
-  user: {
-    username: string;
-  };
+  writer: string;
 }
