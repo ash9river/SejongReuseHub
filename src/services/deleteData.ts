@@ -34,7 +34,8 @@ export const deleteData = async <T>(
     const response = await apiRequester.delete<T>(url, modifiedConfig);
     return response.data;
   } catch (error) {
-    if (isAxiosError(error)) throw new Error(error.message);
-    else throw error;
+    if (isAxiosError(error)) {
+      throw error;
+    } else throw error;
   }
 };
