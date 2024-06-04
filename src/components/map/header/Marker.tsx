@@ -16,9 +16,6 @@ export interface MarkerProps {
 
 const imageSize = { width: 22, height: 30 };
 
-// const handleClick = (id: number) => {
-//   navigate(`../postView/${id}`);
-// };
 // 컴포넌트를 담은 함수
 // 컴포넌트는 항상 JSX를 return하기 때문에 JSX.Element로 타입을 지정하면 된다.
 function Marker({ id, name, position }: MarkerProps): JSX.Element {
