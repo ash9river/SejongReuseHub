@@ -51,7 +51,7 @@ const router = createBrowserRouter([
             element: <PostViewPage />,
           },
           {
-            path: 'edit',
+            path: 'edit/:postId',
             element: <PostEdit />,
           },
         ],

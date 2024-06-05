@@ -14,11 +14,12 @@ import moment from 'moment';
 import { CommentInterface } from 'configs/interface/CommentInterface';
 import { User } from 'configs/interface/UserInterface';
 
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { getData } from 'services/getData';
 import { deleteData } from 'services/deleteData';
-
+import { queryClient } from 'index';
 import styles from './Postview.module.scss';
+
 // import api from '../../utils/api';
 // import { jwtUtils } from '../../utils/jwtUtils';
 import Comments from '../board/Comment';
@@ -71,7 +72,7 @@ function PostView() {
               variant="outlined"
               endIcon={<BuildOutlinedIcon />}
               onClick={() => {
-                navigate(`/postView/edit`);
+                navigate(`/postView/edit/${board.boardId}`);
               }}
             >
               수정
@@ -121,7 +122,7 @@ function PostView() {
               );
 
               console.log(response);
-              alert('게시물이 삭제되었습니다😎');
+              alert('게시물이 삭제되었습니다');
               setShow(true);
               handleClose();
               navigate('/postView');

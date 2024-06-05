@@ -1,10 +1,22 @@
 import { useRecoilState } from 'recoil';
 import { UserInterface } from 'configs/interface/UserInterface';
 import { userState } from 'store/atom/UserAtom';
+import { useEffect } from 'react';
 import styles from './TextArea.module.scss';
 
-function TextArea() {
+interface ContentType {
+  contents: string;
+  titles: string;
+}
+function TextArea({ contents, titles }: ContentType) {
   const [user, setUser] = useRecoilState<UserInterface>(userState);
+  useEffect(() => {
+    setUser({
+      ...user,
+      content: contents,
+      title: titles,
+    });
+  }, []);
 
   return (
     <div className={styles['textArea-wrapper']}>
@@ -21,6 +33,7 @@ function TextArea() {
           type="text"
           value={user.nickname}
           placeholder="아이디"
+          required
         />
         {/* <div className={styles.label}>password </div> */}
         <input
@@ -34,6 +47,7 @@ function TextArea() {
           type="password"
           value={user.password}
           placeholder="비밀번호"
+          required
         />
       </div>
       <input

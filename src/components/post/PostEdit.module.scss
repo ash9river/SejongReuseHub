@@ -1,0 +1,53 @@
+@keyframes smoothAppear {
+    from {
+      opacity: 0;
+      transform: translateY(-5%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .addBoard-wrapper {
+    opacity: 0;
+    animation: smoothAppear 1s forwards;
+    animation-delay: 0.5s;
+    font-family: 'Noto Sans KR', sans-serif;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .addBoard-header {
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+    .submitButton {
+      padding: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      button {
+      }
+      .disable-button {
+        font-size: 1.1rem;
+        cursor: not-allowed;
+      }
+      .success-button {
+        font-size: 1.1rem;
+      }
+    }
+    .addBoard-body {
+      display: flex;
+      margin: 20px 0;
+      align-items: center;
+      flex-direction: column;
+      flex-wrap: wrap;
+      background-color: #eaeaea;
+      padding: 2%;
+      width: 41rem;
+      border-radius: 10px;
+    }
+  }
+  
