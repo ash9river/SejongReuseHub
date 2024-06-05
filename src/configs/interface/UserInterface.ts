@@ -3,7 +3,8 @@ export interface UserInterface {
   title: string;
   content: string;
   imgUrl: string;
-  username: string;
+  nickname: string;
+  password: string;
   date: string;
   latitude: number;
   longitude: number;

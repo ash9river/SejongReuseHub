@@ -71,7 +71,7 @@ function PostView() {
               variant="outlined"
               endIcon={<BuildOutlinedIcon />}
               onClick={() => {
-                navigate(`/edit-board/${board.boardId}`);
+                navigate(`/postView/edit`);
               }}
             >
               수정

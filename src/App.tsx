@@ -12,6 +12,7 @@ import PostAddPage from 'pages/PostAddPage';
 import PostViewPage from 'pages/PostViewPage';
 import PostListPage from 'pages/PostListPage';
 import PostListItemPage from 'pages/PostListItemPage';
+import PostEdit from 'components/post/PostEdit';
 
 declare global {
   interface Window {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
           {
             path: 'view',
             element: <PostViewPage />,
+          },
+          {
+            path: 'edit',
+            element: <PostEdit />,
           },
         ],
       },

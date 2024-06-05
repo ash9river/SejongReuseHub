@@ -8,6 +8,34 @@ function TextArea() {
 
   return (
     <div className={styles['textArea-wrapper']}>
+      <div className={styles['profile-wrapper']}>
+        {/* <div className={styles.label}>id </div> */}
+        <input
+          onChange={(e) => {
+            setUser({
+              ...user,
+              nickname: e.target.value,
+            });
+          }}
+          className="id"
+          type="text"
+          value={user.nickname}
+          placeholder="아이디"
+        />
+        {/* <div className={styles.label}>password </div> */}
+        <input
+          onChange={(e) => {
+            setUser({
+              ...user,
+              password: e.target.value,
+            });
+          }}
+          className="password"
+          type="password"
+          value={user.password}
+          placeholder="비밀번호"
+        />
+      </div>
       <input
         onChange={(e) => {
           setUser({
