@@ -45,13 +45,13 @@ function PostView() {
   // modal이 보이는 여부 상태
   const [show, setShow] = useState(false);
   const [passwordShow, setPasswordShow] = useState(false);
-
   useEffect(() => {
     console.log(board);
   }, [board]);
   const handleClose = () => {
     setPasswordShow(false);
   };
+
   return (
     <>
       {board && (
@@ -120,21 +120,31 @@ function PostView() {
                 `api/boards/${postId}`,
                 formJson.password,
               );
-
               console.log(response);
               alert('게시물이 삭제되었습니다');
               setShow(true);
               handleClose();
               navigate('/postView');
             } catch (error) {
-              console.error('Error deleting data:', error);
+              if (axios.isAxiosError(error)) {
+                console.error('Error deleting data:', error.response);
+                if (error.response) {
+                  console.log(error.response);
+                  if (error.response.data === '권한이 없습니다.') {
+                    // setMessage('비밀번호를 다시 입력해주세요');
+                    alert('올바르지 않은 비밀번호 입니다.');
+
+                    setPasswordShow(true);
+                  }
+                }
+              } else {
+                console.error('Error deleting data:', error);
+              }
             }
-            setShow(true);
-            handleClose();
           },
         }}
       >
-        <DialogTitle>비밀번호를 입력해주세요</DialogTitle>
+        <DialogTitle>비밀번호를 입력해주세요.</DialogTitle>
         <DialogContent>
           {/* <DialogContentText>{null}</DialogContentText> */}
           <TextField

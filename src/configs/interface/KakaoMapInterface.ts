@@ -7,6 +7,7 @@ export interface Position {
 export interface MarkerProps {
   Positions: Position[];
   Origin: { x: number; y: number };
+  onClick?: () => void;
 }
 
 export interface DataMarkerProps extends MarkerProps {
@@ -21,4 +22,10 @@ export interface MarkerInterface {
   longitude: number;
   categoryId: number;
   categoryName: string;
+}
+
+export interface BoardMarkerInterface {
+  id: number;
+  latitude: number;
+  longitude: number;
 }
