@@ -9,9 +9,10 @@ export const userState = atom<UserInterface>({
     title: '',
     content: '',
     imgUrl: '',
-    username: '',
+    nickname: '',
     date: '',
     latitude: 0,
     longitude: 0,
+    password: '',
   },
 });

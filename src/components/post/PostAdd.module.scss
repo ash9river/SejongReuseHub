@@ -14,7 +14,9 @@
   animation: smoothAppear 1s forwards;
   animation-delay: 0.5s;
   font-family: 'Noto Sans KR', sans-serif;
-
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   .addBoard-header {
     text-align: center;
     font-size: 32px;
@@ -42,5 +44,9 @@
     align-items: center;
     flex-direction: column;
     flex-wrap: wrap;
+    background-color: #eaeaea;
+    padding: 2%;
+    width: 41rem;
+    border-radius: 10px;
   }
 }

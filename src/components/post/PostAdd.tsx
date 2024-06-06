@@ -50,7 +50,9 @@ function PostAdd() {
       user.content !== '' &&
       user.title !== '' &&
       position.lat !== 0 &&
-      position.lng !== 0
+      position.lng !== 0 &&
+      user.nickname !== '' &&
+      user.password !== ''
     );
   }, [image, user.title, user.content, user.latitude, user.longitude]);
 
@@ -64,8 +66,8 @@ function PostAdd() {
   const handleSubmit = useCallback(async () => {
     try {
       const formData = new FormData();
-      formData.append('nickname', '임시닉네임');
-      formData.append('password', '1234');
+      formData.append('nickname', user.nickname);
+      formData.append('password', user.password);
       formData.append('title', user.title);
       formData.append('content', user.content);
 
@@ -81,8 +83,9 @@ function PostAdd() {
       mutate({
         form: data,
       });
-      // await api.post('/api/board', formData);
-      window.alert('😎등록이 완료되었습니다😎');
+      window.alert('등록이 완료되었습니다');
+      console.log(data);
+      console.log('!!!!');
       // navigate('/postView');
     } catch (e) {
       // 서버에서 받은 에러 메시지 출력
@@ -92,6 +95,7 @@ function PostAdd() {
       //     position: 'top-center',
       //   },
       // );
+      console.log('post-error');
     }
   }, [canSubmit]);
 
@@ -118,7 +122,7 @@ function PostAdd() {
         )}
       </div>
       <div className={styles['addBoard-body']}>
-        <TextArea />
+        <TextArea contents="" titles="" />
         <ImageUploader setImage={setImage} />
         <PostAddPostion position={position} setPosition={setPosition} />
       </div>
