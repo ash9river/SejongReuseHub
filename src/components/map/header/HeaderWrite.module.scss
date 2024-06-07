@@ -11,9 +11,9 @@
 
 .btn {
   margin: 1rem;
-
-  
-
+  border: none;
+  background-color: #ffffff;
+  font-size: 0.7rem;
 }
 
 @keyframes jittery {
@@ -75,4 +75,7 @@
   to {
     transform: translateX(-100%);
   }
+}
+.img-container {
+  width: 100%;
 }

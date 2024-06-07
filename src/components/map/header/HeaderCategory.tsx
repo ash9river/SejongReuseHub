@@ -23,10 +23,6 @@ const markerCategory = [
     key: 5,
     name: '아름다운가게',
   },
-  {
-    key: 6,
-    name: '게시글',
-  },
 ];
 
 function HeaderCategory() {
