@@ -43,6 +43,11 @@ function Header() {
               </NavLink>
             </li>
             <li>
+              <NavLink to="/postView/add" className={giveActiveClass}>
+                글쓰기
+              </NavLink>
+            </li>
+            <li>
               <NavLink to="/map" className={giveActiveClass}>
                 Map
               </NavLink>
