@@ -8,6 +8,7 @@ import { Position } from 'configs/interface/KakaoMapInterface';
 import { patchData } from 'services/patchData';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getData } from 'services/getData';
+import getGeolocation from 'utils/getGeolocation';
 import ImageUploader from './ImageUploader';
 import TextArea from './TextArea';
 import PostAddPostion from './PostAddPostion';
@@ -20,6 +21,7 @@ import {
 } from '../../services/postFormData';
 // import { toast } from 'react-toastify';
 function PostEdit() {
+  const { longitude, latitude } = getGeolocation();
   // const token = useSelector((state) => state.Auth.token);
   const navigate = useNavigate();
   // URI 파라미터 가져오기
@@ -35,33 +37,21 @@ function PostEdit() {
     lat: 0,
     lng: 0,
   });
+
+  useEffect(() => {
+    setPosition({
+      lat: latitude,
+      lng: longitude,
+    });
+  }, [latitude, longitude]);
   const { data: board, isSuccess } = useQuery({
     queryKey: ['postList', postId],
     queryFn: ({ signal }) => getData<any>(`api/boards/${postId}`, signal),
   });
 
-  // 사용자가 직전에 등록한 게시물의 상태를 그대로 보여주기 위해
-  // 컴포넌트가 마운트되고 URI 파라미터에 해당하는 board를 가져와서
-  // title, content, image의 상태를 바꿔줌
-  // useEffect(() => {
-  //   const getBoard = async () => {
-  //     // const { data } = await axios.get(`/api/board/${board_id}`);
-  //     // return data;
-  //   };
-  //   getBoard().then((result) => {
-  //     // setTitle(result.title);
-  //     // setContent(result.content);
-  //     // 이미지는 파일을 불러올 필요가 없이 미리보기 url만 가져온다.
-  //     // 이미지를 선택하지 않고 올리면 db에 저장되어 있는 이미지를 그대로 사용!
-  //     // setImage({ ...image, preview_URL: `/api/image/view/${board_id}` });
-  //   });
-  // }, []);
-  useEffect(() => {
-    console.log(board);
-  }, [board]);
   const canSubmit = useCallback(() => {
     return (
-      image.image_file !== '' &&
+      (image.preview_URL !== '' || board.image !== '') &&
       user.content !== '' &&
       user.title !== '' &&
       position.lat !== 0 &&
@@ -81,9 +71,13 @@ function PostEdit() {
         latitude: position.lat.toString(),
         longitude: position.lng.toString(),
       };
-
+      let isChanged = true;
+      if (image.preview_URL === './img/profile.png') {
+        Data.image = board.image;
+        isChanged = false;
+      } else Data.image = image.preview_URL;
       console.log(Data);
-      const response = await patchData(`api/boards/${postId}`, Data);
+      const response = await patchData(`api/boards/${postId}`, Data, isChanged);
       // mutate({
       //   form: data,
       // });

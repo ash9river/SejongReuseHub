@@ -208,43 +208,6 @@ function Comment({ boardId }: CommentProps) {
 
   return (
     <div className={styles['comments-wrapper']}>
-      <div className={styles['comments-header']}>
-        <input
-          className="comments-header-textarea"
-          type="text"
-          value={newNickname}
-          onChange={handleNicknameChange}
-          placeholder="닉네임"
-        />
-        <input
-          className="comments-header-textarea"
-          type="password"
-          value={newPassword}
-          onChange={handlePasswordChange}
-          placeholder="패스워드"
-        />
-        <TextField
-          className="comments-header-textarea"
-          maxRows={3}
-          onClick={isLogin}
-          onChange={(e) => {
-            setfirstContent(e.target.value);
-          }}
-          multiline
-          placeholder="댓글을 입력해주세요✏️"
-        />
-
-        {firstcontent !== '' && newNickname !== '' && newPassword !== '' ? (
-          <Button variant="outlined" onClick={handleSubmit} type="submit">
-            등록하기
-          </Button>
-        ) : (
-          <Button variant="outlined" disabled>
-            등록하기
-          </Button>
-        )}
-      </div>
-
       <div className={styles['comments-body']}>
         {data &&
           data.map((item: any, index: any) => (
@@ -285,6 +248,43 @@ function Comment({ boardId }: CommentProps) {
             </div>
           ))}
       </div>
+      <div className={styles['comments-header']}>
+        <input
+          className="comments-header-textarea"
+          type="text"
+          value={newNickname}
+          onChange={handleNicknameChange}
+          placeholder="닉네임"
+        />
+        <input
+          className="comments-header-textarea"
+          type="password"
+          value={newPassword}
+          onChange={handlePasswordChange}
+          placeholder="패스워드"
+        />
+        <TextField
+          className="comments-header-textarea"
+          maxRows={3}
+          onClick={isLogin}
+          onChange={(e) => {
+            setfirstContent(e.target.value);
+          }}
+          multiline
+          placeholder="댓글을 입력해주세요✏️"
+        />
+
+        {firstcontent !== '' && newNickname !== '' && newPassword !== '' ? (
+          <Button variant="outlined" onClick={handleSubmit} type="submit">
+            등록하기
+          </Button>
+        ) : (
+          <Button variant="outlined" disabled>
+            등록하기
+          </Button>
+        )}
+      </div>
+
       {
         /*
           page(현재 페이지)와 pageCount(총 페이지 갯수)가 같으면 서버에서

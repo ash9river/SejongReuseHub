@@ -62,7 +62,7 @@ function BoardList() {
               title={item.title}
               content={item.content}
               boardId={item.boardId}
-              imgUrl={item.image ? `../img/test${item.boardId}.jpg` : null}
+              imgUrl={item.image ? item.image : null}
               // imgUrl="../img/profile.png"
             />
           ))}
