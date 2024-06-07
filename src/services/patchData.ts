@@ -1,5 +1,6 @@
 import { AxiosRequestConfig, isAxiosError } from 'axios';
 import { apiRequester, setRequestDefaultHeader } from './api-requester';
+import { postData } from './postData';
 
 const bracket = {};
 
@@ -16,16 +17,22 @@ const setRequestDefaultPatchHeader = <T>(
 
 export const patchData = async <T>(
   url: string,
-  data: T,
-  signal?: AbortSignal,
+  data: any,
+  isChanged: boolean,
   config?: AxiosRequestConfig,
 ): Promise<T> => {
   try {
-    const modifiedConfig = setRequestDefaultPatchHeader(
-      config || bracket,
-      signal,
-    );
+    const modifiedConfig = setRequestDefaultPatchHeader(config || bracket);
+    if (data.image) {
+      if (isChanged) {
+        const newFormData = new FormData();
 
+        newFormData.append('image', data.image);
+        const imgResponse: any = await postData('api/images', newFormData);
+        // eslint-disable-next-line no-param-reassign
+        data.image = imgResponse?.image;
+      }
+    }
     const response = await apiRequester.patch<T>(url, data, modifiedConfig);
     return response.data;
   } catch (error) {

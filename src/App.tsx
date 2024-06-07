@@ -40,7 +40,16 @@ const router = createBrowserRouter([
           {
             path: ':postId',
             id: ':postId',
-            element: <PostListItemPage />,
+            children: [
+              {
+                index: true,
+                element: <PostListItemPage />,
+              },
+              {
+                path: 'edit',
+                element: <PostEdit />,
+              },
+            ],
           },
           {
             path: 'add',
@@ -49,10 +58,6 @@ const router = createBrowserRouter([
           {
             path: 'view',
             element: <PostViewPage />,
-          },
-          {
-            path: 'edit/:postId',
-            element: <PostEdit />,
           },
         ],
       },

@@ -36,15 +36,15 @@ function PostAddPostion({ position, setPosition }: PositionProps) {
       className={styles['map-background']} // 지도 크기
       level={2} // 지도 확대 레벨
       ref={mapRef}
-      onClick={(_, mouseEvent) => {
-        const latlng = mouseEvent.latLng;
+      onCenterChanged={(map) => {
+        const latlng = map.getCenter();
         setPosition({
           lat: latlng.getLat(),
           lng: latlng.getLng(),
         });
       }}
     >
-      <MapMarker position={position} draggable>
+      <MapMarker position={position}>
         <div style={{ padding: '5px', color: '#000' }}>좌표 선택</div>
       </MapMarker>
     </Map>

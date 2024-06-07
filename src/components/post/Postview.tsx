@@ -41,12 +41,17 @@ function PostView() {
   const navigate = useNavigate();
   // modal이 보이는 여부 상태
   const [show, setShow] = useState(false);
+
+  const [editShow, setEditShow] = useState(false);
   const [passwordShow, setPasswordShow] = useState(false);
   useEffect(() => {
     console.log(board);
   }, [board]);
   const handleClose = () => {
     setPasswordShow(false);
+  };
+  const handleEditClose = () => {
+    setEditShow(false);
   };
 
   return (
@@ -69,7 +74,7 @@ function PostView() {
               variant="outlined"
               endIcon={<BuildOutlinedIcon />}
               onClick={() => {
-                navigate(`/postView/edit/${board.boardId}`);
+                setEditShow(true);
               }}
             >
               수정
@@ -86,7 +91,7 @@ function PostView() {
           <hr />
           <div className={styles['board-body']}>
             <div className={styles['board-image']}>
-              <img src={`/api/image/view/${board.boardId}`} alt="IMG" />
+              <img src={board.image} alt="IMG" />
             </div>
             <div className={styles['board-title-content']}>
               <div className={styles['board-title']}>{board.title}</div>
@@ -101,6 +106,47 @@ function PostView() {
       )}
       {/* modal */}
       {/* 비밀번호 입력 */}
+      <Dialog
+        open={editShow}
+        onClose={handleEditClose}
+        PaperProps={{
+          component: 'form',
+          onSubmit: async (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            const formData = new FormData(event.currentTarget);
+            const formJson = Object.fromEntries((formData as any).entries());
+            console.log('password:', formJson.password);
+            console.log(board);
+
+            if (formJson.password !== board.password) {
+              alert('올바르지 않은 비밀번호 입니다.');
+              setEditShow(true);
+            } else {
+              navigate('./edit');
+            }
+          },
+        }}
+      >
+        <DialogTitle>비밀번호를 입력해주세요.</DialogTitle>
+        <DialogContent>
+          {/* <DialogContentText>{null}</DialogContentText> */}
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="name"
+            name="password"
+            label="비밀번호"
+            type="input"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleEditClose}>취소</Button>
+          <Button type="submit">수정하기</Button>
+        </DialogActions>
+      </Dialog>
       <Dialog
         open={passwordShow}
         onClose={handleClose}
