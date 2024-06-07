@@ -19,6 +19,8 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { postComment } from 'services/postComment';
 import { queryClient } from 'index';
 import { Password } from '@mui/icons-material';
+import { patchComment } from 'services/patchComment';
+import { deleteData } from 'services/deleteData';
 import styles from './Comment.module.scss';
 import CommentDeleteModal from './Modal/CommentDeleteModal';
 import CommentEditModal from './Modal/CommentEditModal';
@@ -90,16 +92,17 @@ function Comment({ boardId }: CommentProps) {
       commentId: number;
       password: string;
     }) =>
-      api.delete(`/comments/${commentId}`, {
+      deleteData(`/comments/${commentId}`, {
         data: { password },
       }),
+
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [`comments/${boardId}`],
       });
     },
     onError: () => {
-      console.log('delete error');
+      alert('오류가 발생했습니다. 다시 시도해주세요');
     },
   });
 
@@ -113,7 +116,7 @@ function Comment({ boardId }: CommentProps) {
       content: string;
       password: string;
     }) =>
-      api.patch(`/comments/${commentId}`, {
+      patchComment(`/comments/${commentId}`, {
         content,
         password,
       }),
@@ -123,7 +126,7 @@ function Comment({ boardId }: CommentProps) {
       });
     },
     onError: () => {
-      console.log('edit error');
+      alert('오류가 발생했습니다. 다시 시도해주세요');
     },
   });
 
