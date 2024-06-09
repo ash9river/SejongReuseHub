@@ -19,9 +19,6 @@ import { getData } from 'services/getData';
 import { deleteData } from 'services/deleteData';
 import { queryClient } from 'index';
 import styles from './Postview.module.scss';
-
-// import api from '../../utils/api';
-// import { jwtUtils } from '../../utils/jwtUtils';
 import Comments from '../board/Comment';
 
 interface postDetailItemType {
