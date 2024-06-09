@@ -53,6 +53,7 @@ function ImageUploader({ setImage }: UploaderProps) {
       </div>
       <div className={styles['upload-button']}>
         <Button
+          className={styles.button}
           variant="outlined"
           color="primary"
           onClick={() => inputRef.click()}

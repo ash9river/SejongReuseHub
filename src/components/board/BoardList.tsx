@@ -51,7 +51,7 @@ function BoardList() {
 
   return (
     <div className={styles['boardList-wrapper']}>
-      <div className={styles['boardList-header']}>재활용 게시물 📝</div>
+      <div className={styles['boardList-header']}>재활용 게시물 </div>
 
       <div className={styles['boardList-body']}>
         {boardListDto !== undefined &&

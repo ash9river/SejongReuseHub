@@ -2,4 +2,9 @@
   width: 40rem;
   height: 15rem;
   border-radius: 10px;
+  border: 1.3px solid rgb(216, 216, 216);
+  &:focus {
+    outline: none;
+    border: 3px solid #a41a37;
+  }
 }
