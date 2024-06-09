@@ -38,12 +38,12 @@ function Header() {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/postView" className={giveActiveClass}>
+              <NavLink to="/postView" className={giveActiveClass} end>
                 게시판
               </NavLink>
             </li>
             <li>
-              <NavLink to="/postView/add" className={giveActiveClass}>
+              <NavLink to="/postView/add" className={giveActiveClass} end>
                 글쓰기
               </NavLink>
             </li>

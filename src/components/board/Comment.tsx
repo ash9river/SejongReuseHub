@@ -21,6 +21,7 @@ import { queryClient } from 'index';
 import { Password } from '@mui/icons-material';
 import { patchComment } from 'services/patchComment';
 import { deleteData } from 'services/deleteData';
+import { postData } from 'services/postData';
 import styles from './Comment.module.scss';
 import CommentDeleteModal from './Modal/CommentDeleteModal';
 import CommentEditModal from './Modal/CommentEditModal';
@@ -45,6 +46,8 @@ function Comment({ boardId }: CommentProps) {
   const [show, setShow] = useState(false);
   const [deleteShow, setdeleteShow] = useState<number | null>(null);
   const [editShow, seteditShow] = useState<number | null>(null);
+
+  const [canEdit, setCanEdit] = useState(false);
   function handleNicknameChange(e: React.ChangeEvent<HTMLInputElement>) {
     setNewNickname(e.target.value);
   }
@@ -56,9 +59,11 @@ function Comment({ boardId }: CommentProps) {
   function handleDelete(id: number) {
     setdeleteShow(deleteShow === id ? null : id);
     seteditShow(null);
+    setCanEdit(false);
   }
 
   function handleEdit(id: number) {
+    setCanEdit(false);
     seteditShow(editShow === id ? null : id);
     setdeleteShow(null);
   }
@@ -89,13 +94,15 @@ function Comment({ boardId }: CommentProps) {
       commentId: number;
       password: string;
     }) => deleteData(`/comments/${commentId}`, password),
-
     onSuccess: () => {
+      alert('댓글이 성공적으로 삭제되었습니다.');
       queryClient.invalidateQueries({
         queryKey: [`comments/${boardId}`],
       });
+      setCanEdit(false);
     },
     onError: () => {
+      setCanEdit(false);
       alert('오류가 발생했습니다. 다시 시도해주세요');
     },
   });
@@ -115,12 +122,32 @@ function Comment({ boardId }: CommentProps) {
         password,
       }),
     onSuccess: () => {
+      setCanEdit(false);
       queryClient.invalidateQueries({
         queryKey: [`comments/${boardId}`],
       });
     },
     onError: () => {
       alert('오류가 발생했습니다. 다시 시도해주세요');
+    },
+  });
+
+  const checkEditMutation = useMutation({
+    mutationFn: ({
+      commentId,
+      password,
+    }: {
+      commentId: number;
+      password: string;
+    }) =>
+      postData(`/comments/password?commentId=${commentId}`, {
+        password,
+      }),
+    onSuccess: () => {
+      setCanEdit(true);
+    },
+    onError: () => {
+      alert('비밀번호가 틀립니다. 다시 시도해주세요.');
     },
   });
 
@@ -141,45 +168,12 @@ function Comment({ boardId }: CommentProps) {
     seteditShow(null);
   };
 
-  // const { mutate } = useMutation({
-  //   mutationFn: postComment,
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({
-  //       queryKey: [`boards/${boardId}/comments`],
-  //     });
-  //   },
-  //   onError: () => {
-  //     console.log('mutate error');
-  //   },
-  // });
-
-  // 페이지 카운트는 컴포넌트가 마운트되고 딱 한번만 가져오면됨
-  // useEffect(() => {
-  //   // 댓글 전체 갯수 구하기
-  //   // const getTotalBoard = async () => {
-  //   //   const { data } = await axios.get(
-  //   //     `/api/comment/count?board_id=${board_id}`,
-  //   //   );
-  //   //   return data.total;
-  //   // };
-  //   // // 페이지 카운트 구하기: (전체 comment 갯수) / (한 페이지 갯수) 결과 올림
-  //   // getTotalBoard().then((result) => setPageCount(Math.ceil(result / 5)));
-  //   setPageCount(1);
-  // }, []);
-
-  // 댓글 추가하기, 댓글 추가하는 API는 인증 미들웨어가 설정되어 있으므로
-  // HTTP HEADER에 jwt-token 정보를 보내는 interceptor 사용
-  /*   const submit = useCallback(async () => {
-    const comment = {
-      boardId,
-      // DB에 엔터가 먹힌 상태로 들어가므로 제대로 화면에 띄우기 위해 <br>로 치환
-      content,
-      user_id: 'sins051301', // jwtUtils.getId(token),
-    };
-    console.log(comment);
-
-    // axios interceptor 사용 : 로그인한 사용자만 쓸 수 있다!
-  }, [content]); */
+  function checkHandleEditSubmit(commentId: number, password: string) {
+    checkEditMutation.mutate({
+      commentId,
+      password,
+    });
+  }
 
   const goLogin = () => {
     // setShow(false);
@@ -238,13 +232,20 @@ function Comment({ boardId }: CommentProps) {
                   }
                 />
               )}
-              {editShow === item.commentId && (
-                <CommentEditModal
-                  onSubmit={(password: string, NewComment: string) =>
-                    handleEditSubmit(item.commentId, NewComment, password)
-                  }
-                />
-              )}
+              {editShow === item.commentId &&
+                (canEdit === false ? (
+                  <CommentDeleteModal
+                    onSubmit={(password: any) =>
+                      checkHandleEditSubmit(item.commentId, password)
+                    }
+                  />
+                ) : (
+                  <CommentEditModal
+                    onSubmit={(password: string, NewComment: string) =>
+                      handleEditSubmit(item.commentId, NewComment, password)
+                    }
+                  />
+                ))}
             </div>
           ))}
       </div>

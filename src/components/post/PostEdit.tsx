@@ -21,7 +21,6 @@ import {
 } from '../../services/postFormData';
 // import { toast } from 'react-toastify';
 function PostEdit() {
-  const { longitude, latitude } = getGeolocation();
   // const token = useSelector((state) => state.Auth.token);
   const navigate = useNavigate();
   // URI 파라미터 가져오기
@@ -38,16 +37,22 @@ function PostEdit() {
     lng: 0,
   });
 
-  useEffect(() => {
-    setPosition({
-      lat: latitude,
-      lng: longitude,
-    });
-  }, [latitude, longitude]);
   const { data: board, isSuccess } = useQuery({
     queryKey: ['postList', postId],
     queryFn: ({ signal }) => getData<any>(`api/boards/${postId}`, signal),
   });
+
+  useEffect(() => {
+    if (board) {
+      setPosition({
+        lat: board.latitude,
+        lng: board.longitude,
+      });
+      console.log(board.latitude);
+
+      console.log(position);
+    }
+  }, [board]);
 
   const canSubmit = useCallback(() => {
     return (
@@ -56,15 +61,22 @@ function PostEdit() {
       user.title !== '' &&
       position.lat !== 0 &&
       position.lng !== 0 &&
-      user.nickname !== '' &&
-      user.password !== ''
+      board.nickname !== '' &&
+      board.password !== ''
     );
-  }, [image, user.title, user.content, user.latitude, user.longitude]);
+  }, [
+    image,
+    board,
+    user.title,
+    position,
+    user.content,
+    user.latitude,
+    user.longitude,
+  ]);
+
   const handleSubmit = useCallback(async () => {
     try {
       const Data = {
-        nickname: user.nickname,
-        password: user.password,
         title: user.title,
         content: user.content,
         image: '',
@@ -82,7 +94,7 @@ function PostEdit() {
       //   form: data,
       // });
       console.log(response);
-      window.alert('등록이 완료되었습니다');
+      window.alert('수정이 완료되었습니다');
       navigate('/postView');
     } catch (e) {
       console.log('patch-error');
@@ -106,14 +118,16 @@ function PostEdit() {
             variant="outlined"
             size="large"
           >
-            수정힐 내용을 모두 입력하세요
+            수정할 내용을 모두 입력하세요
           </Button>
         )}
       </div>
       <div className={styles['addBoard-body']}>
         {board && <TextArea contents={board.content} titles={board.title} />}
         <ImageUploader setImage={setImage} />
-        <PostAddPostion position={position} setPosition={setPosition} />
+        {board && (
+          <PostAddPostion position={position} setPosition={setPosition} />
+        )}
       </div>
     </div>
   );

@@ -17,18 +17,6 @@ function HeaderWrite() {
       <button
         type="button"
         className={`${styles.btn} ${styles['btn-primary']}`}
-        onClick={handleClick2}
-      >
-        <img
-          src="../img/게시글.png"
-          alt="CategoryImage"
-          className={styles['img-container']}
-        />
-        게시글
-      </button>
-      <button
-        type="button"
-        className={`${styles.btn} ${styles['btn-primary']}`}
         onClick={handleClick}
       >
         <img

@@ -23,6 +23,8 @@ export const patchData = async <T>(
 ): Promise<T> => {
   try {
     const modifiedConfig = setRequestDefaultPatchHeader(config || bracket);
+    console.log('a');
+
     if (data.image) {
       if (isChanged) {
         const newFormData = new FormData();
@@ -31,8 +33,11 @@ export const patchData = async <T>(
         const imgResponse: any = await postData('api/images', newFormData);
         // eslint-disable-next-line no-param-reassign
         data.image = imgResponse?.image;
+        console.log('B');
       }
     }
+    console.log('c');
+
     const response = await apiRequester.patch<T>(url, data, modifiedConfig);
     return response.data;
   } catch (error) {

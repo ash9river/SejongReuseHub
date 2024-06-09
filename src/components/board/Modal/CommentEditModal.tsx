@@ -34,13 +34,6 @@ function CommentEditModal({ onSubmit }: any) {
         >
           확인
         </Button>
-        <input
-          className={styles['password-wrap']}
-          type="password"
-          placeholder="비밀번호"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
       </div>
     </div>
   );
