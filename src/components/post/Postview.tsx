@@ -18,7 +18,11 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import { getData } from 'services/getData';
 import { deleteData } from 'services/deleteData';
 import { queryClient } from 'index';
+import { postData } from 'services/postData';
 import styles from './Postview.module.scss';
+
+// import api from '../../utils/api';
+// import { jwtUtils } from '../../utils/jwtUtils';
 import Comments from '../board/Comment';
 
 interface postDetailItemType {
@@ -118,11 +122,35 @@ function PostView() {
             console.log('password:', formJson.password);
             console.log(board);
 
-            if (formJson.password !== board.password) {
-              alert('올바르지 않은 비밀번호 입니다.');
-              setEditShow(true);
-            } else {
+            try {
+              const response = await postData(
+                `api/boards/password?boardId=${postId}`,
+                {
+                  password: formJson.password,
+                },
+              );
+              handleEditClose();
               navigate('./edit');
+            } catch (error: any) {
+              if (axios.isAxiosError(error)) {
+                console.log('c');
+
+                console.error('Error deleting data:', error.response);
+                if (error.response) {
+                  console.log(error.response);
+                  if (error.response.data === '권한이 없습니다.') {
+                    // setMessage('비밀번호를 다시 입력해주세요');
+                    alert('올바르지 않은 비밀번호 입니다.');
+
+                    handleEditClose();
+                  } else {
+                    console.log('asd');
+                  }
+                }
+              } else {
+                alert('올바르지 않은 비밀번호입니다.');
+                handleEditClose();
+              }
             }
           },
         }}
@@ -177,7 +205,7 @@ function PostView() {
                     // setMessage('비밀번호를 다시 입력해주세요');
                     alert('올바르지 않은 비밀번호 입니다.');
 
-                    setPasswordShow(true);
+                    handleClose();
                   }
                 }
               } else {
