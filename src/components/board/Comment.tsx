@@ -80,9 +80,6 @@ function Comment({ boardId }: CommentProps) {
       console.log('mutate error');
     },
   });
-  const api = axios.create({
-    baseURL: process.env.REACT_APP_URL,
-  });
 
   const deleteCommentMutation = useMutation({
     mutationFn: ({
@@ -91,10 +88,7 @@ function Comment({ boardId }: CommentProps) {
     }: {
       commentId: number;
       password: string;
-    }) =>
-      deleteData(`/comments/${commentId}`, {
-        data: { password },
-      }),
+    }) => deleteData(`/comments/${commentId}`, password),
 
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -132,6 +126,9 @@ function Comment({ boardId }: CommentProps) {
 
   const handleDeleteSubmit = (commentId: number, password: string) => {
     deleteCommentMutation.mutate({ commentId, password });
+    console.log('this is password');
+    console.log(password);
+
     setdeleteShow(null);
   };
 
