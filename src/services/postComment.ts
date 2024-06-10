@@ -13,13 +13,10 @@ interface PostDataType {
 
 export async function postComment({ comment, boardId }: PostDataType) {
   try {
-    console.log(comment);
     const response = await postData(
       `comments?%7BboardId%7D=${boardId}`,
       comment,
     );
-
-    console.log(response);
 
     return response;
   } catch (err: any) {

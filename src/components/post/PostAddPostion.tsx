@@ -17,6 +17,7 @@ interface PositionProps {
 
 function PostAddPostion({ position, setPosition }: PositionProps) {
   useKakaoLoader();
+
   const { longitude, latitude } = getGeolocation();
   const mapRef = useCallback<React.RefCallback<kakao.maps.Map>>(
     (node: kakao.maps.Map) => {

@@ -82,7 +82,7 @@ function Comment({ boardId }: CommentProps) {
       });
     },
     onError: () => {
-      console.log('mutate error');
+      //
     },
   });
 
@@ -153,8 +153,6 @@ function Comment({ boardId }: CommentProps) {
 
   const handleDeleteSubmit = (commentId: number, password: string) => {
     deleteCommentMutation.mutate({ commentId, password });
-    console.log('this is password');
-    console.log(password);
 
     setdeleteShow(null);
   };

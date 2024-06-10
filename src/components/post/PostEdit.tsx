@@ -36,6 +36,7 @@ function PostEdit() {
     lat: 0,
     lng: 0,
   });
+  const { longitude, latitude } = getGeolocation();
 
   const { data: board, isSuccess } = useQuery({
     queryKey: ['postList', postId],
@@ -43,16 +44,11 @@ function PostEdit() {
   });
 
   useEffect(() => {
-    if (board) {
-      setPosition({
-        lat: board.latitude,
-        lng: board.longitude,
-      });
-      console.log(board.latitude);
-
-      console.log(position);
-    }
-  }, [board]);
+    setPosition({
+      lat: latitude,
+      lng: longitude,
+    });
+  }, [latitude, longitude]);
 
   const canSubmit = useCallback(() => {
     return (
@@ -88,16 +84,12 @@ function PostEdit() {
         Data.image = board.image;
         isChanged = false;
       } else Data.image = image.preview_URL;
-      console.log(Data);
       const response = await patchData(`api/boards/${postId}`, Data, isChanged);
-      // mutate({
-      //   form: data,
-      // });
-      console.log(response);
+
       window.alert('수정이 완료되었습니다');
       navigate('/postView');
     } catch (e) {
-      console.log('patch-error');
+      //
     }
   }, [canSubmit]);
   return (

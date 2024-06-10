@@ -48,9 +48,7 @@ function PostView() {
 
   const [editShow, setEditShow] = useState(false);
   const [passwordShow, setPasswordShow] = useState(false);
-  useEffect(() => {
-    console.log(board);
-  }, [board]);
+
   const handleClose = () => {
     setPasswordShow(false);
   };
@@ -119,8 +117,6 @@ function PostView() {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries((formData as any).entries());
-            console.log('password:', formJson.password);
-            console.log(board);
 
             try {
               const response = await postData(
@@ -133,18 +129,15 @@ function PostView() {
               navigate('./edit');
             } catch (error: any) {
               if (axios.isAxiosError(error)) {
-                console.log('c');
-
                 console.error('Error deleting data:', error.response);
                 if (error.response) {
-                  console.log(error.response);
                   if (error.response.data === '권한이 없습니다.') {
                     // setMessage('비밀번호를 다시 입력해주세요');
                     alert('올바르지 않은 비밀번호 입니다.');
 
                     handleEditClose();
                   } else {
-                    console.log('asd');
+                    //
                   }
                 }
               } else {
@@ -184,14 +177,12 @@ function PostView() {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries((formData as any).entries());
-            console.log('password:', formJson.password);
 
             try {
               const response = await deleteData(
                 `api/boards/${postId}`,
                 formJson.password,
               );
-              console.log(response);
               alert('게시물이 삭제되었습니다');
               setShow(true);
               handleClose();
@@ -200,7 +191,6 @@ function PostView() {
               if (axios.isAxiosError(error)) {
                 console.error('Error deleting data:', error.response);
                 if (error.response) {
-                  console.log(error.response);
                   if (error.response.data === '권한이 없습니다.') {
                     // setMessage('비밀번호를 다시 입력해주세요');
                     alert('올바르지 않은 비밀번호 입니다.');

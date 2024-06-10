@@ -9,7 +9,6 @@ import HeaderWrite from './HeaderWrite';
 // 카테고리 헤더
 
 function KakaoHeader(): ReactElement {
-  // console.log(MarkerState);
   const navigator = useNavigate();
   function handleClick() {
     navigator('/');

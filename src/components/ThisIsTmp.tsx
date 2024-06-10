@@ -48,10 +48,6 @@ export default function ThisIsTmp() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   return (
     <>
       <p>below</p>

@@ -85,8 +85,7 @@ function PostAdd() {
         form: data,
       });
       window.alert('등록이 완료되었습니다');
-      console.log(data);
-      console.log('!!!!');
+
       // navigate('/postView');
     } catch (e) {
       // 서버에서 받은 에러 메시지 출력
@@ -96,7 +95,7 @@ function PostAdd() {
       //     position: 'top-center',
       //   },
       // );
-      console.log('post-error');
+      //
     }
   }, [canSubmit]);
 

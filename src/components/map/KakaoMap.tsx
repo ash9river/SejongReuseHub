@@ -41,14 +41,10 @@ function KakaoMap() {
     isLoading: isBoardDataLoading,
     isError: isBoardDataError,
   } = useQuery<BoardMarkerInterface[], AxiosError>({
-    queryKey: ['boardMarker'], // 고유한 쿼리 키를 지정
-    queryFn: ({ signal }) => getData('api/boards/map', signal), // 새로운 API 엔드포인트를 지정
+    queryKey: ['boardMarker'],
+    queryFn: ({ signal }) => getData('api/boards/map', signal),
     staleTime: 5000,
   });
-
-  useEffect(() => {
-    console.log(boardData);
-  }, [boardData]);
 
   return (
     <Map

@@ -46,8 +46,6 @@ export const postData = async <T>(
 
     return response.data;
   } catch (error) {
-    console.log(error);
-
     if (isAxiosError(error)) throw new Error(error.message);
     else throw error;
   }
