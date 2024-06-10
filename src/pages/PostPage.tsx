@@ -50,21 +50,6 @@ function PostPage() {
       latitude: location ? location.lat : 0,
       longitude: location ? location.lng : 0,
     };
-    /* 
-    try {
-      const response = await postFormData(data);
-
-      console.log('Response:', response);
-      alert('게시글 업로드 완료!');
-      // 성공적으로 전송된 후 추가적인 작업 수행
-    } catch (error) {
-      alert('통신 실패'); // 에러 객체의 상세 정보를 로그
-      // 에러 객체의 상세 정보를 로그
-
-      console.error('Error posting data:', error);
-    } */
-
-    // console.log(data);
   };
 
   const changeLocation = useCallback((prop: coordinateType) => {

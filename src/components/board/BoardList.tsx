@@ -45,10 +45,6 @@ function BoardList() {
   });
   const boardListDto = data?.boardListDto ?? [];
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   return (
     <div className={styles['boardList-wrapper']}>
       <div className={styles['boardList-header']}>재활용 게시물 </div>
@@ -73,12 +69,10 @@ function BoardList() {
         <Pagination
           variant="outlined"
           color="primary"
-          // page={Number(searchParams.get('page'))}
           page={pageCount}
           count={data?.pageInfo.totalPages ? data.pageInfo.totalPages - 1 : 0}
           size="large"
           onChange={async (e, value) => {
-            // window.location.href = `/board-list?page=${value}`;
             setPageCount(value);
             await refetch();
           }}

@@ -42,9 +42,6 @@ function PostList() {
   };
 
   const naviagate = useNavigate();
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   // function handleClick(boardId: number) {
   //   naviagte(`../postView/${boardId}`);
