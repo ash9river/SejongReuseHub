@@ -216,12 +216,17 @@ function Comment({ boardId }: CommentProps) {
               <div className={styles['comment-content']}>{item.content}</div>
               <div className={styles['comment-username']}>익명 {index + 1}</div>
               <Button
+                className={styles['delete-button']}
                 type="button"
                 onClick={() => handleDelete(item.commentId)}
               >
                 삭제
               </Button>
-              <Button type="button" onClick={() => handleEdit(item.commentId)}>
+              <Button
+                className={styles['edit-button']}
+                type="button"
+                onClick={() => handleEdit(item.commentId)}
+              >
                 수정
               </Button>
               <hr />
@@ -250,22 +255,24 @@ function Comment({ boardId }: CommentProps) {
           ))}
       </div>
       <div className={styles['comments-header']}>
-        <input
-          className="comments-header-textarea"
-          type="text"
-          value={newNickname}
-          onChange={handleNicknameChange}
-          placeholder="닉네임"
-        />
-        <input
-          className="comments-header-textarea"
-          type="password"
-          value={newPassword}
-          onChange={handlePasswordChange}
-          placeholder="패스워드"
-        />
+        <div className={styles.info}>
+          <input
+            className={styles['comments-header-textarea']}
+            type="text"
+            value={newNickname}
+            onChange={handleNicknameChange}
+            placeholder="닉네임"
+          />
+          <input
+            className={styles['comments-header-textarea']}
+            type="password"
+            value={newPassword}
+            onChange={handlePasswordChange}
+            placeholder="패스워드"
+          />
+        </div>
         <TextField
-          className="comments-header-textarea"
+          className={styles['comments-header-textarea']}
           maxRows={3}
           onClick={isLogin}
           onChange={(e) => {

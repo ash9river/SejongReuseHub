@@ -22,7 +22,10 @@ function TextArea({ names, contents, titles }: ContentType) {
 
   return (
     <div className={styles['textArea-wrapper']}>
-      <div className={styles['profile-wrapper']}>{user.nickname}</div>
+      <div className={styles['profile-wrapper']}>
+        {user.nickname}
+        <img src="/img/sejonglogo.png" alt="logo" />
+      </div>
       <input
         onChange={(e) => {
           setUser({

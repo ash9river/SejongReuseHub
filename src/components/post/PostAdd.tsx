@@ -102,7 +102,7 @@ function PostAdd() {
 
   return (
     <div className={styles['addBoard-wrapper']}>
-      <div className={styles['addBoard-header']}>게시물 등록하기 🖊️</div>
+      <div className={styles['addBoard-header']}>게시물 등록하기</div>
       <div className={styles.submitButton}>
         {canSubmit() ? (
           <Button

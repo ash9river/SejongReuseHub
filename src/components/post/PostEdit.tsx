@@ -102,7 +102,7 @@ function PostEdit() {
   }, [canSubmit]);
   return (
     <div className={styles['addBoard-wrapper']}>
-      <div className={styles['addBoard-header']}>게시물 수정하기 🖊️</div>
+      <div className={styles['addBoard-header']}>게시물 수정하기</div>
       <div className={styles.submitButton}>
         {canSubmit() ? (
           <Button

@@ -51,16 +51,16 @@ function ImageUploader({ setImage }: UploaderProps) {
       <div className={styles['img-wrapper']}>
         {/* <img src={PreviewURL} alt="Preview" /> */}
       </div>
-      <div className={styles['upload-button']}>
-        <Button
-          className={styles.button}
-          variant="outlined"
-          color="primary"
-          onClick={() => inputRef.click()}
-        >
-          사진 고르기
-        </Button>
-      </div>
+
+      <button
+        type="button"
+        className={styles.button}
+        color="primary"
+        onClick={() => inputRef.click()}
+      >
+        사진 고르기
+      </button>
+
       {fileName && (
         <div className={styles['file-name']}>
           {getDisplayFileName(fileName)}
