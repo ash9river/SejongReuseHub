@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { isSideBarOpenState } from 'store/atom/SideBarAtom';
 import { getData } from 'services/getData';
 import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-
+import { OpenMarkerState } from 'store/atom/OpenMarkerAtom';
 import styles from './PostList.module.scss';
 
 interface BoardItem {
@@ -36,6 +36,11 @@ function PostList() {
       getData(`api/boards?page=${0}&size=${1000}`, signal),
     staleTime: 5000,
   });
+  const [openMarkerId, setOpenMarkerId] = useRecoilState(OpenMarkerState);
+  const handleMarkerClick = (id: number) => {
+    setOpenMarkerId(id === openMarkerId ? null : id); // Toggle marker open state
+  };
+
   const naviagate = useNavigate();
   useEffect(() => {
     console.log(data);
@@ -59,7 +64,7 @@ function PostList() {
           className={styles.postContainer}
           key={item.boardId}
           onClick={() => {
-            naviagate(`../postView/${item.boardId}`);
+            handleMarkerClick(item.boardId);
           }}
         >
           <div className={styles.imageBox}>
