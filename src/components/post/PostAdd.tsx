@@ -19,6 +19,7 @@ import { useMutation } from '@tanstack/react-query';
 import ImageUploader from './ImageUploader';
 import styles from './PostAdd.module.scss';
 import PostAddPostion from './PostAddPostion';
+import TextAddArea from './TextAddArea';
 import {
   FormDataEntryInterface,
   postFormData,
@@ -101,7 +102,7 @@ function PostAdd() {
 
   return (
     <div className={styles['addBoard-wrapper']}>
-      <div className={styles['addBoard-header']}>게시물 등록하기 🖊️</div>
+      <div className={styles['addBoard-header']}>게시물 등록하기</div>
       <div className={styles.submitButton}>
         {canSubmit() ? (
           <Button
@@ -122,7 +123,7 @@ function PostAdd() {
         )}
       </div>
       <div className={styles['addBoard-body']}>
-        <TextArea contents="" titles="" />
+        <TextAddArea />
         <ImageUploader setImage={setImage} />
         <PostAddPostion position={position} setPosition={setPosition} />
       </div>

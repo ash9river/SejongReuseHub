@@ -9,8 +9,14 @@
   /* 추가적인 스타일을 원할 경우 여기에 추가 */
 }
 
-.upload-button {
+.button {
+  color: white;
+  background-color: #a41a37;
   margin-bottom: 10px;
+  font-size: 1rem;
+  //color: white;
+  height: 2.5rem;
+  border-radius: 5px;
 }
 
 .file-name {

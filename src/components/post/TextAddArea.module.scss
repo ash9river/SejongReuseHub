@@ -15,7 +15,6 @@
     &::-webkit-scrollbar {
       display: none;
     }
-
     resize: none;
     font-size: 18px;
     font-weight: 500;
@@ -34,17 +33,21 @@
 }
 
 .profile-wrapper {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 10%;
   gap: 10%;
+  width: 50%;
+  height: 30%;
+}
+.header-wrapper {
   display: flex;
   flex-direction: row;
-  width: 100%;
-  height: 30%;
-  font-size: 1.4rem;
   justify-content: space-between;
   img {
     width: 5rem;
     height: 5rem;
+    
   }
 }
 

@@ -1,5 +1,9 @@
-import { MapMarker } from 'react-kakao-maps-sdk';
+import { MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { getData } from 'services/getData';
+import styles from './Marker.module.scss';
 
 // postion 타입 지정
 export interface Position {
@@ -19,23 +23,72 @@ const imageSize = { width: 22, height: 30 };
 // 컴포넌트를 담은 함수
 // 컴포넌트는 항상 JSX를 return하기 때문에 JSX.Element로 타입을 지정하면 된다.
 function Marker({ id, name, position }: MarkerProps): JSX.Element {
+  const { data: board, isSuccess } = useQuery({
+    queryKey: ['postList', id],
+    queryFn: ({ signal }) => getData<any>(`api/boards/${id}`, signal),
+  });
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   return (
-    <MapMarker
-      key={`${position.lat},${position.lng}`}
-      position={position}
-      image={{
-        src: `/img/${name}pin.png`,
-        size: imageSize,
-        options: {
-          // offset: {
-          //   x: 27,
-          //   y: 69,
-          // },
-        },
-      }}
-      onClick={() => navigate(`../postView/${id}`)}
-    />
+    <>
+      <MapMarker
+        key={`${position.lat},${position.lng}`}
+        position={position}
+        image={{
+          src: `/img/${name}pin.png`,
+          size: imageSize,
+          options: {
+            // offset: {
+            //   x: 27,
+            //   y: 69,
+            // },
+          },
+        }}
+        onClick={() => setIsOpen(true)}
+      />
+      {isOpen && board && (
+        <CustomOverlayMap position={position}>
+          <div className={styles.wrap}>
+            <div className={styles.info}>
+              <div className={styles.title}>
+                {board.title}
+                <button
+                  type="button"
+                  className={styles.close}
+                  onClick={() => setIsOpen(false)}
+                >
+                  x{' '}
+                </button>
+              </div>
+              <div className={styles.body}>
+                {board.image && (
+                  <div className={styles.img}>
+                    <img
+                      src={board.image}
+                      width="100"
+                      height="100"
+                      alt="게시물"
+                    />
+                  </div>
+                )}
+                <div className={styles.desc}>
+                  <div className={styles.content}>{board.content}</div>
+                  <div>
+                    <button
+                      type="button"
+                      className={styles.navigateButton}
+                      onClick={() => navigate(`../postView/${id}`)}
+                    >
+                      게시물 이동
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CustomOverlayMap>
+      )}
+    </>
   );
 }
 

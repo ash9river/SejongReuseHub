@@ -102,7 +102,7 @@ function PostEdit() {
   }, [canSubmit]);
   return (
     <div className={styles['addBoard-wrapper']}>
-      <div className={styles['addBoard-header']}>게시물 수정하기 🖊️</div>
+      <div className={styles['addBoard-header']}>게시물 수정하기</div>
       <div className={styles.submitButton}>
         {canSubmit() ? (
           <Button
@@ -123,7 +123,13 @@ function PostEdit() {
         )}
       </div>
       <div className={styles['addBoard-body']}>
-        {board && <TextArea contents={board.content} titles={board.title} />}
+        {board && (
+          <TextArea
+            names={board.nickname}
+            contents={board.content}
+            titles={board.title}
+          />
+        )}
         <ImageUploader setImage={setImage} />
         {board && (
           <PostAddPostion position={position} setPosition={setPosition} />

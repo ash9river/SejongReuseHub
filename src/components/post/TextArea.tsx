@@ -5,14 +5,16 @@ import { useEffect } from 'react';
 import styles from './TextArea.module.scss';
 
 interface ContentType {
+  names: string;
   contents: string;
   titles: string;
 }
-function TextArea({ contents, titles }: ContentType) {
+function TextArea({ names, contents, titles }: ContentType) {
   const [user, setUser] = useRecoilState<UserInterface>(userState);
   useEffect(() => {
     setUser({
       ...user,
+      nickname: names,
       content: contents,
       title: titles,
     });
@@ -21,34 +23,8 @@ function TextArea({ contents, titles }: ContentType) {
   return (
     <div className={styles['textArea-wrapper']}>
       <div className={styles['profile-wrapper']}>
-        {/* <div className={styles.label}>id </div> */}
-        <input
-          onChange={(e) => {
-            setUser({
-              ...user,
-              nickname: e.target.value,
-            });
-          }}
-          className="id"
-          type="text"
-          value={user.nickname}
-          placeholder="아이디"
-          required
-        />
-        {/* <div className={styles.label}>password </div> */}
-        <input
-          onChange={(e) => {
-            setUser({
-              ...user,
-              password: e.target.value,
-            });
-          }}
-          className="password"
-          type="password"
-          value={user.password}
-          placeholder="비밀번호"
-          required
-        />
+        {user.nickname}
+        <img src="/img/sejonglogo.png" alt="logo" />
       </div>
       <input
         onChange={(e) => {
