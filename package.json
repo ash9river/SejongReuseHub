@@ -77,9 +77,5 @@
     "prettier": "^3.2.5",
     "sass": "^1.72.0"
   },
-  "msw": {
-    "workerDirectory": [
-      "public"
-    ]
-  }
+  "proxy": "http://3.38.93.17:9000"
 }
