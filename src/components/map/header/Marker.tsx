@@ -1,11 +1,12 @@
 import { MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getData } from 'services/getData';
+import { useRecoilState } from 'recoil';
+import { OpenMarkerState } from 'store/atom/OpenMarkerAtom';
 import styles from './Marker.module.scss';
 
-// postion 타입 지정
+// Position 타입 지정
 export interface Position {
   lat: number;
   lng: number;
@@ -27,8 +28,13 @@ function Marker({ id, name, position }: MarkerProps): JSX.Element {
     queryKey: ['postList', id],
     queryFn: ({ signal }) => getData<any>(`api/boards/${id}`, signal),
   });
-  const [isOpen, setIsOpen] = useState(false);
+  const [openMarkerId, setOpenMarkerId] = useRecoilState(OpenMarkerState);
   const navigate = useNavigate();
+
+  const handleMarkerClick = () => {
+    setOpenMarkerId(id === openMarkerId ? null : id); // Toggle marker open state
+  };
+
   return (
     <>
       <MapMarker
@@ -37,16 +43,10 @@ function Marker({ id, name, position }: MarkerProps): JSX.Element {
         image={{
           src: `/img/${name}pin.png`,
           size: imageSize,
-          options: {
-            // offset: {
-            //   x: 27,
-            //   y: 69,
-            // },
-          },
         }}
-        onClick={() => setIsOpen(true)}
+        onClick={handleMarkerClick}
       />
-      {isOpen && board && (
+      {openMarkerId === id && board && (
         <CustomOverlayMap position={position}>
           <div className={styles.wrap}>
             <div className={styles.info}>
@@ -55,9 +55,9 @@ function Marker({ id, name, position }: MarkerProps): JSX.Element {
                 <button
                   type="button"
                   className={styles.close}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => setOpenMarkerId(null)}
                 >
-                  x{' '}
+                  x
                 </button>
               </div>
               <div className={styles.body}>
